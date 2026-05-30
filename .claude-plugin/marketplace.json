@@ -1,0 +1,24 @@
+{
+  "name": "lfp-skills",
+  "owner": {
+    "name": "LFP (pinz-byte)"
+  },
+  "description": "LFP ecosystem skills: oversight thinkers, core ops, and apex trading.",
+  "plugins": [
+    {
+      "name": "lfp-thinkers",
+      "source": "./plugins/lfp-thinkers",
+      "description": "Oversight roundtable + router: critical, creative, logic, loop-breaker, toolbox."
+    },
+    {
+      "name": "lfp-core",
+      "source": "./plugins/lfp-core",
+      "description": "Core ops/build/meta/comms skills for every working project."
+    },
+    {
+      "name": "lfp-apex",
+      "source": "./plugins/lfp-apex",
+      "description": "APEX live-money trading council -- scope to trading projects only."
+    }
+  ]
+}
