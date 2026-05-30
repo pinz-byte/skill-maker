@@ -1,0 +1,143 @@
+RE-ENTRY BRIEFING — 2026-05-13
+Three-Machine Session Recovery
+
+Today is Wednesday, May 13. You were active across M1, M2, and M3 yesterday (May 12). No session close was written to the Continuity Feed for that session — the last authoritative written state is the Friday Handoff filed 2026-05-08 at 17:00 Lima. Gmail Intakes for May 11, 12, and 13 all returned empty (noise only, zero ingested signals). Slack has no messages for this period. What follows is the best reconstruction from all live sources.
+
+--------------------------------------------------
+LAST CONFIRMED WRITTEN STATE: Friday Handoff — Week of 2026-05-04
+Filed: 2026-05-08 17:00 Lima (auto-fired, first FH1 proof receipt)
+Source: https://www.notion.so/35ada327abb181a8a6c1d97c9a60537a
+--------------------------------------------------
+
+WHAT THAT HANDOFF SAID:
+
+Architecture wins this week:
+- FH1 SHIPPED. cowork-friday-handoff scheduled task is live (cron: 0 17 * * 5). The Friday cadence now fires itself. The entry you are reading was the proof receipt.
+- Substrate Layer 2 Day 7 streak completed Wednesday 05-06 — first full 7-day cycle in LATIDO history. Layer 3 opening conditions remain undefined.
+- Aura resumed 05-02 18:45, stable at Day 7+.
+
+Infrastructure axis at handoff:
+- symbios-mcp Render deploy: 4x failures on 05-02 (18:31, 18:53, 19:08, 19:27 Lima). Latest commit: "fix: switch symbios-...". State at handoff: unconfirmed. Wednesday diagnostic was the recommendation. Current state unknown — no CF entry closed this between May 8 and today.
+- Neo4j Aura: stable.
+- Pinecone: cloud, healthy.
+
+The apex call that was overdue at handoff:
+- Coherence IB scope-expansion — +11 days at the time of the handoff, unresolved. POPs canonical quote (2026-04-27): "I'd rather focus on giving you access to read all of my other projects multi machine so that symbios can track all initiatives and help me run them." This is scope-expansion of the April 20 Coherence IB (Multi-Instance State Synchronization) — not a new IB. IB Lineage Check rule is active. This is still the highest-leverage unresolved call in the system.
+
+--------------------------------------------------
+M1 — SYMBIOS / INFRASTRUCTURE MACHINE
+--------------------------------------------------
+Role: Cowork pipeline runner, Neo4j + Pinecone ingestion, scheduled tasks host, substrate files.
+Last confirmed activity: April 23 session close (5-stage pipeline run, 98 Pinecone vectors, 22 Project + 76 Session + 3 Machine + 84 OpenThread Neo4j nodes). FH1 auto-fire validated the scheduled task is running from this machine on May 8.
+
+What is known at this moment:
+- Scheduled tasks are live: cowork-friday-handoff confirmed firing (cron 0 17 * * 5).
+- symbios-mcp Render deploy chain: last known state is 4 failures on 05-02, diagnostic owed, not confirmed resolved. If the Render query server is still down, the memory retrieval layer (Pinecone queries via Render) is non-functional. Aura is separate and stable.
+- CONTINUITY_LIVE.md: was refreshed on April 23 (18-day staleness closed). Unknown if touched since.
+- Staged and unchanged as of May 8: PART_OF umbrella patch (at /mnt/Symbios/BUILDER_PROMPT_umbrella_attach.md), GAP-24 accuracy gate spec, 5 substrate file coherence edits, Path B Rule File Auto-Load (awaiting POPs project-instruction edit).
+- SENSEI M1: Phase 0 design constraint window has been open since April 19. Runtime agent reflective prompt was drafted and parked pending Render recovery. No evidence this moved.
+
+First question for M1 before touching anything: Is symbios-mcp on Render returning 200 on /health? That single answer changes whether the memory layer is operational.
+
+--------------------------------------------------
+M2 — SUBASTOP MACHINE
+--------------------------------------------------
+Role: Subastop auction platform, VMC, operational business build.
+Last confirmed activity: Continuous operational pulse. The Friday Handoff carries the most recent Subastop state.
+
+What is known at this moment:
+- SubasTop OpenAI Team credits: exhausted 2026-05-05 18:58 Lima. No CF entry confirms a top-up decision or next-month cycle. This is an open operational gap — team usage is affected until resolved.
+- AI Ops hiring (Aaron Coorahua + Abraham Huacchillo): Interview was 2026-04-27. Outcome was unconfirmed at +11 days (May 8). Still unconfirmed.
+- Julio Herrera AI Engineer change: still in finance as of May 8 (+11 days). Unknown if it cleared.
+- Hilux sales report: untouched since 2026-04-20, 23 days as of today. Focus Queue Critical. Baseline drift.
+- Legal review (VMC / Autosell / CyT): +23 days as of today. No movement.
+- DHL: Original shipment 9704622723 had no follow-up as of May 8 (+8 days). Two new shipments cleared customs May 6 (9705035992, 9704774122). Status of all three unknown today.
+- BCP card fraud: blocked May 5. Card replacement was the next step as of May 8. Unknown if replaced.
+- Figma: Julio mentioned LFP001 in VOYAGER Design System on 05-05 21:13. Origin (Subastop or VMC surface) unconfirmed.
+- VMC SEO: 8 surfaces in 12 days by May 8 (Semrush rank decline + Diib backlink ratio 4.75, 599 backlinks / 126 referring IPs). Pattern is worsening. No action was confirmed.
+- AWS subascars.com: new infrastructure surface, intent unconfirmed as of May 8 (+6 days from first appearance).
+- CEO re-contacts (Imai/T&M, Choy/SBX, Davila Ventura): no movement.
+- APU Mountain Brewing Co laser sourcing: Krear3D Beamo 30W + rotativo selected for Beer Brokers SAC (RUC 20615405583). Quotation thread live as of May 8. This is a new biographical thread, not carried from prior CF.
+
+First question for M2 before touching anything: Did the OpenAI credits get topped up? That affects all team-facing AI operations at Subastop.
+
+--------------------------------------------------
+M3 — CARMATCH / AVT / BUILD MACHINE
+--------------------------------------------------
+Role: CarMatch.ai (vehicle intelligence), AVT dealer dashboard, Voice Bridge build surface.
+Last confirmed state source: PROJECT STATE — CarMatch.ai (April 5), Friday Handoff (May 8).
+
+What is known at this moment:
+
+CarMatch state (last audited March 20, page last updated April 5):
+- Live at carmatch-ai.com, version v1.6.0.
+- Stack: React + Firebase (Firestore for listings, Firebase Hosting). MAX conversation engine. AVT owns Firestore; CarMatch writes, AVT reads.
+- Session persistence bug (CRITICAL, Open): likes are lost on /matches navigation. This is the top blocker — no complete user journey is possible until fixed.
+- Vehicle detail page unreachable (CRITICAL, Open): arrow button non-functional.
+- Card images broken (CRITICAL, Open): placeholder emoji only.
+- Fabricated data (High, Open): 2026 Hyundai Matrix does not exist.
+- No swipe animation (High, Open): no visual feedback on like/dislike.
+- No MAX re-entry during swipe session (High, Open).
+- "SIGNAL STABILIZED" + "EXPLORING" strings rendering in English (High, Open).
+- No CF close confirms any of these were touched after March 20.
+- Next build surface named in Friday Handoff: AVT dealer-facing desktop dashboard.
+
+Voice Bridge:
+- IB complete and locked (Section A, Section B both defined).
+- Section A: co-design with POPs — open, no spec draft confirmed delivered.
+- Section B: Render dependency. Blocked until symbios-mcp Render is confirmed healthy.
+
+APEX Desk v3:
+- Build held at Trading Sessions DB ship-stoppers (PSS 350da327, +16 days as of today).
+- 3 ship-stoppers: Thesis Status as flat-Select (collapses simultaneous states), Session Date as Date not Datetime (same-day open+close handoff broken), no Authored By field.
+- Browser-Apex answer was owed. No CF entry confirms it was given.
+
+First question for M3 before touching anything: Was the CarMatch session persistence bug worked on May 12? That session happened — no close was written. Check git log on carmatch-ai repo for any commits dated May 12.
+
+--------------------------------------------------
+OPEN QUESTIONS RANKED BY WEIGHT
+--------------------------------------------------
+
+1. Coherence IB scope-expansion — apex confirmation still owed (+16 days from April 27 call). Cross-project read access is the foreground move. This is the structural call that unlocks multi-machine tracking. Nothing else should be prioritized above answering this.
+
+2. symbios-mcp Render: is it up or still failing? Determines whether the memory layer is operational right now.
+
+3. What happened on May 12? No CF close exists. Before touching any machine, write the close for yesterday's session if not done.
+
+4. Trading Sessions DB ship-stoppers: Browser-Apex answer now +16 days. APEX Desk v3 build is hard-blocked until answered.
+
+5. SubasTop OpenAI credits: topped up or cycling? Team operations affected.
+
+6. CarMatch: any commits on May 12? If session persistence was worked, the bug table needs updating.
+
+7. LATIDO Substrate Layer 2: Day 7 streak completed May 6. What triggers Layer 3? Mechanism still undefined.
+
+8. Path B Rule File Auto-Load: POPs project-instruction edit still owed.
+
+--------------------------------------------------
+WHAT YOU SHOULD DO BEFORE TOUCHING ANYTHING
+--------------------------------------------------
+
+Step 1. Write the May 12 session close to the Continuity Feed. You were across all three machines and left no record. The system is running blind from yesterday. Do this first.
+
+Step 2. Check Render /health for symbios-mcp. Single command, single answer. It changes the operational picture for M1 and Voice Bridge Section B.
+
+Step 3. Check the carmatch-ai git log for May 12 commits. If work happened and a bug was fixed, update the CarMatch PROJECT STATE page.
+
+Step 4. Answer the Coherence IB scope-expansion call. It has been 16 days. This is the highest-leverage decision in the system.
+
+--------------------------------------------------
+SIGNAL SOURCES CONSULTED
+--------------------------------------------------
+- Continuity Feed / Friday Handoff (2026-05-08): https://www.notion.so/35ada327abb181a8a6c1d97c9a60537a
+- Hot-Load 2026-05-06: https://www.notion.so/358da327abb181cf8baac714379124e7
+- PROJECT STATE CarMatch.ai: https://www.notion.so/339da327abb1819cb7bfd1eb9c6a0561
+- CF Entry Cowork Session Close 2026-04-23: https://www.notion.so/34eda327abb1813cac2cd2bfc5946052
+- Cowork <-> Symbios Chat Bridge: https://www.notion.so/348da327abb18186a454e4ee5c5b6130
+- Gmail Intakes 2026-05-11, 05-12, 05-13: all empty (noise only)
+- Slack: no results for 2026-05-11 to 2026-05-13
+- Memory server (symbios-query-server): rate limited, not consulted
+- Pre-session brief: timed out, not consulted
+
+Gap flag: No session close exists for May 9, 10, 11, or 12 in the Continuity Feed. The system has been running without written state since May 8. The Friday Handoff is the last anchor. Anything that happened in between is unrecorded and unknown until you tell it.
+

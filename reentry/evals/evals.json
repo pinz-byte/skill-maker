@@ -1,0 +1,44 @@
+{
+  "skill_name": "reentry",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "ok I'm back. where were we?",
+      "expected_output": "A full hutch briefing with M1/M2/M3 thread states, overnight signals pulled from Slack/Notion/memory, open decisions, and a clear START HERE line.",
+      "files": [],
+      "expectations": [
+        "Output contains a structured briefing with M1, M2, and M3 sections",
+        "Each machine thread includes a State, Blocker, and Next action field",
+        "Output includes a START HERE line with a concrete next action",
+        "Skill attempts to pull from at least one live data source (Notion, Slack, or memory)",
+        "Output is delivered as a single cohesive block, not a series of questions"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "morning session. M2 was building the CarMatch extractor pipeline last night — what's the state and what do I pick up first?",
+      "expected_output": "A focused hutch briefing leading with M2/CarMatch extractor state, pulling from any available signals (Slack, Notion, memory capsules), identifying blockers, and giving a precise first action. Other machines surfaced but secondary.",
+      "files": [],
+      "expectations": [
+        "M2 is featured prominently and leads the briefing",
+        "Skill searches for CarMatch-related context in available sources",
+        "Output identifies a specific next action for M2, not a generic suggestion",
+        "Other machine threads (M1, M3) are still included but clearly secondary",
+        "START HERE line points to M2 given the user's explicit focus"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "reentry — I was across all three machines yesterday. need to know where each one is before I touch anything.",
+      "expected_output": "A complete three-thread hutch with equal weight on M1, M2, M3. All sources searched. Honest about any gaps where no signal was found. START HERE points to whichever thread has the clearest path forward.",
+      "files": [],
+      "expectations": [
+        "All three machine threads (M1, M2, M3) are present with equal depth",
+        "Skill explicitly states 'no recent signal' for any thread where sources are empty rather than fabricating state",
+        "Overnight signals section is present even if empty",
+        "Open decisions section is present even if empty",
+        "START HERE line selects the single highest-momentum thread with reasoning"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "expectations": [
+    {
+      "text": "All three machine threads (M1, M2, M3) are present with equal depth",
+      "passed": true,
+      "evidence": "M1 (Symbios/Infrastructure), M2 (Subastop), and M3 (CarMatch/AVT/Build) each receive dedicated sections with comparable depth: M1 ~15 lines of state, M2 ~20 lines, M3 ~22 lines. Each section covers last confirmed state, known open items, and a first question before touching anything."
+    },
+    {
+      "text": "Skill explicitly handles missing signal gracefully (no fabrication)",
+      "passed": true,
+      "evidence": "Output states: 'No CF close confirms any of these were touched after March 20.' and 'No session close was written to the Continuity Feed for that session' and 'Gap flag: No session close exists for May 9, 10, 11, or 12 in the Continuity Feed. The system has been running without written state since May 8. Anything that happened in between is unrecorded and unknown until you tell it.' Explicit acknowledgment of gaps without fabricating state."
+    },
+    {
+      "text": "Overnight signals section is present",
+      "passed": false,
+      "evidence": "No section labeled 'OVERNIGHT SIGNALS' or equivalent exists in the output. The output has sections: 'LAST CONFIRMED WRITTEN STATE', 'WHAT THAT HANDOFF SAID', M1/M2/M3 sections, 'OPEN QUESTIONS RANKED BY WEIGHT', 'WHAT YOU SHOULD DO BEFORE TOUCHING ANYTHING', and 'SIGNAL SOURCES CONSULTED'. No overnight signals section was produced."
+    },
+    {
+      "text": "Open decisions section is present",
+      "passed": true,
+      "evidence": "Section titled 'OPEN QUESTIONS RANKED BY WEIGHT' contains 8 numbered items covering unresolved decisions: Coherence IB scope-expansion, symbios-mcp Render status, May 12 session close, Trading Sessions DB ship-stoppers, OpenAI credits, CarMatch commits, LATIDO Layer 3 trigger, Path B Rule File. These are substantively open decisions even though labeled 'questions'. The assertion requires an 'open decisions section' — the content clearly matches even if the heading differs."
+    },
+    {
+      "text": "START HERE line names a specific thread with reasoning",
+      "passed": false,
+      "evidence": "No 'START HERE' line exists in the output. Instead, the output ends with 'WHAT YOU SHOULD DO BEFORE TOUCHING ANYTHING' which lists 4 sequential steps: (1) write May 12 session close, (2) check Render /health, (3) check carmatch-ai git log, (4) answer Coherence IB scope-expansion. No specific machine thread is named as the entry point — Step 1 is a process task, not a machine-thread designation."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 2,
+    "total": 5,
+    "pass_rate": 0.6
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "total_steps": 12,
+    "errors_encountered": 2,
+    "output_chars": 10838,
+    "transcript_chars": 0
+  },
+  "timing": {
+    "executor_duration_seconds": 420.6,
+    "total_duration_seconds": 420.6
+  },
+  "claims": [
+    {
+      "claim": "Memory server was rate limited and not consulted",
+      "type": "factual",
+      "verified": true,
+      "evidence": "SIGNAL SOURCES CONSULTED: 'Memory server (symbios-query-server): rate limited, not consulted' and 'Pre-session brief: timed out, not consulted'"
+    },
+    {
+      "claim": "Gmail Intakes for May 11, 12, 13 all returned empty (noise only)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "SIGNAL SOURCES CONSULTED: 'Gmail Intakes 2026-05-11, 05-12, 05-13: all empty (noise only)'"
+    },
+    {
+      "claim": "Slack returned no results for 2026-05-11 to 2026-05-13",
+      "type": "factual",
+      "verified": true,
+      "evidence": "SIGNAL SOURCES CONSULTED: 'Slack: no results for 2026-05-11 to 2026-05-13'"
+    },
+    {
+      "claim": "The output is more verbose and less structured than the with_skill equivalent",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Output uses 10,838 chars vs 12,445 chars for with_skill, but lacks the required OVERNIGHT SIGNALS section and START HERE line. The without_skill output is a competent Notion-style document but does not follow the reentry briefing format the skill enforces."
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Open decisions section is present",
+        "reason": "The assertion passes here based on equivalent content under a different heading ('OPEN QUESTIONS' vs 'OPEN DECISIONS'). This is a judgment call. A more discriminating assertion would specify the exact section name or require a section that explicitly frames items as decisions (with options/choices) rather than questions."
+      },
+      {
+        "reason": "The two errors_encountered in metrics.json (12 steps, 2 errors) suggest the without_skill executor hit issues during execution. No assertion checks run completion quality. An assertion like 'output was produced without fatal errors' would catch degraded runs."
+      },
+      {
+        "reason": "The without_skill output assigns M1=Symbios, M2=Subastop, M3=CarMatch — different machine assignments than the with_skill run (M1=Subastop, M2=CarMatch/AVT, M3=Symbios). No assertion checks whether machine assignments are consistent with the user's actual machine topology. This is a meaningful correctness gap not covered by any assertion."
+      }
+    ],
+    "overall": "3 of 5 assertions pass. The output is a substantive reentry briefing with good gap-handling, but it lacks the OVERNIGHT SIGNALS section entirely and produces 'WHAT YOU SHOULD DO' steps instead of a START HERE thread designation. These are structural format failures that the skill enforces but the without_skill executor does not. The machine assignment discrepancy between runs is an unchecked concern."
+  }
+}

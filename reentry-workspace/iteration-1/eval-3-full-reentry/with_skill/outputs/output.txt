@@ -1,0 +1,186 @@
+╔══════════════════════════════════════════════════════╗
+║  REENTRY  ·  2026-05-13  ·  ~5 days since FH1 fire  ║
+╚══════════════════════════════════════════════════════╝
+
+SIGNAL AUDIT (pre-hutch)
+────────────────────────
+Sources read:
+  ✓ Notion — Continuity Feed (Friday Handoff Week of 2026-05-04, last updated 2026-05-08)
+  ✓ Notion — Hot-Load 2026-05-01 (most recent structured Hot-Load found; no newer Hot-Load
+             or Monday Handover located for week of 2026-05-11 — no CF Active entry confirmed)
+  ✓ Slack — #alerta-zendesk (bot alerts, today 2026-05-13, text bodies empty in API return)
+  ✓ Slack — DM Luis Fernando / Diego Valentin (2026-05-13, high-signal incident thread)
+  ✓ Calendar — Today 2026-05-13: Comité AI 16:00–17:00 Lima (Jherrera organizer,
+               ahuacchillo + rcoorahua + pinzon accepted)
+  ✗ Memory layer (Symbios episodic) — UNAVAILABLE (429 rate limit + timeout on get_brief)
+  ✗ Workspace file timestamps — not accessible from this surface
+  ! No Monday Handover entry found in Notion CF for week of 2026-05-11.
+    Either the auto-init did not fire or did not write to the CF. State gap of ~5 days.
+
+Confidence level: MEDIUM. Most recent authoritative state is Friday Handoff 2026-05-08.
+Anything between 2026-05-09 and 2026-05-12 is inferred from known trajectories + today's
+Slack incident. Do not act on thread states as settled — verify before building.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ACTIVE THREADS
+──────────────
+M1 · Subastop / Platform Ops
+
+   State:   INCIDENT — active as of 2026-05-13 today. Subastop auction platform went down
+            on the highest-volume auction day. Diego Valentin (Slack DM, ~13:55 Lima):
+            49 auctions scheduled today; motor engine keys were deleted (not an attack —
+            security patched 100%); Silvana moving processes via database. MAF + Mapfre
+            gave green light to roll today's auctions to tomorrow. Santander session at
+            17:00 Lima — if system still down at that time, it gets declared desierto.
+            Bruce + Silvana + Anibal in active call working resolution.
+            Ford Bronco coordination also surfaced in same DM: Diego says coordinate
+            with Orlando → Manuel for pickup and drop-off this week.
+            Background (from FH 2026-05-08): SubasTop OpenAI Team credits exhausted
+            2026-05-05 — team usage impact unresolved. Julio Herrera AI Engineer change
+            still in finance (+18d at this point). AI Ops outcome (Aaron Coorahua +
+            Abraham Huacchillo, 04-27 interview) — now +16 days unconfirmed. Hilux
+            sales report untouched ~23 days. Legal queue (VMC/Autosell/CyT) ~23 days.
+
+   Blocker: Platform engine keys deleted — system partially or fully down RIGHT NOW.
+            Santander 17:00 Lima hard deadline: if unresolved, auction declared desierto.
+
+   Next:    Confirm with Diego/Silvana whether engine keys are restored and system is
+            stable before the 17:00 Santander deadline. If resolved, audit which of
+            today's 49 auctions are rescheduled to tomorrow and what notifications
+            went out to consignees.
+
+──────────────────────────────────────────────────────
+
+M2 · Symbios / APEX Desk v3 + Voice Bridge
+
+   State:   HELD. As of Friday Handoff 2026-05-08:
+            — APEX Desk v3 build sequence is active on Cowork but held at Trading
+              Sessions DB pending Browser-Apex answer to 3 ship-stoppers (PSS 350da327).
+              Ship-stoppers: (a) Thesis Status as flat Select collapses simultaneous
+              CRWV/IREN/HOOD states; (b) Session Date should be Datetime not Date;
+              (c) no Authored By field for APEX Chat vs Cowork conflict resolution.
+              This blocker was first raised 2026-04-27 — now 16+ days without answer.
+            — Voice Bridge: IB locked. Section A co-design open. Section B blocked on
+              Render+Aura infrastructure (symbios-mcp Render 4× deploy failures surfaced
+              2026-05-02; Aura resumed 2026-05-02 18:45 and was stable Day 7+).
+            — Coherence IB scope-expansion: apex call owed +16 days. POPs canonical
+              quote (2026-04-27): "I'd rather focus on giving you access to read all of
+              my other projects multi machine so that Symbios can track all initiatives
+              and help me run them." IB Lineage Check rule active — this is the foreground
+              strategic move, unblocked by POPs decision.
+            — LATIDO Substrate Layer 2: Day 7 streak completed 2026-05-06. Layer 3
+              opening conditions still undefined.
+            — Symbios memory layer: unavailable this session (429 + timeout). Episodic
+              context is thin until query server recovers.
+            — No M2 Slack activity found for 2026-05-12/13. No Notion Hot-Load or
+              Monday Handover for week of 2026-05-11 found. State gap confirmed.
+
+   Blocker: (1) Trading Sessions DB ship-stoppers answer from Browser-Apex — 16+ days
+            unresolved; APEX Desk v3 build cannot proceed until answered.
+            (2) Coherence IB scope-expansion — apex routing decision owed by POPs;
+            determines how Symbios tracks multi-machine initiatives going forward.
+            (3) Symbios memory layer offline this session (429 rate limit).
+
+   Next:    Answer the Coherence IB scope-expansion question (POPs decision, no build
+            required) — this is the highest-leverage unblocked move on M2. After that,
+            answer the Trading Sessions DB ship-stoppers so APEX build can resume.
+
+──────────────────────────────────────────────────────
+
+M3 · CarMatch / AVT
+
+   State:   NO RECENT SIGNAL. Last structured signal:
+            — CarMatch Builder instruction block (2026-04-05): React + Firebase stack,
+              live at carmatch-ai.com v1.6.0. Priority fix order as of that date:
+              (1) session persistence, (2) vehicle detail navigation, (3) real listing
+              photos, (4) replace fabricated data (2026 Hyundai Matrix), (5) swipe
+              animation, (6) MAX re-entry button, (7) translate SIGNAL STABILIZED to
+              Spanish.
+            — AVT Project State (2026-04-05): pipeline operational, extractor running,
+              7 fuentes / 442+ listados, no confirmed blocker.
+            — Friday Handoff 2026-05-08 listed "CarMatch AVT — dealer dashboard build
+              surface" as an active focus queue item but gave no new build signal.
+            — No CarMatch Slack activity found for 2026-05-12/13.
+            — No Notion updates for CarMatch found after 2026-04-05.
+            Honest gap: ~38 days without a logged CarMatch build state update.
+            What was being built and what shipped in that window is unknown from
+            available sources this session.
+
+   Blocker: Unknown — no recent signal to confirm whether prior P1–P7 bugs are fixed,
+            whether the dealer dashboard build started, or whether any blockers emerged.
+
+   Next:    Open PROJECT STATE — CarMatch.ai in Notion and read it before touching
+            any code. The state page may have been updated by a builder session even
+            if the search surface didn't surface it. Confirm current bug list status,
+            then pick up dealer dashboard build or highest-priority open bug.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OVERNIGHT SIGNALS
+─────────────────
+· SUBASTOP PLATFORM DOWN (today, 2026-05-13, ~13:55 Lima): Engine keys deleted.
+  Highest-volume auction day. 49 auctions affected. MAF + Mapfre moved to tomorrow.
+  Santander at 17:00 Lima is the live deadline — still unresolved at time of this briefing.
+  Bruce + Silvana + Anibal + Aníbal actively working. Diego heading to clinic soon.
+
+· Zendesk #alerta-zendesk: 10+ bot alerts fired today (2026-05-13, 13:36–20:10 Lima).
+  Message bodies returned empty in API — content unreadable. Volume spike likely
+  correlates with the platform incident. Treat as confirmation of customer-facing impact.
+
+· Comité AI today 16:00–17:00 Lima (Jherrera organizer, ahuacchillo + rcoorahua +
+  pinzon all accepted). This is during the platform incident — agenda may shift to
+  incident review. Aaron Huacchillo and Ramiro Coorahua both confirmed attending,
+  which may clarify the AI Ops hire outcome (+16 days unresolved).
+
+· Ford Bronco: Diego asks to coordinate with Orlando → Manuel for pickup/delivery
+  this week. Action sits with you.
+
+· No Monday Handover found in Notion CF for week of 2026-05-11. Either auto-init
+  did not fire or did not write. ~5-day state gap on M2 + M3 threads confirmed.
+
+· Symbios memory layer (query server): rate-limited and timed out this session.
+  Episodic memory unavailable. Brief not loaded. This is a diagnostic signal —
+  Render deploy may still be unstable.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPEN DECISIONS
+──────────────
+1. [M1 · Subastop] Platform engine keys — restored or not before 17:00 Lima today?
+   Options: (a) system recovers in time, Santander runs today; (b) system still down
+   at 17:00, Santander declared desierto, all processes run tomorrow. Silvana + Bruce
+   are the actors. Your role: monitor and confirm outcome.
+
+2. [M2 · Symbios] Coherence IB scope-expansion — cross-project read access for Symbios
+   across all machines. POPs canonical decision owed since 2026-04-27 (+16 days).
+   Options per POPs's own framing: foreground this now (give Symbios multi-machine
+   read access) or continue scoped-per-machine operation. No build required — this
+   is a POPs routing choice.
+
+3. [M2 · APEX] Trading Sessions DB v1.0 ship-stoppers — Browser-Apex answer owed
+   since 2026-04-27 (+16 days). Options: (a) confirm greenlit version addresses the
+   3 items (Thesis Status, Session Date Datetime, Authored By); (b) accept v1.1 retrofit
+   debt and unblock build now. APEX Desk v3 cannot proceed until resolved.
+
+4. [M2 · LATIDO] Substrate Layer 2 — Day 7 streak completed 2026-05-06. What triggers
+   Layer 3 opening? Mechanism undefined. Needs POPs to name the condition.
+
+5. [M1 · Subastop] SubasTop OpenAI Team credits — top up or cycle to next month?
+   Decision deferred from 2026-05-05. Team usage impact ongoing.
+
+6. [M1 · Subastop] AI Ops hire outcome — Aaron Coorahua + Abraham Huacchillo,
+   interview 2026-04-27, +16 days unconfirmed. Today's Comité AI (16:00) has both
+   attending — may surface naturally.
+
+START HERE ──────────────────────────────────────────→
+M1 is on fire right now: check with Diego or Silvana on platform status before
+the 17:00 Lima Santander deadline — confirm whether engine keys are restored and
+which auctions are rescheduled, then attend Comité AI at 16:00 Lima with incident
+context already in hand.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Signal fidelity note: Memory layer offline this session. Friday Handoff 2026-05-08
+is the last confirmed authoritative state for M2/M3. Week of 2026-05-11 has a
+confirmed CF gap — verify M2 and M3 states directly before building.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

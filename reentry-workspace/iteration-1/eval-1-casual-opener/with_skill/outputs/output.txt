@@ -1,0 +1,122 @@
+╔══════════════════════════════════════════════════════╗
+║  REENTRY  ·  2026-05-13  ·  ~5 days since last sync  ║
+╚══════════════════════════════════════════════════════╝
+
+Signal sources read: Notion Continuity Feed (Friday Handoff 05-08,
+Hot-Load 05-06, Gmail Intake 05-13), Slack (Group DM + #helpdesk,
+live as of today), Calendar (today, Lima). Memory layer (Symbios
+/brief + /query): rate-limited — no retrieval this session. Where
+noted, state is drawn from Notion CF as source of truth.
+
+ACTIVE THREADS
+──────────────
+M1 · Subastop (Platform Operations + AI Stack)
+   State:   AI stack selection finalized week of 05-07 (Claude Code,
+            Cursor, CodeRabbit Pro, Pennant — 6-person team). Subastop
+            frontend reskin running parallel to backend in Next.js.
+            JWT pushed to production 05-08. OpenAI Team credits
+            exhausted 05-05 — team-facing operational gap still open.
+            AI Ops Jr outcome (Aaron + Abraham, 04-27 interview)
+            unconfirmed at +16 days.
+   Blocker: API INCIDENT LIVE — #helpdesk flagged red-circle "Incident
+            started on API" at 22:21 Lima tonight (05-13). BruceR
+            acknowledged in Group DM ("lo reviso y aplicamos las
+            mejoras"). Status unknown as of this session open.
+   Next:    Confirm API incident resolution with BruceR before any
+            build work. Then close OpenAI credits decision (top-up
+            or cycle) so team usage resumes.
+
+M2 · CarMatch / AVT (Vehicle Intelligence Layer)
+   State:   CarMatch pre-production. Core flow has 9 open bugs, all
+            critical-to-high (session persistence loses likes on
+            /matches; vehicle detail unreachable; card images broken;
+            fabricated data). Last builder session: March 20 live
+            audit. No session since. AVT pipeline operational —
+            7 sources, 442+ listings, extractor running. Source
+            expansion needed. Dealer-facing desktop dashboard
+            identified as next build surface.
+   Blocker: Session persistence bug (#1 critical) blocks any complete
+            user journey — no deploy until fixed. No confirmed builder
+            session since March 20 (57 days).
+   Next:    Open carmatch-ai repo and fix session persistence —
+            likes lost on /matches navigation. This is the single
+            unlock for the entire CarMatch bug queue.
+
+M3 · Symbios AI Layer (Infrastructure + Voice Bridge)
+   State:   symbios-mcp Render deploy chain: 4x failures on 05-02
+            (18:31–19:27 Lima) — diagnostic still open, no confirmed
+            resolution in CF. /brief endpoint has 13 of 14 retrievers
+            silent (confirmed live diagnostic 05-03). /query endpoint
+            confirmed working. Aura stable at Day 7+. Voice Bridge
+            Section A co-design open; Section B runway live (Aura
+            stable + Render runway). LATIDO Substrate Layer 2 Day 7
+            streak completed 05-06 — Layer 3 opening conditions
+            undefined. Friday Handoff (FH1) shipped and auto-firing
+            (cron 0 17 * * 5, first fire confirmed 05-08).
+   Blocker: Coherence IB scope-expansion — apex confirmation owed
+            +16 days. POPs's canonical quote (04-27): "I'd rather
+            focus on giving you access to read all of my other
+            projects multi machine so that Symbios can track all
+            initiatives and help me run them." This is the foreground
+            architectural call that no build work resolves.
+   Next:    Diagnose symbios-mcp Render deploy chain (4x failures
+            05-02 unresolved) — this is a 5-minute surgical check
+            before Voice Bridge Section B can move.
+
+OVERNIGHT SIGNALS
+─────────────────
+- LIVE API INCIDENT: Subastop API went red at 22:21 Lima tonight.
+  BruceR in Group DM acknowledged and is reviewing. No resolution
+  confirmed yet. This is the highest-urgency signal entering the
+  session.
+- Comité AI today at 16:00–17:00 Lima (confirmed, full attendee list:
+  Ahuacchillo, Herrera, Coorahua + you). Hard time constraint on the
+  afternoon.
+- Comité de gestión was rescheduled — Julio asked 05-12 to move this
+  week's comité to Thursday; team agreed.
+- Slack Group DM (05-13 19:14): you flagged to BruceR "sobre lo
+  sucedido hoy analisis y remedios" — analysis + remedies requested.
+  This was before the #helpdesk API alert fired at 22:21.
+- Gmail Intake 05-13 ran clean: 5 emails searched, 0 ingested
+  (all noise). No new operational signals from email today.
+- Friday Handoff week of 05-04 closed with FH1 auto-fire confirmed
+  05-08 17:00 Lima. Scheduler-shaped class proven. FH2–FH5 are one
+  spec each away.
+- VMC SEO: 8-surface compounding pattern in 12 days (Semrush decline
+  + Diib backlink ratio 4.75). Pattern is no longer ambient.
+- Hilux sales report: untouched 23 days. Baseline drift accelerating.
+- DHL 9704622723: 13+ days no follow-up. Two newer shipments
+  (9705035992, 9704774122) cleared customs 05-06 — different packages,
+  also need status check.
+
+OPEN DECISIONS
+──────────────
+1. [Symbios] Coherence IB scope-expansion — apex confirmation still
+   owed +16 days. Options: (a) confirm cross-project read access as
+   foreground move and proceed to mechanism design, (b) formally
+   defer and name what replaces it at apex. Blocking M3 architectural
+   progress.
+
+2. [Subastop] API incident root cause — what broke tonight, and does
+   it require a hotfix before Comité AI at 16:00? Options: (a) BruceR
+   resolves overnight, session opens clean, (b) incident still live
+   and Comité AI agenda shifts to incident review.
+
+3. [Subastop] OpenAI Team credits — exhausted since 05-05. Options:
+   (a) top up now, (b) cycle to next month. Team usage blocked until
+   decided.
+
+4. [Symbios] APEX Desk v3 Trading Sessions DB — 3 ship-stoppers
+   unresolved +16 days (Thesis Status flat-Select, Session Date
+   Date-not-Datetime, no Authored By field). Build held. Options:
+   (a) answer ship-stoppers and unblock v3 build, (b) formally stage.
+
+5. [CarMatch] March 20 audit to now — 57 days without a builder
+   session. Options: (a) schedule dedicated CarMatch session this
+   week, (b) hold until Subastop stabilizes.
+
+START HERE ──────────────────────────────────────────→
+Confirm API incident status with BruceR before anything else — if
+it's still live, that owns the morning; if it's resolved, open the
+carmatch-ai repo and fix session persistence, which has been the
+single blocker on CarMatch for 57 days.

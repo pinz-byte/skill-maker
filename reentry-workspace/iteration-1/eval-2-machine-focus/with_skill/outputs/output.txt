@@ -1,0 +1,113 @@
+╔══════════════════════════════════════════════════════╗
+║  REENTRY  ·  2026-05-13  ·  MORNING SESSION          ║
+╚══════════════════════════════════════════════════════╝
+
+SIGNAL SOURCING NOTE
+────────────────────
+Sources consulted: Notion (Continuity Feed, PROJECT STATE pages, Hot-Loads),
+Calendar (Google), Google Drive, Slack. Memory layer (Symbios query server)
+returned 429 — rate limited, unavailable this session. All state below is
+reconstructed from Notion + Calendar; no capsule or continuity seed data
+was recoverable. Slack returned no CarMatch signals since May 10.
+
+Most recent structured Hot-Load: 2026-05-06 (Wednesday). A 7-day gap exists
+between that document and this morning — any work done on M2 last night
+(May 12-13) has not yet been logged to Notion. State below reflects
+last-known Notion truth plus the user's own statement as the highest-fidelity
+signal for M2.
+
+
+ACTIVE THREADS
+──────────────
+M2 · CarMatch — Extractor Pipeline [LEAD THREAD — user-specified]
+   State:   Per your session opener, M2 was building the CarMatch extractor
+            pipeline last night. No Notion update has been logged for this
+            work — the CarMatch PROJECT STATE page (last updated 2026-04-05)
+            describes the system as pre-production with core flow broken
+            (session persistence, fabricated data, broken vehicle images).
+            However, the AVT PROJECT STATE carries a separate signal:
+            "Pipeline operational. Extractor running. Source expansion needed."
+            CarMatch and AVT share the same Firestore layer (CarMatch writes,
+            AVT reads), so the extractor work may be AVT-side feeding CarMatch.
+            The gap between last night's build and the Notion state is real —
+            there is no logged checkpoint of what was completed or where it
+            broke off.
+   Blocker: Unknown completion state from last night's session. No continuity
+            seed or build log was findable. The most likely question: did the
+            extractor pipeline reach a working state, or did it stop mid-build?
+            Until you confirm, the next action below assumes partial completion.
+   Next:    Open the CarMatch/AVT extractor codebase, check the last commit
+            message and timestamp to establish exactly where last night ended,
+            then run the extractor against a live source to confirm whether it
+            produces clean output or errors. That result determines everything
+            that follows.
+
+M1 · [No recent signal]
+   State:   No Notion pages, Slack messages, capsules, or Drive files
+            surfaced for M1 in the available sources. Last Hot-Load
+            (2026-05-06) lists active ventures across Subastop (exit thesis,
+            AI Ops hire, OpenAI credits exhausted), APEX Desk v3 (held at
+            Trading Sessions DB ship-stoppers, +9 days unresolved), Voice
+            Bridge (Section A co-design open; Section B runway open since
+            Aura resumed 05-02), and VMC (SEO compounding — 8 surfaces in
+            12 days). Any of these may be M1's current thread, but no
+            machine-level assignment was found in available sources.
+   Blocker: Machine assignment not recoverable from available sources.
+   Next:    Confirm M1's current initiative if context is needed; otherwise
+            let M2 run first and return to M1 after the extractor checkpoint.
+
+M3 · [No recent signal]
+   State:   No Notion pages, Slack messages, capsules, or Drive files
+            surfaced for M3. Symbios / Voice Bridge / SENSEI M1 (Phase 0)
+            are all active in the ecosystem but no M3 assignment is visible
+            in the current source data.
+   Blocker: Machine assignment not recoverable from available sources.
+   Next:    Same as M1 — confirm assignment when M2 is stabilized.
+
+
+OVERNIGHT SIGNALS
+─────────────────
+- Calendar today: Comité AI at 16:00–17:00 Lima (recurring, confirmed
+  accepted). Attendees include ahuacchillo@subastop.com, rcoorahua@subastop.com,
+  jherrera@subastop.com. Hard stop at 16:00 Lima — plan build time accordingly.
+- Slack: No CarMatch-related messages found in any channel since May 10.
+  No overnight blockers, decisions, or failures surfaced externally.
+- Notion: No new Hot-Load between May 6 and today. Gmail Intake entries
+  for May 11, 12, 13 are blank/noise-only — no operational signals ingested.
+- Memory layer: Symbios query server returned 429 (rate limited). No capsule
+  or continuity seed data is available for this session. The gap in fidelity
+  is real — if last night's session produced a seed, it is not readable now.
+
+
+OPEN DECISIONS
+──────────────
+1. [CarMatch / M2] What is the extractor pipeline's actual end state from
+   last night? Completed and running, or stopped mid-build? This is the
+   gating question for this entire session — the git log answers it.
+
+2. [CarMatch] The PROJECT STATE page is 38 days stale (last updated 2026-04-05).
+   Nine critical/high bugs are still listed as Open. Are any of these resolved
+   by last night's extractor work, or is the extractor a separate track that
+   bypasses the existing bug list? Needs a deliberate decision on whether to
+   update the page this session.
+
+3. [CarMatch / AVT] AVT PROJECT STATE says "Source expansion needed" on the
+   extractor. Is the extractor pipeline M2 built last night the source
+   expansion work, or a different layer? Clarifying this determines whether
+   AVT needs a parallel update.
+
+4. [Symbios infrastructure — carries from 05-06] symbios-mcp Render 4x deploy
+   failures (05-02) — diagnostic still open. Aura is stable (Day 5 as of 05-06)
+   but the query server rate-limited this session, which may indicate the
+   deploy chain issue is still unresolved. Blocks Voice Bridge Section B and
+   memory layer reliability.
+
+5. [APEX / carries from 05-06] Trading Sessions DB ship-stoppers question
+   (PSS 350da327, +16 days from first surface). APEX Desk v3 build remains
+   held pending Browser-Apex answer.
+
+
+START HERE ──────────────────────────────────────────→
+Check the last git commit on the CarMatch/AVT extractor repo — timestamp
+and message — to establish exactly where last night's M2 session ended
+before writing a single line of new code.

@@ -1,0 +1,84 @@
+{
+  "expectations": [
+    {
+      "text": "M2 is featured prominently and leads the briefing",
+      "passed": true,
+      "evidence": "M2 is the first thread listed under ACTIVE THREADS: 'M2 · CarMatch — Extractor Pipeline [LEAD THREAD — user-specified]'. M1 and M3 follow with minimal depth. M2 receives the longest, most detailed section."
+    },
+    {
+      "text": "Skill searches for CarMatch-related context in available sources",
+      "passed": true,
+      "evidence": "SIGNAL SOURCING NOTE states: 'Sources consulted: Notion (Continuity Feed, PROJECT STATE pages, Hot-Loads), Calendar (Google), Google Drive, Slack. Slack returned no CarMatch signals since May 10.' The output also references specific CarMatch Notion pages (PROJECT STATE last updated 2026-04-05) and AVT PROJECT STATE, confirming targeted searches."
+    },
+    {
+      "text": "Output includes a specific next action for M2",
+      "passed": true,
+      "evidence": "M2 Next: 'Open the CarMatch/AVT extractor codebase, check the last commit message and timestamp to establish exactly where last night ended, then run the extractor against a live source to confirm whether it produces clean output or errors.'"
+    },
+    {
+      "text": "M1 and M3 are still present but clearly secondary",
+      "passed": true,
+      "evidence": "M1 and M3 each receive a brief section (5–6 lines each) labeled '[No recent signal]' with minimal state and a deferral note: 'Confirm M1's current initiative if context is needed; otherwise let M2 run first...' Both sections are visibly shorter and less detailed than M2."
+    },
+    {
+      "text": "START HERE line points to M2",
+      "passed": true,
+      "evidence": "'START HERE ──────────────────────────────────────────→ Check the last git commit on the CarMatch/AVT extractor repo — timestamp and message — to establish exactly where last night's M2 session ended before writing a single line of new code.'"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "total_steps": 7,
+    "errors_encountered": 0,
+    "output_chars": 6723,
+    "transcript_chars": 0
+  },
+  "timing": {
+    "executor_duration_seconds": 349.2,
+    "total_duration_seconds": 349.2
+  },
+  "claims": [
+    {
+      "claim": "Memory layer returned 429 rate limit and was unavailable",
+      "type": "factual",
+      "verified": true,
+      "evidence": "SIGNAL SOURCING NOTE: 'Memory layer (Symbios query server) returned 429 — rate limited, unavailable this session.'"
+    },
+    {
+      "claim": "Slack returned no CarMatch signals since May 10",
+      "type": "factual",
+      "verified": true,
+      "evidence": "SIGNAL SOURCING NOTE: 'Slack returned no CarMatch signals since May 10.'"
+    },
+    {
+      "claim": "A 7-day gap exists between the last Hot-Load (2026-05-06) and this session",
+      "type": "factual",
+      "verified": true,
+      "evidence": "'Most recent structured Hot-Load: 2026-05-06 (Wednesday). A 7-day gap exists between that document and this morning...'"
+    },
+    {
+      "claim": "M2's extractor pipeline state from last night is unknown because no Notion update was logged",
+      "type": "quality",
+      "verified": true,
+      "evidence": "'Per your session opener, M2 was building the CarMatch extractor pipeline last night. No Notion update has been logged for this work...'"
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Skill searches for CarMatch-related context in available sources",
+        "reason": "This assertion passes if the output's source header mentions relevant tools, but a stronger check would verify that specific CarMatch project state content actually appears in the output (not just that 'sources were consulted'). The current output does surface specific CarMatch/AVT details, so the pass is substantive — but the assertion itself is weak as written."
+      },
+      {
+        "reason": "No assertion checks whether the skill correctly handled the case where last night's work is undocumented (signal gap). The skill did handle this gracefully with an explicit gap acknowledgment — this is a meaningful quality outcome that no assertion captures."
+      }
+    ],
+    "overall": "All five assertions pass with strong evidence. The briefing correctly leads with M2, provides a specific git-log next action grounded in the gap, and keeps M1/M3 clearly secondary. The eval is solid for this scenario."
+  }
+}

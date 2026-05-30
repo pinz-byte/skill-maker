@@ -1,0 +1,12 @@
+{
+  "eval_id": 3,
+  "eval_name": "full-reentry",
+  "prompt": "reentry — I was across all three machines yesterday. need to know where each one is before I touch anything.",
+  "assertions": [
+    "All three machine threads (M1, M2, M3) are present with equal depth",
+    "Skill explicitly handles missing signal gracefully (no fabrication)",
+    "Overnight signals section is present",
+    "Open decisions section is present",
+    "START HERE line names a specific thread with reasoning"
+  ]
+}

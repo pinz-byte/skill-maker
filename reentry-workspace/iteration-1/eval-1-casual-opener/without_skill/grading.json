@@ -1,0 +1,54 @@
+{
+  "expectations": [
+    {
+      "text": "Output contains sections for M1, M2, and M3",
+      "passed": false,
+      "evidence": "No output.txt file exists in the outputs directory. The without_skill run produced no output file — only a timing.json was found."
+    },
+    {
+      "text": "Each machine thread includes a next action",
+      "passed": false,
+      "evidence": "No output file was produced. Cannot verify."
+    },
+    {
+      "text": "Output includes a START HERE line",
+      "passed": false,
+      "evidence": "No output file was produced. Cannot verify."
+    },
+    {
+      "text": "Skill attempts to pull context from at least one live source (Notion, Slack, or memory)",
+      "passed": false,
+      "evidence": "No output file was produced. Cannot verify whether any sources were consulted."
+    },
+    {
+      "text": "Output is a single cohesive briefing, not a series of clarifying questions",
+      "passed": false,
+      "evidence": "No output file was produced. Cannot verify."
+    }
+  ],
+  "summary": {
+    "passed": 0,
+    "failed": 5,
+    "total": 5,
+    "pass_rate": 0.0
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 0,
+    "transcript_chars": 0
+  },
+  "timing": {
+    "total_duration_seconds": 222.2
+  },
+  "claims": [],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "The without_skill run produced no output.txt at all. The eval framework should verify that the executor actually completed and wrote its output before grading — a missing output is a run failure, not a content failure, and should be flagged separately from assertion failures."
+      }
+    ],
+    "overall": "Run did not complete — no output.txt was written. All assertions fail by default due to missing output. The timing.json indicates the run consumed 222 seconds, suggesting it executed but failed to produce the expected artifact. This is a run failure that should be investigated independently of assertion quality."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "skill_name": "meta-no-bare-names",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "ok i think we're done for today, let me commit what we have. i ran the continuity seed skill earlier and also wrote an IB for the new module. git add -A and commit",
+      "expected_output": "The skill fires before the commit, scans for bare default names, finds CONTINUITY_SEED.md and IB.md, runs the orphan-duplicate check for each, and either renames/deletes them or surfaces ambiguity -- before allowing the git commit to proceed.",
+      "files": [],
+      "assertions": [
+        "The skill identifies CONTINUITY_SEED.md as a bare skill-default name",
+        "The skill identifies IB.md as a bare skill-default name",
+        "The skill runs an orphan-duplicate check (compares to any timestamped siblings)",
+        "The skill does NOT proceed with git commit until all bare files are resolved",
+        "The skill states a gate verdict before proceeding"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "hygiene sweep before push. working tree has: CONTINUITY_SEED_2026-05-01.md, CONTINUITY_SEED.md (100% match to the dated one), BUILDER_PROMPT_META_RULE_2026-05-15.md, and some python files. clean it up",
+      "expected_output": "The skill scans, finds the bare CONTINUITY_SEED.md, confirms it is a 100% orphan duplicate of CONTINUITY_SEED_2026-05-01.md, deletes the bare file, confirms the BUILDER_PROMPT file already has canonical naming, and declares the tree clean.",
+      "files": [],
+      "assertions": [
+        "The skill identifies CONTINUITY_SEED.md as a bare default name requiring attention",
+        "The skill performs a diff or comparison against CONTINUITY_SEED_2026-05-01.md",
+        "The skill determines the bare file is an orphan duplicate (100% match) and deletes it",
+        "The skill recognizes BUILDER_PROMPT_META_RULE_2026-05-15.md as already canonical (no action needed)",
+        "The skill declares the gate clean after deletion"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "git status shows CONTINUITY_SEED.md modified. i also have CONTINUITY_SEED_2026-05-10.md already committed. but i think the bare one has newer notes i added this morning. what do we do?",
+      "expected_output": "The skill identifies this as a divergent case (bare differs from canonical sibling), does NOT auto-delete or auto-rename, surfaces the ambiguity to the user, explains the two options (keep the new content by renaming the bare to a new date, or merge the changes manually), and waits for user instruction before any git operation.",
+      "files": [],
+      "assertions": [
+        "The skill identifies this as a divergent case requiring manual resolution",
+        "The skill does NOT auto-delete or silently overwrite either file",
+        "The skill surfaces the ambiguity explicitly to the user",
+        "The skill suggests a resolution path (rename bare to new date, or merge)",
+        "The skill holds the git operation until the user resolves the ambiguity"
+      ]
+    }
+  ]
+}

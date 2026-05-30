@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "casual-opener",
+  "prompt": "ok I'm back. where were we?",
+  "assertions": [
+    "Output contains sections for M1, M2, and M3",
+    "Each machine thread includes a next action",
+    "Output includes a START HERE line",
+    "Skill attempts to pull context from at least one live source (Notion, Slack, or memory)",
+    "Output is a single cohesive briefing, not a series of clarifying questions"
+  ]
+}

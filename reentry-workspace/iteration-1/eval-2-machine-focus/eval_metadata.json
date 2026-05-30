@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "machine-focus",
+  "prompt": "morning session. M2 was building the CarMatch extractor pipeline last night — what's the state and what do I pick up first?",
+  "assertions": [
+    "M2 is featured prominently and leads the briefing",
+    "Skill searches for CarMatch-related context in available sources",
+    "Output includes a specific next action for M2",
+    "M1 and M3 are still present but clearly secondary",
+    "START HERE line points to M2"
+  ]
+}

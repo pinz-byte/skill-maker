@@ -1,0 +1,84 @@
+{
+  "expectations": [
+    {
+      "text": "All three machine threads (M1, M2, M3) are present with equal depth",
+      "passed": true,
+      "evidence": "M1 (Subastop), M2 (Symbios / APEX + Voice Bridge), and M3 (CarMatch / AVT) each receive a full section with State, Blocker, and Next fields. M1 runs ~12 lines, M2 ~17 lines, M3 ~15 lines — broadly comparable depth. Each section has concrete state, a named blocker, and a specific next action."
+    },
+    {
+      "text": "Skill explicitly handles missing signal gracefully (no fabrication)",
+      "passed": true,
+      "evidence": "M3 explicitly states: 'NO RECENT SIGNAL. Last structured signal: CarMatch Builder instruction block (2026-04-05)...' and 'Honest gap: ~38 days without a logged CarMatch build state update. What was being built and what shipped in that window is unknown from available sources this session.' The SIGNAL AUDIT header also flags: '! No Monday Handover entry found in Notion CF for week of 2026-05-11.' and 'Confidence level: MEDIUM.'"
+    },
+    {
+      "text": "Overnight signals section is present",
+      "passed": true,
+      "evidence": "Output contains 'OVERNIGHT SIGNALS' section with 6 distinct bullet points covering: Subastop platform down, Zendesk alerts, Comité AI today, Ford Bronco, missing Monday Handover, and memory layer rate limit."
+    },
+    {
+      "text": "Open decisions section is present",
+      "passed": true,
+      "evidence": "Output contains 'OPEN DECISIONS' section with 6 numbered items covering M1 platform engine keys, M2 Coherence IB scope-expansion, M2 APEX Trading Sessions DB, M2 LATIDO Layer 3, M1 OpenAI credits, and M1 AI Ops hire."
+    },
+    {
+      "text": "START HERE line names a specific thread with reasoning",
+      "passed": true,
+      "evidence": "'START HERE ──────────────────────────────────────────→ M1 is on fire right now: check with Diego or Silvana on platform status before the 17:00 Lima Santander deadline — confirm whether engine keys are restored and which auctions are rescheduled, then attend Comité AI at 16:00 Lima with incident context already in hand.' M1 is named explicitly with time-sensitive reasoning (17:00 deadline, platform incident)."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "total_steps": 7,
+    "errors_encountered": 0,
+    "output_chars": 12445,
+    "transcript_chars": 0
+  },
+  "timing": {
+    "executor_duration_seconds": 359.3,
+    "total_duration_seconds": 359.3
+  },
+  "claims": [
+    {
+      "claim": "Subastop platform was actively down with an incident at time of briefing",
+      "type": "factual",
+      "verified": true,
+      "evidence": "M1 State: 'INCIDENT — active as of 2026-05-13 today. Subastop auction platform went down on the highest-volume auction day.' Sourced from Slack DM with Diego Valentin."
+    },
+    {
+      "claim": "Memory layer was unavailable (429 + timeout)",
+      "type": "factual",
+      "verified": true,
+      "evidence": "SIGNAL AUDIT: '✗ Memory layer (Symbios episodic) — UNAVAILABLE (429 rate limit + timeout on get_brief)'"
+    },
+    {
+      "claim": "~5 day state gap confirmed due to missing Monday Handover",
+      "type": "factual",
+      "verified": true,
+      "evidence": "SIGNAL AUDIT: '! No Monday Handover entry found in Notion CF for week of 2026-05-11. Either the auto-init did not fire or did not write to the CF. State gap of ~5 days.'"
+    },
+    {
+      "claim": "Confidence level noted as MEDIUM",
+      "type": "quality",
+      "verified": true,
+      "evidence": "'Confidence level: MEDIUM. Most recent authoritative state is Friday Handoff 2026-05-08. Anything between 2026-05-09 and 2026-05-12 is inferred from known trajectories + today's Slack incident.'"
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "All three machine threads (M1, M2, M3) are present with equal depth",
+        "reason": "The assertion uses 'equal depth' but does not define a threshold. In the output, M1 has more state (active incident) while M3 has less (gap flagged). The assertion passes because all three sections are substantive, but 'equal depth' is ambiguous — consider revising to 'each machine thread has state, blocker, and next action' which is verifiable without subjective depth comparison."
+      },
+      {
+        "reason": "The output demonstrates an important quality not checked by any assertion: the START HERE recommendation is prioritized based on live-signal urgency (active incident + hard deadline), not just template order. An assertion like 'START HERE recommendation reflects the most time-sensitive signal found in sources' would catch cases where the skill defaults to a generic recommendation despite finding a live emergency."
+      }
+    ],
+    "overall": "All five assertions pass with strong, specific evidence. This is the highest-quality output of the three with_skill runs — the live incident signal from Slack was correctly prioritized in START HERE, missing signals were handled with explicit confidence labeling, and all four required sections are present and substantive."
+  }
+}
