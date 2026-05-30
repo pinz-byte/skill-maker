@@ -1,27 +1,25 @@
 # SKILL MAKER — Claude Project Context
 
-Skill and plugin authoring lab for the LFP ecosystem. Produces `.plugin` files that extend
-Claude agents across Cowork (M1, M2, M3) and Claude.ai Chat projects.
+Skill authoring lab for the LFP ecosystem. Produces `.skill` files that extend Claude agents
+across Cowork (M1, M2, M3) and Claude.ai Chat projects.
 
-## Deployed Plugins
+## Distribution — private git remote (M1/M2/M3 parity)
 
-| Plugin | Version | Status | Purpose |
-|---|---|---|---|
-| `agent-bridge` | 1.2.2 | deployed | Cross-project Notion inbox messaging system |
-| `git-ops` | current | deployed | Full Git lifecycle autonomy for build agents |
-| `reentry` | current | deployed | Session re-entry and context reconstruction |
-| `self-audit` | 1.0.0 | deployed | Pre-delivery self-auditing protocol |
-| `critical-thinker` | 1.0.0 | deployed | Blunt, unfiltered critical thinking companion |
+Skills are distributed via a private GitHub repo, NOT iCloud. iCloud sync proved unreliable
+(M2 ran ~2 weeks stale, silently). Git is the source of truth: deterministic, versioned,
+inspectable. (Established 2026-05-29.)
 
-## Key Commands
+- Remote: `git@github.com:pinz-byte/skill-maker.git` (private; HTTPS form works too)
+- M1 is the source of truth — this is where skills are authored and built.
+- After building a skill on M1: `git add -A && git commit -m "..." && git push`
+- On M2/M3: `cd ~/Documents/Claude/Projects/skill-maker && ./sync-skills.sh`
+  (runs `git pull` and lists exactly which `.skill` files changed so you know what to re-add)
+- Install per workspace: Cowork -> Customize -> Skills -> + -> browse to the repo folder ->
+  select the `.skill` -> confirm the toggle is ON.
 
-```bash
-# Deploy all plugins to iCloud (M2/M3 pick up on sync)
-bash "/sessions/relaxed-funny-pasteur/mnt/SKILL MAKER/deploy-plugins.sh"
-
-# Install on M2/M3: Cowork -> Customize -> Add Plugin
-# Source: iCloud Drive -> Claude -> Plugins
-```
+Per-workspace install is manual and irreducible: git distributes the FILES across machines;
+each Cowork workspace still adds + enables each skill separately (Cowork isolates plugins per
+project on purpose). iCloud and `deploy-plugins.sh` are legacy — superseded by git.
 
 ## File Structure
 
@@ -51,8 +49,8 @@ The `.plugin` format is deprecated — Cowork's validator rejects it. Use `.skil
 # Build a skill
 python3 build-skill.py <skill-name>
 
-# Deploy all skills to iCloud
-bash deploy-plugins.sh
+# Distribute: commit + push to the private remote (M2/M3 pull via sync-skills.sh)
+git add -A && git commit -m "feat(<skill>): ..." && git push
 ```
 
 Or manually:
@@ -87,7 +85,9 @@ Install: Cowork -> Customize -> Skills -> + -> select `name.skill`
 - Description in plugin.json <= 1024 chars (hard limit, silent failure)
 - Verify zip contents before deploying: `python3 -c "import zipfile; print(zipfile.ZipFile('x.plugin').namelist())"`
 - Inbox UUIDs in `rules/inbox-registry.md` and `agent-bridge/SKILL.md` must stay in sync
-- Run `deploy-plugins.sh` after every build — never copy individual files manually
+- Commit + push after every build — git is the distribution channel (not iCloud)
+- Install is per-workspace and manual; updating a skill needs a remove + re-add in each workspace
+- Avoid duplicate installs: add a skill from ONE folder per machine (the git clone), not also from iCloud
 
 ## Git
 
