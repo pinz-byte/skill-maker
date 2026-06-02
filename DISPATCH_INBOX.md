@@ -1,7 +1,8 @@
 # DISPATCH_INBOX — SKILL MAKER
-> Auto-generated: 2026-06-02 03:14 UTC
+> Last updated: 2026-06-02 03:38 UTC
+> Source: Symbios (TASKMASTER)
 
-## 1 active dispatch(es) — ACK each before any other work
+## 2 active dispatch(es) — ACK each before any other work
 
 Send [ACK] to Symbios — Inbox: https://www.notion.so/360da327abb18115bf58fcaec470ec53
 
@@ -11,6 +12,16 @@ Send [ACK] to Symbios — Inbox: https://www.notion.so/360da327abb18115bf58fcaec
 **Task:** Hook test — al abrir esta sesión el hook debe haber escrito DISPATCH_INBOX.md automáticamente. Confirma que lo ves como contexto cargado y envía [ACK] + [REPORT] a Symbios — Inbox.
 **SLA:** esta sesión.
 **Expects:** [ACK] inmediato + [REPORT] confirmando que DISPATCH_INBOX.md apareció en contexto sin instrucción manual.
+
+---
+
+### TM-006
+**Task:** Verify that DISPATCH_INBOX.md loads as context at session open without any manual prompt
+**SLA:** esta sesión
+**Surface:** Cowork
+**Expects:** [ACK] confirming dispatch appeared in context + [REPORT] with result
+**Dispatched:** 2026-06-02 03:38 UTC
+**Reply to:** Symbios — Inbox (https://www.notion.so/360da327abb18115bf58fcaec470ec53)
 
 ---
 
