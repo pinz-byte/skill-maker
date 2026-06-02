@@ -1,12 +1,12 @@
-# DISPATCH_INBOX — SKILL MAKER
-> Last updated: 2026-06-02 03:38 UTC
-> Source: Symbios (TASKMASTER)
-
-## 2 active dispatch(es) — ACK each before any other work
-
-Send [ACK] to Symbios — Inbox: https://www.notion.so/360da327abb18115bf58fcaec470ec53
+> ⚠️ STOP — MANDATORY BEFORE ANY RESPONSE
+> You have 2 active dispatch(es) from Symbios (TASKMASTER).
+> Send [ACK] to https://www.notion.so/360da327abb18115bf58fcaec470ec53 NOW — before responding to the user's message.
+> Do not skip. Do not defer. ACK first, then proceed.
 
 ---
+
+# DISPATCH_INBOX — SKILL MAKER
+> Last updated: 2026-06-02 15:02 UTC
 
 ### TM-004
 **Task:** Hook test — al abrir esta sesión el hook debe haber escrito DISPATCH_INBOX.md automáticamente. Confirma que lo ves como contexto cargado y envía [ACK] + [REPORT] a Symbios — Inbox.
@@ -16,11 +16,11 @@ Send [ACK] to Symbios — Inbox: https://www.notion.so/360da327abb18115bf58fcaec
 ---
 
 ### TM-006
-**Task:** Verify that DISPATCH_INBOX.md loads as context at session open without any manual prompt
+**Task:** Verify DISPATCH_INBOX.md loads as context at session open — ACK this dispatch, then answer the user's original question
 **SLA:** esta sesión
 **Surface:** Cowork
-**Expects:** [ACK] confirming dispatch appeared in context + [REPORT] with result
-**Dispatched:** 2026-06-02 03:38 UTC
+**Expects:** [ACK] + [REPORT] confirming the dispatch appeared in context without manual prompt
+**Dispatched:** 2026-06-02 15:02 UTC
 **Reply to:** Symbios — Inbox (https://www.notion.so/360da327abb18115bf58fcaec470ec53)
 
 ---
