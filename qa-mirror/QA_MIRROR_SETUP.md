@@ -11,34 +11,47 @@ galleries. A mirror shows the phone screen live on the Mac without capturing
 anything to the phone. You stop taking phone screenshots entirely, so the
 contamination stops at the source.
 
-## Option A -- Wired (QuickTime). Recommended: lowest latency, most reliable.
+## Option A -- iPhone Mirroring app. Recommended: wireless AND windowed.
 
-1. Connect the iPhone to the Mac with a cable. Tap "Trust" on the phone if
-   prompted.
-2. Open QuickTime Player.
-3. Menu: File -> New Movie Recording.
-4. In the recording window, click the small chevron/arrow next to the red
-   record button.
-5. Under Camera, select your iPhone. The live phone screen appears in the
-   window.
-6. Do NOT press record. The preview itself is the live mirror. Leave this
-   window open and visible during QA.
+Requires macOS Sequoia 15+ and iOS 18+, same Apple ID on both, Bluetooth +
+Wi-Fi on.
 
-## Option B -- Wireless (AirPlay). No cable, slightly more latency.
+1. On the Mac, open the "iPhone Mirroring" app (Applications, or Spotlight).
+2. Follow the one-time pairing prompt. The iPhone screen opens in a movable,
+   phone-shaped window -- not fullscreen.
+3. Park that window next to the chat. The phone stays locked; you drive it by
+   clicking and typing inside the window.
 
-1. On the Mac, ensure AirPlay receiver is available (recent macOS: System
-   Settings -> General -> AirDrop & Handoff -> AirPlay Receiver = on).
-2. On the phone: Control Center -> Screen Mirroring -> select the Mac.
-3. The phone screen appears in a window on the Mac. Keep it visible.
+This is the path that solves the AirPlay fullscreen problem: it is wireless
+(no cable) and stays a window you can position. Use it unless your QA needs
+you physically handling the device.
+
+## Option B -- Wired QuickTime. For hands-on-device testing.
+
+Use this when you must hold and tap the real phone (gestures, camera, sensors)
+while the Mac shows it.
+
+1. Connect the iPhone with a cable; tap "Trust" if prompted.
+2. QuickTime Player -> File -> New Movie Recording.
+3. Click the chevron next to the record button -> select your iPhone.
+4. The live screen appears in a normal resizable window. Do NOT press record;
+   the preview itself is the mirror. Resize/position it next to the chat.
+
+## Avoid -- AirPlay receiver.
+
+AirPlay screen mirroring forces the iPhone fullscreen on the Mac and will not
+resize into a window. Only workable if you put it on a second display and keep
+the chat on the main one. Prefer Option A or B.
 
 ## Using it
 
-1. Get the mirror window up (Option A or B).
-2. In chat: "start QA" -- I take one grab to confirm I can see the phone.
-3. Do whatever you are testing on the phone, then say "look" / "next".
+1. Get the mirror window up (Option A recommended).
+2. In chat: "start QA" -- I take one grab to confirm I can read the phone.
+3. Drive the QA (in the iPhone Mirroring window, or on the device if wired),
+   then say "look" / "next".
 4. I capture the live screen and comment on the QA state.
 
-No screenshots, no files, no walking to the machine, no waiting on sync.
+No phone screenshots, no files, no walking to the machine, no waiting on sync.
 
 ## Cleaning the existing contamination
 
@@ -47,8 +60,8 @@ mirror. To clean them once:
 
 - Phone: Photos -> Albums -> Screenshots -> Select -> delete the QA ones ->
   empty Recently Deleted.
-- Mac: Photos app -> Media Types -> Screenshots -> remove QA shots. If iCloud
-  Photos is on, deleting on one device removes them everywhere.
+- Mac: Photos app -> Media Types -> Screenshots -> remove QA shots. With iCloud
+  Photos on, deleting on one device removes them everywhere.
 
 Ask me to help script a Mac-side cleanup if the volume is large.
 

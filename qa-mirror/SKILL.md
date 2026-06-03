@@ -1,8 +1,9 @@
 ---
 name: qa-mirror
 description: >
-  Desk QA companion. The phone screen is mirrored to the Mac (QuickTime wired
-  or AirPlay); this skill grabs the live screen on demand via computer control
+  Desk QA companion. The phone screen is mirrored to the Mac (iPhone Mirroring
+  app preferred; QuickTime wired or AirPlay as fallbacks); this skill grabs the
+  live screen on demand via computer control
   and comments on the QA state -- no phone screenshots, no files, no photo-
   gallery contamination. Use whenever the user says "look", "grab", "capture",
   "what's on screen", "check the phone", "see the phone", "look at the phone",
@@ -43,18 +44,21 @@ this expectation; do not imply a live video feed.
 
 ## Prerequisites
 
-A mirror window must be visible on the Mac. See QA_MIRROR_SETUP.md. Quick form:
-wired iPhone -> QuickTime Player -> File -> New Movie Recording -> click the
-chevron next to the record button -> select the iPhone -> the live screen
-appears (do NOT press record; the preview itself is the live mirror). Keep that
-window visible.
+A mirror window must be visible on the Mac. See QA_MIRROR_SETUP.md. Preferred:
+the macOS iPhone Mirroring app (Sequoia 15+ / iOS 18+) -- wireless, opens as a
+movable phone-shaped window that parks next to the chat (not fullscreen). The
+phone is locked and driven from the Mac. Fallback for hands-on-device testing:
+wired iPhone -> QuickTime Player -> New Movie Recording -> select the iPhone
+(do NOT press record; the preview is the live mirror, in a resizable window).
+Avoid AirPlay receiver -- it forces fullscreen and will not window.
 
 ## Computer-use access
 
-Before the first grab, ensure computer-use access to the mirror app (QuickTime
-Player, or the AirPlay receiver). Call request_access for it. QuickTime is a
-normal app (full tier) -- screenshots, clicks, and bringing it forward all
-work. If access is not granted, ask for it rather than failing silently.
+Before the first grab, ensure computer-use access to the mirror app (iPhone
+Mirroring, or QuickTime Player). Call request_access for it. Both are normal
+apps (full tier) -- screenshots, clicks, and bringing the window forward all
+work. With iPhone Mirroring you can also drive the phone by clicking inside the
+window. If access is not granted, ask for it rather than failing silently.
 
 ## Capturing a frame
 
