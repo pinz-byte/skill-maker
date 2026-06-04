@@ -1,4 +1,3 @@
-<!-- DESTINATION: .claude/distribution.md -->
 # Distribution detail (on-demand)
 
 Skills are distributed via a private GitHub repo, NOT iCloud. iCloud sync proved

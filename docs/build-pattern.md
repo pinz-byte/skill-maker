@@ -1,4 +1,3 @@
-<!-- DESTINATION: .claude/build-pattern.md -->
 # Build Pattern (on-demand)
 
 Every skill produces ONE output file: `name.skill`. The `.plugin` format is
