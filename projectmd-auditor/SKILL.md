@@ -44,8 +44,9 @@ For each CLAUDE.md, compute:
    - references to dead/deprecated infra (e.g. Railway, retired tools, old
      hostnames), legacy paths,
    - unresolved TODO / FIXME / XXX.
-4. @import usage -- does it use `@filename` includes, or is everything inlined?
-   All-inlined large files are tiering candidates.
+4. @import usage -- note `@filename` includes. @import is EAGER (loads every
+   session), so it is not deferral. Flag large inlined OR heavily-@imported
+   files as tiering candidates (move to docs/ + plain-path pointer).
 5. Baseline presence -- apply the DETECTION SIGNATURE in
    references/karpathy-baseline.md (heading match OR >=3 of 4 concept markers).
    Classify present / weak / none.

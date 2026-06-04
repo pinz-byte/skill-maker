@@ -10,8 +10,9 @@ description: >
   losing meaning. Runs three passes: compression (prose to imperative one-
   liners), tiering (ALWAYS / ON-DEMAND / ARCHIVE), and baseline (insert the
   Karpathy behavior block if absent). Outputs a lean root CLAUDE.md plus one
-  .claude/*.md per on-demand section with @import stubs, and a token-delta
-  summary. Never deletes content without showing it first; never rewrites
+  docs/*.md per on-demand section referenced by plain-path pointers (not
+  @import, which loads every session), and a token-delta summary. Never
+  deletes content without showing it first; never rewrites
   custom-marked sections; never paraphrases build commands.
 ---
 
@@ -32,18 +33,28 @@ tests, then ...". Keep every distinct instruction; drop only filler words.
 
 ## Pass 2 -- Tiering
 
+LOAD SEMANTICS FIRST -- this is where tiering is won or faked. `@import` is
+EAGER: a CLAUDE.md `@file` loads that file every session, deferring nothing. And
+Cowork AUTO-LOADS `.claude/` (including `.claude/rules/`). So neither `@import`
+nor `.claude/` defers tokens. Real deferral = move content to a folder the
+runtime does NOT auto-load (default `docs/`) and reference it from root with a
+PLAIN-PATH POINTER the agent reads only when the task needs it. Verify which
+folders the target runtime auto-loads before trusting the saving.
+
 Classify each section:
 - ALWAYS -- needed every session (project identity, core build commands, the
   behavior baseline). Stays in root CLAUDE.md.
 - ON-DEMAND -- task-specific (deploy playbook, one subsystem's details, rare
-  workflows). Move to `.claude/[section-name].md` and leave an `@import` stub in
-  root so it loads only when referenced.
+  workflows). Move to `docs/[section-name].md` and add a plain-path pointer in
+  root (e.g. "Build steps: docs/build-pattern.md"). NOT `@import`, NOT
+  `.claude/` -- both load every session.
 - ARCHIVE -- historical / no longer operative (past migrations, resolved
-  incidents). Move to an archive file (e.g. `.claude/archive/CLAUDE-archive.md`
-  or MEMORY.md). Never discard.
+  incidents). Move to `docs/archive/` or MEMORY.md. Never discard, never put it
+  in an auto-loaded folder.
 
-Target: the optimized root CLAUDE.md holds ALWAYS-tier only, aiming under ~300
-tokens.
+Target: the optimized root holds ALWAYS-tier only. The behavior baseline (~100
+tokens) is additive, so a root that lacked it lands above a bare 300 -- that is
+expected, not a failure.
 
 ## Pass 3 -- Baseline
 
@@ -57,11 +68,10 @@ projectmd-gen draft, which placed it between Code conventions and Testing.)
 
 ## Outputs
 
-1. Optimized root CLAUDE.md (ALWAYS tier, baseline high, target <300 tokens).
-2. One `.claude/[section-name].md` per ON-DEMAND section, with an `@`-import stub
-   added to root. Verify the runtime honors `@import` in the target workspace
-   first -- if it does not, keep the section inline rather than silently
-   breaking the load.
+1. Optimized root CLAUDE.md (ALWAYS tier, baseline high).
+2. One `docs/[section-name].md` per ON-DEMAND section, with a plain-path pointer
+   added to root. Never use `@import` (eager) or `.claude/` (auto-loaded) for
+   deferred content -- both load every session and fake the saving.
 3. Anything moved to ARCHIVE, written to the archive file.
 4. A diff summary: original tokens -> optimized tokens, sections compressed,
    sections moved (to where), sections archived. Show it before the user
@@ -91,8 +101,9 @@ projectmd-gen draft, which placed it between Code conventions and Testing.)
 
 ## Edge cases
 
-- @import unsupported in the workspace: keep ON-DEMAND sections inline; report
-  that tiering was skipped for this reason rather than emitting dead stubs.
+- Runtime auto-loads the chosen folder: then tiering saves nothing there.
+  Verify what the runtime auto-loads; if even `docs/` loads, keep ON-DEMAND
+  inline and report that only compression + baseline applied.
 - File already lean (<300 tokens, baseline present): say so and stop -- do not
   manufacture changes.
 - Build commands embedded in prose: extract them verbatim into an ALWAYS block;
