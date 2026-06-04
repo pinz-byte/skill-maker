@@ -1,7 +1,7 @@
 # Behavior rules (Karpathy baseline)
 
-Single source of the four-rule baseline. Both claudemd-auditor (detects its
-presence) and claudemd-optimizer (inserts it) read THIS file. Edit here once;
+Single source of the four-rule baseline. Both projectmd-auditor (detects its
+presence) and projectmd-optimizer (inserts it) read THIS file. Edit here once;
 the build copies it into each skill bundle as references/karpathy-baseline.md.
 Never fork this content into a skill body -- they will drift.
 

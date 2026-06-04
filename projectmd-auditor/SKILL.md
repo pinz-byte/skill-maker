@@ -1,5 +1,5 @@
 ---
-name: claudemd-auditor
+name: projectmd-auditor
 description: >
   Read-only scanner that finds every CLAUDE.md across the ecosystem and ranks
   which ones need optimization -- before anything is touched. Use whenever the
@@ -11,17 +11,17 @@ description: >
   (old dates, dead infra, unresolved TODOs), @import usage, and Karpathy
   baseline presence. Outputs a ranked table worst-first with the primary issue
   and a recommended action. Never modifies anything. Pairs with
-  claudemd-optimizer (this maps; optimizer executes one file at a time).
+  projectmd-optimizer (this maps; optimizer executes one file at a time).
 ---
 
-# claudemd-auditor -- Rank CLAUDE.md Files by Optimization Need
+# projectmd-auditor -- Rank CLAUDE.md Files by Optimization Need
 
 ## What this is
 
 A read-only audit. It surveys every CLAUDE.md under a root and tells you which
 ones are bloated, stale, or missing the behavior baseline -- so you optimize the
 worst offenders deliberately instead of guessing. It changes nothing; it
-produces a ranked report. Run it before claudemd-optimizer.
+produces a ranked report. Run it before projectmd-optimizer.
 
 ## Scope
 
@@ -77,7 +77,7 @@ action (rough: prose-heavy files lose ~50%, stale sections their full size).
 ## Principles
 
 - Read-only, always. The auditor never edits, never deletes, never reorders.
-  Optimization is claudemd-optimizer's job, one file at a time, with a diff.
+  Optimization is projectmd-optimizer's job, one file at a time, with a diff.
 - Rank by cost, not just size. A 200-token file loaded every session can matter
   more than a 900-token one loaded rarely -- weight root CLAUDE.md files first.
 - One primary issue per file. Do not dump every nit; name the load-bearing
