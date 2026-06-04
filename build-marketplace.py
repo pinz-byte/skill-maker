@@ -28,10 +28,12 @@ GROUPS = {
         ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker", "toolbox"],
     ),
     "lfp-core": (
-        "Core ops/build/meta/comms skills for every working project.",
+        "Core ops/build/meta/comms/QA skills for every working project.",
         ["agent-bridge", "git-ops", "machine-bridge", "self-audit", "reentry",
          "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit",
-         "gcp-iam-resolver", "herald-config-doctor"],
+         "gcp-iam-resolver", "herald-config-doctor",
+         "projectmd-auditor", "projectmd-optimizer", "offload",
+         "qa-mirror", "qa-sequence", "carmatch-intel"],
     ),
     "lfp-apex": (
         "APEX live-money trading council -- scope to trading projects only.",
@@ -60,6 +62,20 @@ def main():
     dupes = {s for s in all_skills if all_skills.count(s) > 1}
     if dupes:
         raise SystemExit(f"ERROR: skill listed in more than one group: {dupes}")
+
+    # Fail-loud guard: every skill on disk must be assigned to a group, or it
+    # silently never propagates to M2/M3. (Root cause of the projectmd-auditor
+    # propagation gap, 2026-06-04.) A skill dir is any top-level dir holding a
+    # SKILL.md; the generated plugins/ tree is excluded (no top-level SKILL.md).
+    on_disk = {d.name for d in ROOT.iterdir()
+               if d.is_dir() and (d / "SKILL.md").exists() and d.name != "plugins"}
+    ungrouped = sorted(on_disk - set(all_skills))
+    if ungrouped:
+        raise SystemExit(
+            "ERROR: these built skills are not in any GROUP and would NOT "
+            f"propagate:\n  {ungrouped}\n"
+            "Add each to a plugin in GROUPS (build-marketplace.py), then rebuild."
+        )
 
     marketplace = {
         "name": MARKETPLACE_NAME,
