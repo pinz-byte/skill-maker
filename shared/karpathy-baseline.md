@@ -33,13 +33,18 @@ bloat the very context the optimizer is shrinking. Attribute, do not inflate.
 
 ## DETECTION SIGNATURE (this is how the auditor decides "baseline present")
 
-Count a CLAUDE.md as having the baseline if it contains EITHER:
-- a heading matching /behaviou?r(al)? (rules|guidelines)/i, OR
-- at least 3 of these 4 concept markers (case-insensitive):
+Decide by CONCEPT MARKERS, not heading alone. The 4 markers (case-insensitive):
   - assumptions / don't assume / surface tradeoffs
   - simplicity / minimum code / nothing speculative
   - surgical / touch only what / don't refactor
   - success criteria / verifiable goal / loop until
 
-Partial match (1-2 markers, no heading) = "baseline weak" -> recommend refresh.
-Zero markers = "no baseline" -> recommend add-baseline.
+- present = >=3 of the 4 markers. A `## Behavior rules`-style heading reinforces
+  but does NOT substitute for markers.
+- weak = 1-2 markers -> recommend refresh.
+- none = 0 markers -> recommend add-baseline.
+
+CRITICAL: a behavior-ish HEADING with 0 markers is some OTHER behavioral
+section, NOT the Karpathy baseline -- classify "none", never "present". Heading
+alone never counts. (This false positive was found on Symbios_instructions_v1.6:
+heading matched, 0/4 markers, but the four rules were absent.)

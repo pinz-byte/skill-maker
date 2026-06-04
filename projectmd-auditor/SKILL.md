@@ -30,6 +30,13 @@ user names one. Find CLAUDE.md files recursively. Include `.claude/*.md`
 context files too if asked, but rank root CLAUDE.md files first -- those load
 every session and cost the most.
 
+Not every project uses the name `CLAUDE.md`. If a root has NO CLAUDE.md, do not
+stop -- look for the project's actual context file by common patterns
+(`*_instructions*.md`, `AGENTS.md`, `*_INSTRUCTIONS*.md`, a top-level
+`*-context.md`) and audit that, noting it is the de-facto context file. Also
+accept a file the user names directly. (Found on Symbios: context lived in
+`Symbios_instructions_v1.6.md`, no CLAUDE.md at all.)
+
 ## Per-file measurements
 
 For each CLAUDE.md, compute:
@@ -48,8 +55,9 @@ For each CLAUDE.md, compute:
    session), so it is not deferral. Flag large inlined OR heavily-@imported
    files as tiering candidates (move to docs/ + plain-path pointer).
 5. Baseline presence -- apply the DETECTION SIGNATURE in
-   references/karpathy-baseline.md (heading match OR >=3 of 4 concept markers).
-   Classify present / weak / none.
+   references/karpathy-baseline.md: decide by CONCEPT MARKERS (>=3 of 4 =
+   present, 1-2 = weak, 0 = none). A behavior-ish HEADING with 0 markers is NOT
+   the baseline -- classify "none", never "present" on a heading alone.
 
 ## Output
 
