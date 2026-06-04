@@ -1,3 +1,4 @@
 .DS_Store
 *.plugin
 .git/index.lock
+.claude/settings.local.json

@@ -1,5 +1,9 @@
 # Build Pattern (on-demand)
 
+> LIVE CHANNEL = the `lfp-skills` **marketplace** (`./publish.sh`). See
+> `docs/distribution.md`. The per-`.skill` flow below is the legacy per-file
+> path -- still works, but `publish.sh` + the marketplace is what reaches M2/M3.
+
 Every skill produces ONE output file: `name.skill`. The `.plugin` format is
 deprecated -- Cowork's validator rejects it. Use `.skill` only.
 

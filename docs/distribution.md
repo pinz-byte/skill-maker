@@ -1,19 +1,63 @@
 # Distribution detail (on-demand)
 
-Skills are distributed via a private GitHub repo, NOT iCloud. iCloud sync proved
-unreliable (M2 ran ~2 weeks stale, silently). Git is the source of truth:
-deterministic, versioned, inspectable. (Established 2026-05-29.)
+_Last verified 2026-06-04._
 
-- Remote: `git@github.com:pinz-byte/skill-maker.git` (private; HTTPS form works too)
-- M1 is the source of truth -- skills are authored and built here.
-- After building a skill on M1: `git add -A && git commit -m "..." && git push`
-- On M2/M3: `cd ~/Documents/Claude/Projects/skill-maker && ./sync-skills.sh`
-  (runs `git pull` and lists exactly which `.skill` files changed so you know
-  what to re-add)
-- Install per workspace: Cowork -> Customize -> Skills -> + -> browse to the
-  repo folder -> select the `.skill` -> confirm the toggle is ON.
+Skills ship as a **Claude Code plugin marketplace** named `lfp-skills`, carried
+over a private GitHub repo (NOT iCloud — iCloud ran ~2 weeks stale silently, so it
+was retired 2026-05-29). Git is the transport; the marketplace tree is the payload.
 
-Per-workspace install is manual and irreducible: git distributes the FILES
-across machines; each Cowork workspace still adds + enables each skill
-separately (Cowork isolates plugins per project on purpose). iCloud and
-`deploy-plugins.sh` are legacy -- superseded by git.
+## The pipeline
+
+1. Edit source of truth: each top-level `<skill>/SKILL.md` (+ optional `references/`).
+2. `build-marketplace.py` regenerates the committed marketplace tree:
+   - `.claude-plugin/marketplace.json`
+   - `plugins/<plugin>/.claude-plugin/plugin.json`
+   - `plugins/<plugin>/skills/<skill>/SKILL.md`
+   Plugins/groups are defined in `GROUPS` inside that script. `plugin.json` omits
+   `version` on purpose, so every commit reads as a new version (drives auto-update).
+3. `publish.sh` (M1 only) runs the build, commits `skills: rebuild marketplace (date)`,
+   and pushes. One command.
+
+```bash
+# On M1, after editing any SKILL.md or GROUPS:
+cd ~/Documents/Claude/Projects/skill-maker && ./publish.sh
+```
+
+## Fail-loud grouping guard (added 2026-06-04)
+
+Every skill dir on disk must be listed in some `GROUPS` plugin. If one isn't,
+`build-marketplace.py` **halts** and names it — it will not ship a partial
+marketplace. This closes the gap where 6 built skills (`carmatch-intel`, `offload`,
+`projectmd-auditor`, `projectmd-optimizer`, `qa-mirror`, `qa-sequence`) were built
+but never added to `GROUPS`, so they silently never reached M2/M3. Adding a skill
+now means: create its dir AND add it to a GROUP, or the build stops you.
+
+## Keeping M2/M3 current
+
+Run once per machine:
+
+```bash
+cd ~/Documents/Claude/Projects/skill-maker && git pull && ./install-refresh.sh
+```
+
+`install-refresh.sh` installs a launchd job (`com.lfp.skill-maker.refresh`) that
+daily — and at load — runs `git pull` + `claude plugin marketplace update lfp-skills`,
+logging to `~/Library/Logs/com.lfp.skill-maker.refresh.log`. This is the
+belt-and-suspenders against silent staleness (the failure that killed iCloud).
+Remove with `./install-refresh.sh --uninstall`.
+
+## Open question: is per-workspace re-add still required?
+
+Historically each Cowork workspace had to add + enable each skill manually
+(Customize -> Skills -> +). With the marketplace model, M2/M3 *should* auto-update
+without that step. This is **unconfirmed** as of 2026-06-04. To verify: after the
+first `install-refresh.sh` run, check whether a newly published skill (e.g.
+`projectmd-auditor`) becomes usable in a project WITHOUT touching Cowork's UI.
+- If yes: auto-update works; the old "manual re-add is irreducible" note is stale.
+- If no: per-workspace re-add is still needed; document the exact step here.
+
+## Legacy paths (still present, not the live channel)
+
+- `ship-skill.sh <name>` — builds one `.skill`, commits, pushes (per-file model).
+- `sync-skills.sh` — `git pull` + lists changed `.skill` files to re-add.
+- `deploy-plugins.sh` / iCloud — fully retired.

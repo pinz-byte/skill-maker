@@ -21,15 +21,26 @@ Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
 
 ## Invariants (every session)
 
-- Distribution = private git (`git@github.com:pinz-byte/skill-maker.git`), NOT
-  iCloud. M1 is source of truth. iCloud + `deploy-plugins.sh` are legacy.
-- Output format: `.skill` only. `.plugin` is deprecated (Cowork rejects it).
-- Strip non-ASCII before packaging -- Cowork rejects it silently.
+- Distribution channel = a **Claude Code plugin marketplace** (`lfp-skills`),
+  not loose files. `build-marketplace.py` generates `.claude-plugin/marketplace.json`
+  + the `plugins/` tree from each `<skill>/SKILL.md`. `publish.sh` rebuilds +
+  commits + pushes it. Private git (`git@github.com:pinz-byte/skill-maker.git`)
+  is the transport; M1 is source of truth. iCloud + `deploy-plugins.sh` are legacy.
+- Every skill MUST be assigned to a plugin in `GROUPS` (build-marketplace.py).
+  The builder now **fails loud** if any on-disk skill is ungrouped -- this is the
+  guard against the 2026-06-04 gap where 6 built skills silently never propagated.
+  Adding a new skill = drop its dir + add it to a GROUP, or the build halts.
+- Publish from M1 only: `./publish.sh` (rebuild + commit + push, one command).
+- M2/M3 stay current via `./install-refresh.sh` (run once per machine): a daily
+  launchd job that does `git pull` + `claude plugin marketplace update lfp-skills`.
+  Whether a per-workspace re-add is STILL required on top of marketplace
+  auto-update is unconfirmed as of 2026-06-04 -- verify via the refresh log before
+  trusting auto-update alone. The older per-`.skill` path (`ship-skill.sh` /
+  `sync-skills.sh`) still exists but the marketplace is the live channel.
+- Strip non-ASCII before packaging -- Cowork rejects it silently (builder does this).
 - Skill description <= 1024 chars (hard limit, silent failure).
-- Skill name must NOT contain "claude" (Cowork reserved word).
-- Commit + push after every build -- git is the distribution channel.
-- Install is per-workspace + manual (remove + re-add to update). Add from ONE
-  folder per machine, not also from iCloud.
+- Skill name must NOT contain "claude" (Cowork reserved word). NB: the skill is
+  `projectmd-auditor`, NOT "claudemd-auditor".
 - Inbox UUIDs in `.claude/rules/inbox-registry.md` and `agent-bridge/SKILL.md`
   must stay in sync.
 
