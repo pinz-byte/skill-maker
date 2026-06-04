@@ -1,9 +1,12 @@
 > ⚠️ STOP — MANDATORY BEFORE ANY RESPONSE
-> You have 2 active dispatch(es) from Symbios (TASKMASTER).
+> You have 3 active dispatch(es) from Symbios (TASKMASTER).
 > Send [ACK] to https://www.notion.so/360da327abb18115bf58fcaec470ec53 NOW — before responding to the user's message.
 > Do not skip. Do not defer. ACK first, then proceed.
 
 ---
+
+# DISPATCH_INBOX — SKILL MAKER
+> Last updated: 2026-06-04 15:54 UTC
 
 # DISPATCH_INBOX — SKILL MAKER
 > Last updated: 2026-06-04 02:38 UTC
@@ -27,6 +30,16 @@
 **Surface:** Cowork
 **Expects:** List of skills + description status
 **Dispatched:** 2026-06-04 02:38 UTC
+**Reply to:** Symbios — Inbox (https://www.notion.so/360da327abb18115bf58fcaec470ec53)
+
+---
+
+### TM-010
+**Task:** Audit: verify all .skill files have version numbers in SKILL.md
+**SLA:** esta sesión
+**Surface:** Cowork
+**Expects:** Result + status report
+**Dispatched:** 2026-06-04 15:54 UTC
 **Reply to:** Symbios — Inbox (https://www.notion.so/360da327abb18115bf58fcaec470ec53)
 
 ---
