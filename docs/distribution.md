@@ -32,29 +32,45 @@ marketplace. This closes the gap where 6 built skills (`carmatch-intel`, `offloa
 but never added to `GROUPS`, so they silently never reached M2/M3. Adding a skill
 now means: create its dir AND add it to a GROUP, or the build stops you.
 
-## Keeping M2/M3 current
+## Marketplace is GitHub-sourced (confirmed 2026-06-04)
+
+`claude plugin marketplace list` shows `lfp-skills -> Source: GitHub
+(pinz-byte/skill-maker)`. So `claude` keeps its OWN clone under `~/.claude` and
+`claude plugin marketplace update lfp-skills` pulls straight from GitHub. The
+local repo in `~/Documents` is the AUTHORING source only — refreshing a consumer
+machine does NOT require `git pull` of that repo. The folder name also differs per
+machine (M1 `SKILL MAKER`, M2/M3 `skill-maker`); rely on no fixed path.
+
+## Keeping every machine current (M1, M2, M3)
 
 Run once per machine:
 
 ```bash
-cd ~/Documents/Claude/Projects/skill-maker && git pull && ./install-refresh.sh
+./install-refresh.sh        # from inside the repo; path-agnostic
 ```
 
 `install-refresh.sh` installs a launchd job (`com.lfp.skill-maker.refresh`) that
-daily — and at load — runs `git pull` + `claude plugin marketplace update lfp-skills`,
-logging to `~/Library/Logs/com.lfp.skill-maker.refresh.log`. This is the
-belt-and-suspenders against silent staleness (the failure that killed iCloud).
-Remove with `./install-refresh.sh --uninstall`.
+daily — and at load — runs `claude plugin marketplace update lfp-skills`, logging
+to `~/Library/Logs/com.lfp.skill-maker.refresh.log`. Remove with
+`./install-refresh.sh --uninstall`. M1 ALSO benefits (its own Cowork consumes the
+marketplace); `publish.sh` additionally runs the update right after pushing.
+
+### TCC gotcha (why the wrapper lives in ~/Library, not the repo)
+
+macOS TCC blocks launchd-spawned processes from executing OR reading anything under
+`~/Documents` (`Operation not permitted`). The first cut put the wrapper inside the
+repo and failed silently every run. Fix: the wrapper lives in
+`~/Library/Application Support/lfp-skill-maker/` and touches only `~/.claude` via
+`claude` — never `~/Documents`. Do not move it back into the repo.
 
 ## Open question: is per-workspace re-add still required?
 
-Historically each Cowork workspace had to add + enable each skill manually
-(Customize -> Skills -> +). With the marketplace model, M2/M3 *should* auto-update
-without that step. This is **unconfirmed** as of 2026-06-04. To verify: after the
-first `install-refresh.sh` run, check whether a newly published skill (e.g.
-`projectmd-auditor`) becomes usable in a project WITHOUT touching Cowork's UI.
-- If yes: auto-update works; the old "manual re-add is irreducible" note is stale.
-- If no: per-workspace re-add is still needed; document the exact step here.
+`claude plugin marketplace update lfp-skills` is CONFIRMED working (M2, 2026-06-04).
+What's still unconfirmed: whether a project then sees a newly published skill
+WITHOUT a manual Customize -> Skills re-add. To close this: after a refresh, check
+whether `projectmd-auditor` resolves in a project you never touched in the UI.
+- If yes: fully automated; delete this section.
+- If no: per-workspace re-enable is still needed; document the exact step here.
 
 ## Legacy paths (still present, not the live channel)
 

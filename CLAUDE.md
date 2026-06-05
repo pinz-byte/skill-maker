@@ -31,12 +31,16 @@ Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
   guard against the 2026-06-04 gap where 6 built skills silently never propagated.
   Adding a new skill = drop its dir + add it to a GROUP, or the build halts.
 - Publish from M1 only: `./publish.sh` (rebuild + commit + push, one command).
-- M2/M3 stay current via `./install-refresh.sh` (run once per machine): a daily
-  launchd job that does `git pull` + `claude plugin marketplace update lfp-skills`.
-  Whether a per-workspace re-add is STILL required on top of marketplace
-  auto-update is unconfirmed as of 2026-06-04 -- verify via the refresh log before
-  trusting auto-update alone. The older per-`.skill` path (`ship-skill.sh` /
-  `sync-skills.sh`) still exists but the marketplace is the live channel.
+- Marketplace is GitHub-sourced (`pinz-byte/skill-maker`), so `claude` updates
+  from GitHub into `~/.claude` -- consumer machines do NOT need `git pull`. All 3
+  machines stay current via `./install-refresh.sh` (run once each): a daily launchd
+  job running `claude plugin marketplace update lfp-skills`. Its wrapper MUST live
+  in `~/Library` not the repo -- macOS TCC blocks launchd from `~/Documents`
+  ("Operation not permitted"). `publish.sh` also self-refreshes M1 after pushing.
+  OPEN: whether a project sees a new skill without a manual Customize re-add is
+  still unconfirmed (update command itself is confirmed working). The older
+  per-`.skill` path (`ship-skill.sh` / `sync-skills.sh`) still exists but the
+  marketplace is the live channel.
 - Strip non-ASCII before packaging -- Cowork rejects it silently (builder does this).
 - Skill description <= 1024 chars (hard limit, silent failure).
 - Skill name must NOT contain "claude" (Cowork reserved word). NB: the skill is
