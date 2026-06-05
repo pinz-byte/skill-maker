@@ -1,36 +1,36 @@
 #!/usr/bin/env bash
-# install-refresh.sh — install a daily launchd job on THIS machine (run on M2 and M3)
+# install-refresh.sh — install a daily launchd job on THIS machine (run on M1/M2/M3)
 # that keeps the lfp-skills marketplace current, so skills never run silently stale.
 #
-# What it does, once per day (and at load):
-#   1. git pull  in this skill-maker repo  (refresh the marketplace source files)
-#   2. claude plugin marketplace update lfp-skills  (re-read so Cowork sees changes)
+# The lfp-skills marketplace is GitHub-sourced, so `claude plugin marketplace update`
+# pulls straight from GitHub into ~/.claude — it does NOT need the repo in ~/Documents.
+# The wrapper therefore lives in ~/Library (NOT in ~/Documents): macOS TCC blocks
+# launchd-spawned processes from executing or reading anything under ~/Documents,
+# which is why the previous in-repo wrapper failed with "Operation not permitted".
 #
 # Run once per machine:   ./install-refresh.sh
 # Remove it later with:   ./install-refresh.sh --uninstall
-#
-# Paths are resolved at install time on the machine that runs this — nothing is
-# hardcoded, so it works on M2 and M3 regardless of username or repo location.
 
 set -euo pipefail
 
 LABEL="com.lfp.skill-maker.refresh"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
-REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
-WRAPPER="$REPO_DIR/.refresh-run.sh"
+SUPPORT="$HOME/Library/Application Support/lfp-skill-maker"
+WRAPPER="$SUPPORT/refresh-run.sh"
 LOG="$HOME/Library/Logs/$LABEL.log"
 HOUR=8   # daily run time (24h). Change if you want a different slot.
 
 if [ "${1:-}" = "--uninstall" ]; then
   launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null || launchctl unload "$PLIST" 2>/dev/null || true
   rm -f "$PLIST" "$WRAPPER"
+  rmdir "$SUPPORT" 2>/dev/null || true
   echo "Removed $LABEL (plist + wrapper). Log left at $LOG"
   exit 0
 fi
 
 # Resolve the claude CLI now; launchd jobs don't inherit your interactive PATH.
 CLAUDE_BIN="$(command -v claude || true)"
-for c in /usr/local/bin/claude /opt/homebrew/bin/claude "$HOME/.local/bin/claude"; do
+for c in /opt/homebrew/bin/claude /usr/local/bin/claude "$HOME/.local/bin/claude"; do
   [ -z "$CLAUDE_BIN" ] && [ -x "$c" ] && CLAUDE_BIN="$c"
 done
 if [ -z "$CLAUDE_BIN" ]; then
@@ -38,22 +38,21 @@ if [ -z "$CLAUDE_BIN" ]; then
   echo "Install it / put it on PATH, then re-run ./install-refresh.sh"
   exit 1
 fi
+CLAUDE_DIR="$(dirname "$CLAUDE_BIN")"   # node usually sits next to claude (nvm/brew)
 
-# Write the wrapper the job actually runs.
+mkdir -p "$SUPPORT" "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
+
+# Write the wrapper the job runs. It touches ONLY ~/.claude (via claude) — no
+# ~/Documents access, so no TCC wall. PATH is widened so claude can find node.
 cat > "$WRAPPER" <<EOF
 #!/usr/bin/env bash
 set -uo pipefail
+export PATH="$CLAUDE_DIR:/opt/homebrew/bin:/usr/local/bin:\$PATH"
 echo "===== \$(date '+%Y-%m-%d %H:%M:%S') refresh start ====="
-cd "$REPO_DIR" || exit 1
-echo "-- git pull --"
-git pull --ff-only 2>&1 || echo "git pull failed (continuing to marketplace update)"
-echo "-- claude plugin marketplace update lfp-skills --"
-"$CLAUDE_BIN" plugin marketplace update lfp-skills 2>&1 || echo "marketplace update failed"
+"$CLAUDE_BIN" plugin marketplace update lfp-skills 2>&1 || echo "marketplace update FAILED"
 echo "===== \$(date '+%Y-%m-%d %H:%M:%S') refresh done ====="
 EOF
 chmod +x "$WRAPPER"
-
-mkdir -p "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
 
 # Write the launchd plist: run at load + daily at $HOUR:00.
 cat > "$PLIST" <<EOF
@@ -81,9 +80,9 @@ launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null || launchctl unload "$PLIST"
 launchctl bootstrap "gui/$(id -u)" "$PLIST" 2>/dev/null || launchctl load "$PLIST"
 
 echo "Installed $LABEL"
-echo "  repo:    $REPO_DIR"
 echo "  claude:  $CLAUDE_BIN"
+echo "  wrapper: $WRAPPER  (outside ~/Documents — TCC-safe)"
 echo "  daily:   ${HOUR}:00  (+ once now at load)"
 echo "  log:     $LOG"
 echo ""
-echo "Verify it ran:   tail -n 20 \"$LOG\""
+echo "Verify it ran:   sleep 5; tail -n 20 \"$LOG\""
