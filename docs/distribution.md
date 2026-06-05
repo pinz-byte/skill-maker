@@ -63,14 +63,14 @@ repo and failed silently every run. Fix: the wrapper lives in
 `~/Library/Application Support/lfp-skill-maker/` and touches only `~/.claude` via
 `claude` — never `~/Documents`. Do not move it back into the repo.
 
-## Open question: is per-workspace re-add still required?
+## Per-workspace re-add is NOT required (confirmed 2026-06-04)
 
-`claude plugin marketplace update lfp-skills` is CONFIRMED working (M2, 2026-06-04).
-What's still unconfirmed: whether a project then sees a newly published skill
-WITHOUT a manual Customize -> Skills re-add. To close this: after a refresh, check
-whether `projectmd-auditor` resolves in a project you never touched in the UI.
-- If yes: fully automated; delete this section.
-- If no: per-workspace re-enable is still needed; document the exact step here.
+Settled: after `claude plugin marketplace update lfp-skills`, a project surfaces a
+newly published skill WITHOUT any Customize -> Skills re-add. Verified by invoking
+`/projectmd-auditor` in an M2 project never touched in the UI — it resolved. So the
+chain is fully hands-off: publish on M1, the daily launchd job refreshes each
+machine, and skills become live in every workspace with no manual UI step. The old
+"manual re-add is irreducible" claim was stale and is retired.
 
 ## Legacy paths (still present, not the live channel)
 
