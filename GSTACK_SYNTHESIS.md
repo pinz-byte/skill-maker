@@ -205,3 +205,40 @@ substitute, it is gstack's actual architecture, and it upgrades every gate you a
 Ship it, watch it fire in real use, and only then unlock B through G. If A does not change
 how a real session goes, nothing downstream will either — and you will have learned that
 cheaply instead of after building all seven.
+
+---
+
+## 6. The two spirits — take one, reject the other
+
+gstack's ethos splits in two, and only one half fits LFP.
+
+**Reject the maximalist half.** "Boil the Lake" (completeness is near-free, do the complete
+thing every time), "10,000 lines a day," "build the cathedral," 10x-by-default. That spirit
+fits a focused single-repo tool whose constraint is output. LFP's constraint is the opposite:
+coherence across a sprawling federation. Importing the maximalist spirit pours fuel on the
+sprawl. Stated as an inverted principle: **in this ecosystem completeness is NOT free — every
+artifact carries a lifetime maintenance and coherence cost.** (Caveat: "boil the lake" has a
+defensible core — when you are building the *right* thing, complete beats fragile-shortcut.
+So gate it behind "is this the right thing," which is exactly `ceo-planner`'s mode selection.
+The real discipline is knowing which mode you are in.)
+
+**Take the discipline half — packed into four verticals.** Critical reframe: three of the four
+are WIRING existing skills into protocols, not building new skills. The spirit needs connective
+tissue, not new organs.
+
+1. **Coherence / anti-drift** (wiring) — one fact, one home; generate copies, never hand-sync.
+   Live bug it kills: 19 inbox UUIDs hand-mirrored across `inbox-registry.md` and
+   `agent-bridge/SKILL.md`. Skills: `projectmd-auditor`, `projectmd-optimizer`,
+   `meta-no-bare-names`, `data-capsule`.
+2. **Federation protocol** (wiring) — bus messages carry `DONE / DONE_WITH_CONCERNS / BLOCKED /
+   NEEDS_CONTEXT` + attempts-then-escalate, not prose. Makes the bus queryable. Skills:
+   `agent-bridge`, `reentry`, `continuity-seed`, `work-retrospective`, `skill-miner`.
+3. **Search before building** (wiring) — prove nothing already serves this before authoring.
+   The sprawl brake; closes the `skill-miner` -> search -> build loop. Skills: `skill-miner`,
+   `toolbox`, `workspace-plugin-audit`, `ceo-planner`, `ib`.
+4. **Fail-closed defaults** (new artifact) — secret blocks dispatch, allowlist not denylist,
+   cap attempts then escalate. One universal preamble injected at build time. Skills:
+   `apex-builder-gate`, `dependency-audit`, `gcp-iam-resolver`, `machine-bridge`, `session-rules`.
+
+The thread through all four: the ecosystem should make its own failures loud and its own truth
+singular. That is the entire discipline-spirit in one line.
