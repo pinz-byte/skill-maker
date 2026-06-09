@@ -32,9 +32,10 @@ Always use page UUIDs when routing bridge messages.
 ## When adding a new project
 
 1. Create the Notion inbox page
-2. Add UUID to this file
-3. Add UUID to agent-bridge/SKILL.md Inbox Registry table
-4. Rebuild agent-bridge.plugin and deploy
+2. Add the row to the table above -- this file is the SINGLE SOURCE OF TRUTH
+3. Run `python3 gen-inbox-registry.py` (or `./publish.sh`) to regenerate
+   agent-bridge/SKILL.md's table -- never hand-edit that table; it is generated
+4. Rebuild and deploy via `./publish.sh`
 
 ## Bridge message minimum fields
 
