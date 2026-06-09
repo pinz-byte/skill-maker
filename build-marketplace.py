@@ -24,8 +24,8 @@ MARKETPLACE_DESC = "LFP ecosystem skills: oversight thinkers, core ops, and apex
 # plugin -> (description, [skill dirs])
 GROUPS = {
     "lfp-thinkers": (
-        "Oversight roundtable + router: critical, creative, logic, loop-breaker, toolbox.",
-        ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker", "toolbox"],
+        "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox.",
+        ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker", "ceo-planner", "toolbox"],
     ),
     "lfp-core": (
         "Core ops/build/meta/comms/QA skills for every working project.",
