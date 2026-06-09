@@ -37,10 +37,12 @@ upgrade available to you, and it is the through-line of the whole repo.
 
 ## 1. The CEO skill vs your IB — the blind spot it exposes
 
-gstack has two "CEO" skills: `/plan-ceo-review` (Brian Chesky mode, design review) and
-`/office-hours` (YC-partner Socratic interrogation). The one that matters is
-`/office-hours`, because **it is the direct analog of your IB — and where they diverge is
-exactly your weakness.**
+gstack has two "CEO" skills: `/plan-ceo-review` (CEO/founder-mode *plan* review with three
+scope modes — expansion / hold / reduction) and `/office-hours` (YC-partner demand
+interrogation). For the IB blind-spot argument the one that matters is `/office-hours`,
+because **it is the direct analog of your IB's demand axis — and where they diverge is
+exactly your weakness.** `/plan-ceo-review` is a different and separately useful thing,
+reviewed below.
 
 **`/office-hours` mechanics (verbatim):** hard gate — output is ONLY a design doc, no
 code. Six Forcing Questions, asked ONE AT A TIME, stage-routed (pre-product / has-users /
