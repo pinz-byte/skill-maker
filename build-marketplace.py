@@ -14,7 +14,7 @@ Code picks up changes on `/plugin marketplace update` (or background auto-update
 
 Usage: python3 build-marketplace.py
 """
-import json, re, shutil
+import json, re, shutil, subprocess, sys
 from pathlib import Path
 
 MARKETPLACE_NAME = "lfp-skills"
@@ -50,6 +50,11 @@ def strip_non_ascii(s: str) -> str:
 
 
 def main():
+    # Single source of truth for inbox UUIDs: regenerate agent-bridge's embedded
+    # registry table from canonical (.claude/rules/inbox-registry.md) before packaging.
+    # Fails loud if the markers are missing. Closes the hand-sync drift gap.
+    subprocess.run([sys.executable, str(ROOT / "gen-inbox-registry.py")], check=True)
+
     plugins_dir = ROOT / "plugins"
     if plugins_dir.exists():
         shutil.rmtree(plugins_dir)  # regenerate clean

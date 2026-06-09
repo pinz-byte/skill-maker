@@ -45,8 +45,10 @@ Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
 - Skill description <= 1024 chars (hard limit, silent failure).
 - Skill name must NOT contain "claude" (Cowork reserved word). NB: the skill is
   `projectmd-auditor`, NOT "claudemd-auditor".
-- Inbox UUIDs in `.claude/rules/inbox-registry.md` and `agent-bridge/SKILL.md`
-  must stay in sync.
+- Inbox UUIDs live in ONE place: `.claude/rules/inbox-registry.md` (canonical).
+  `agent-bridge/SKILL.md`'s table is GENERATED from it by `gen-inbox-registry.py`
+  (run automatically by `build-marketplace.py`); never hand-edit that table. Add a
+  project = add a row to canonical, then `./publish.sh`.
 
 ## On-demand references (read the file only when the task needs it)
 

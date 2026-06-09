@@ -62,6 +62,7 @@ Every inbox in the ecosystem has a permanent UUID. Always use the UUID in REPLY 
 strings are not reliably searchable across environments. If you don't know a project's UUID,
 look it up in this registry before sending.
 
+<!-- INBOX_REGISTRY:START (generated from .claude/rules/inbox-registry.md -- run gen-inbox-registry.py; do not edit by hand) -->
 | Project | Host | Notion Inbox UUID |
 |---|---|---|
 | SKILL MAKER | Cowork M1 | `360da327-abb1-8196-b98d-cfc86bbe0ec6` |
@@ -82,6 +83,8 @@ look it up in this registry before sending.
 | Carta Natal OS | Cowork M3 | `360da327-abb1-81f5-a0ed-e5fd571f01f1` |
 | Tenant Farm | Cowork M3 | `360da327-abb1-819a-9206-ce785d2d6547` |
 | Subascars | Cowork M3 | `360da327-abb1-81f1-82ac-ca47d195312f` |
+| apex-ultra | Cowork M1 | `368da327-abb1-817e-9d0c-ce184ee0a69b` |
+<!-- INBOX_REGISTRY:END -->
 
 **Rule:** when sending, always include your own UUID in `REPLY TO`. When receiving, use the
 UUID directly to fetch the sender's inbox — never rely on name search alone.
