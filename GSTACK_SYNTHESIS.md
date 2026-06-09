@@ -16,7 +16,7 @@ and a max-iteration cap.** It repeats five times:
 
 | Skill | The verifier |
 |---|---|
-| `/office-hours` (CEO) | adversarial Spec Review Loop — independent subagent scores the design doc 1-10 on 5 axes, max 3 iterations, BEFORE the doc is shown to you |
+| `/office-hours` (YC partner) | adversarial Spec Review Loop — independent subagent scores the design doc 1-10 on 5 axes, max 3 iterations, BEFORE the doc is shown to you |
 | `/cso` (security) | Parallel Finding Verification — "fresh context, cannot see the initial scan's reasoning, only the finding itself"; anti-anchoring (line number ONLY); discard < 8/10 |
 | `/spec` | codex quality gate — "a second AI model scores the spec 0-10 for executability"; fail-closed secret redaction PRECEDES dispatch |
 | `/codex` | cross-model review — "two doctors, same patient"; Claude review never seen by Codex |
