@@ -63,7 +63,7 @@ SKILL MAKER, APEX DESK, CarMatch, Herald/VMC, and others). Output a concrete che
 ```
 Deployed: herald-config-doctor, machine-bridge, gcp-iam-resolver, workspace-plugin-audit
 Install per workspace (Customize -> Add Plugin -> iCloud/Claude/Plugins):
-  [ ] SKILL MAKER (M1)
+  [ ] SKILL MAKER (M2)
   [ ] APEX DESK (M1)
   [ ] CarMatch (M2)
   [ ] Herald / VMC feed (M3)

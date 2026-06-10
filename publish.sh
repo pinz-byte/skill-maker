@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # publish.sh — rebuild the plugin marketplace from skill sources and push it.
-# Run on M1 after editing any SKILL.md (or changing GROUPS in build-marketplace.py).
-# M2/M3 then auto-update from the marketplace on Cowork start (or `claude plugin marketplace update`).
+# Run on M2 (canonical publisher) after editing any SKILL.md (or changing GROUPS in build-marketplace.py).
+# Other machines auto-update from the marketplace on Cowork start (or `claude plugin marketplace update`).
 
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -16,7 +16,7 @@ fi
 git commit -m "skills: rebuild marketplace ($(date '+%Y-%m-%d %H:%M'))"
 git push
 
-# Self-refresh M1's own Cowork so newly published skills are visible here immediately.
+# Self-refresh this machine's own Cowork so newly published skills are visible here immediately.
 # (Marketplace is GitHub-sourced, so this pulls the commit just pushed.)
 if command -v claude >/dev/null 2>&1; then
   echo ""

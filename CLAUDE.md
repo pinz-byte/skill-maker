@@ -25,18 +25,22 @@ Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
   not loose files. `build-marketplace.py` generates `.claude-plugin/marketplace.json`
   + the `plugins/` tree from each `<skill>/SKILL.md`. `publish.sh` rebuilds +
   commits + pushes it. Private git (`git@github.com:pinz-byte/skill-maker.git`)
-  is the transport; M1 is source of truth. iCloud + `deploy-plugins.sh` are legacy.
+  is the transport; M2 is source of truth (rehomed from M1, 2026-06-10). iCloud +
+  `deploy-plugins.sh` are legacy.
 - Every skill MUST be assigned to a plugin in `GROUPS` (build-marketplace.py).
   The builder now **fails loud** if any on-disk skill is ungrouped -- this is the
   guard against the 2026-06-04 gap where 6 built skills silently never propagated.
   Adding a new skill = drop its dir + add it to a GROUP, or the build halts.
-- Publish from M1 only: `./publish.sh` (rebuild + commit + push, one command).
+- Publish from M2 only: `./publish.sh` (rebuild + commit + push, one command).
+  M1's working copy and its `com.lfp.skillmaker.publish` launchd job are
+  decommissioned (2026-06-10) -- two publishers = split-brain.
 - Marketplace is GitHub-sourced (`pinz-byte/skill-maker`), so `claude` updates
   from GitHub into `~/.claude` -- consumer machines do NOT need `git pull`. All 3
   machines stay current via `./install-refresh.sh` (run once each): a daily launchd
   job running `claude plugin marketplace update lfp-skills`. Its wrapper MUST live
   in `~/Library` not the repo -- macOS TCC blocks launchd from `~/Documents`
-  ("Operation not permitted"). `publish.sh` also self-refreshes M1 after pushing.
+  ("Operation not permitted"). `publish.sh` also self-refreshes the publishing
+  machine (M2) after pushing.
   CONFIRMED 2026-06-04: after a refresh, projects surface new skills with NO
   per-workspace Customize re-add (verified via `/projectmd-auditor`). Fully
   hands-off. The older per-`.skill` path (`ship-skill.sh` / `sync-skills.sh`)
