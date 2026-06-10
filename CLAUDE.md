@@ -24,8 +24,9 @@ Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
 - Distribution channel = a **Claude Code plugin marketplace** (`lfp-skills`),
   not loose files. `build-marketplace.py` generates `.claude-plugin/marketplace.json`
   + the `plugins/` tree from each `<skill>/SKILL.md`. `publish.sh` rebuilds +
-  commits + pushes it. Private git (`git@github.com:pinz-byte/skill-maker.git`)
-  is the transport; M2 is source of truth (rehomed from M1, 2026-06-10). iCloud +
+  commits + pushes it. Private git (`https://github.com/pinz-byte/skill-maker.git`,
+  HTTPS + `gh` keyring auth -- NOT SSH; verified 2026-06-10) is the transport;
+  M2 is source of truth (rehomed from M1, 2026-06-10). iCloud +
   `deploy-plugins.sh` are legacy.
 - Every skill MUST be assigned to a plugin in `GROUPS` (build-marketplace.py).
   The builder now **fails loud** if any on-disk skill is ungrouped -- this is the

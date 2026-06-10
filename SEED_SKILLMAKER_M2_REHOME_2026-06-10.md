@@ -18,7 +18,8 @@ SKILL MAKER's canonical home moved from M1 to M2 on 2026-06-10, executed via the
   Recreate that one memory on M2; nothing else was load-bearing.
 
 ## First M2 session checklist
-1. Verify push access: `ssh -T git@github.com` and one trivial commit + push.
+1. Verify push access: `gh auth status` must show pinz-byte (transport is
+   HTTPS + gh keyring, NOT SSH), then one trivial commit + push.
 2. Run `./publish.sh` end-to-end once -- this is the proof M2 is the publisher.
 3. Recreate the `github-account` memory.
 4. Optional: `./automation/install-automation.sh publish` if you want M2 to

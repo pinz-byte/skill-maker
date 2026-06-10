@@ -11,22 +11,22 @@ Mode: REHOME. M2 becomes source of truth and sole publisher; M1 decommissioned.
 - [x] publish.sh comments updated
 - [x] Continuity seed committed: SEED_SKILLMAKER_M2_REHOME_2026-06-10.md
 
-## Step 1 -- On M2, BEFORE publishing anything: verify push access
+## Step 1 -- On M2, BEFORE cloning: verify push access
+TRANSPORT CORRECTION (2026-06-10): the remote is HTTPS + gh keyring auth, NOT
+SSH. M1's `ssh -T` denial was a false alarm against the wrong protocol.
 ```bash
-ssh -T git@github.com        # must greet pinz-byte
+gh auth status               # must show: Logged in to github.com account pinz-byte
 ```
-If this fails, STOP. Fix M2's SSH key for pinz-byte first. Nothing below works
-without it, and publishing the flip from M1 first would strand the repo.
+If gh is missing or not authed on M2:
+```bash
+brew install gh              # if needed
+gh auth login                # github.com -> HTTPS -> login with browser -> pinz-byte
+gh auth setup-git            # wire git to the keyring credential
+```
 
 ## Step 2 -- On M1: final publish (M1's last act as publisher)
-Check whether the auto-publish job is live:
-```bash
-launchctl list | grep skillmaker
-```
-- If `com.lfp.skillmaker.publish` is listed: it will ship this migration commit
-  automatically within 5 minutes. Wait for it (check `git log`), or run
-  `./publish.sh` yourself to not wait.
-- If not listed: run `./publish.sh` manually from the repo root.
+DONE 2026-06-10 16:17 -- the live auto-publish job shipped the migration commit
+(b5b7149). Subsequent doc corrections ship the same way until Step 3 runs.
 
 ## Step 3 -- On M1: decommission (immediately after the push lands)
 ```bash
@@ -41,7 +41,7 @@ Cowork project. Do NOT leave it mounted as an editable workspace.
 ## Step 4 -- On M2: clone + mount
 ```bash
 cd ~/Documents/Claude/Projects   # or M2's projects folder
-git clone git@github.com:pinz-byte/skill-maker.git "SKILL MAKER"
+git clone https://github.com/pinz-byte/skill-maker.git "SKILL MAKER"
 ```
 Open Cowork on M2, add "SKILL MAKER" as a project folder.
 

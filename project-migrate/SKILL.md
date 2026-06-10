@@ -54,8 +54,12 @@ Answer three questions before touching anything:
     machine names). Sandbox session paths are always stale -- see machine-bridge.
   - Per-workspace plugin installs and MCP connectors (see workspace-plugin-audit).
   - Scheduled Cowork tasks tied to the source workspace.
-- Verify the TARGET machine has push access to the remote before starting
-  (`ssh -T git@github.com` on target). This is the most common silent blocker.
+- Verify the TARGET machine has push access to the remote before starting --
+  and check the remote's ACTUAL protocol first (`git remote -v`), do not assume:
+  SSH remote -> `ssh -T git@github.com` on target; HTTPS remote -> `gh auth
+  status` (keyring) or a working credential helper on target. Testing the wrong
+  protocol produces a false alarm (learned on this skill's first live run).
+  This is the most common silent blocker.
 
 ## Phase 2 -- Transfer
 
