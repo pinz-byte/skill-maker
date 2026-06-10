@@ -9,7 +9,7 @@ Always use page UUIDs when routing bridge messages.
 
 | Project | Host | UUID |
 |---|---|---|
-| SKILL MAKER | Cowork M1 | 360da327-abb1-8196-b98d-cfc86bbe0ec6 |
+| SKILL MAKER | Cowork M2 | 360da327-abb1-8196-b98d-cfc86bbe0ec6 |
 | Herald | Cowork M3 | 360da327-abb1-819d-850b-e86dc3293e94 |
 | Push Notifier | Cowork M3 | 360da327-abb1-81ab-96a9-f83bdb93acc0 |
 | Subastop | Cowork M1 | 360da327-abb1-81a1-825b-ddf7555604ee |
