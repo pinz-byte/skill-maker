@@ -33,7 +33,7 @@ GROUPS = {
          "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit",
          "gcp-iam-resolver", "herald-config-doctor",
          "projectmd-auditor", "projectmd-optimizer", "offload",
-         "qa-mirror", "qa-sequence", "carmatch-intel", "disk-doctor"],
+         "qa-mirror", "qa-sequence", "carmatch-intel", "disk-doctor", "notebooklm-bridge"],
     ),
     "lfp-apex": (
         "APEX live-money trading council -- scope to trading projects only.",
