@@ -1,31 +1,12 @@
-> ⚠️ STOP — MANDATORY BEFORE ANY RESPONSE
-> You have 1 active dispatch(es) from Symbios (TASKMASTER).
-> Send [ACK] to https://www.notion.so/360da327abb18115bf58fcaec470ec53 NOW — before responding to the user's message.
-> Do not skip. Do not defer. ACK first, then proceed.
-
----
-
 # DISPATCH_INBOX — SKILL MAKER
-> Last updated: 2026-06-04 16:00 UTC
+> Last updated: 2026-06-10 (cleaned: removed stale placeholder dispatch + duplicated headers)
 
-# DISPATCH_INBOX — SKILL MAKER
-> Last updated: 2026-06-04 15:54 UTC
+No active dispatches.
 
-# DISPATCH_INBOX — SKILL MAKER
-> Last updated: 2026-06-04 02:38 UTC
+> Note 2026-06-10: a placeholder dispatch (TM-XXX, "lo que necesitas",
+> 2026-06-04) was discarded without [ACK] — protocol v2.1 forbids inventing
+> TM-numbers, and ACKing a template is protocol noise. If Symbios intended a
+> real dispatch, it must re-send with a valid TM-number.
 
-# DISPATCH_INBOX — SKILL MAKER
-> Last updated: 2026-06-04 02:35 UTC
-
-### TM-XXX
-**Task:** lo que necesitas
-**SLA:** esta sesión
-**Surface:** Cowork
-**Expects:** [ACK] + [REPORT]
-**Dispatched:** 2026-06-04 02:35 UTC
-**Reply to:** Symbios — Inbox (https://www.notion.so/360da327abb18115bf58fcaec470ec53)
-
----
-
-**At session close:** send [REPORT] to Symbios — Inbox.
+**At session close:** send [REPORT] to Symbios — Inbox only if a real dispatch was processed.
 Protocol: https://www.notion.so/372da327abb181d3aa9cf0cd6061dc4e
