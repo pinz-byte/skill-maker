@@ -1,54 +1,59 @@
 #!/bin/bash
 # SessionStart hook -- auto mount-check + continuity gate for SKILL MAKER.
 #
-# PURPOSE: inject mount facts into the agent's context on turn one of every
-# session, so the "X folder isn't mounted this session" failure is caught
-# before any work -- without the user having to type "reentry".
+# TWO SIGNALS, on purpose:
+#   1. stdout FIRED marker  -> tests whether Cowork pipes hook stdout into the
+#      agent's context. (First test came back: marker NOT in context.)
+#   2. fired.log side-effect -> tests whether the hook EXECUTES AT ALL,
+#      independent of stdout surfacing. A file write needs no context plumbing.
 #
-# EXPERIMENT MARKER: if the FIRED line below shows up in a fresh session's
-# context, Cowork honors .claude/settings.json SessionStart hooks. If it never
-# appears, Cowork ignores them and the CLAUDE.md behavioral directive is the
-# only available lever.
+# Decision table after the next fresh session:
+#   marker in context + log line present -> hook fires, stdout surfaced. DONE.
+#   no marker        + log line present -> hook fires, stdout NOT surfaced.
+#                                          -> switch strategy: hook should write
+#                                             context to a file the agent reads,
+#                                             or use a different surfacing path.
+#   no marker        + no log line       -> Cowork ignores .claude/settings.json
+#                                          SessionStart hooks. Behavioral CLAUDE.md
+#                                          directive is the only lever. Abandon hook.
 #
-# PORTABILITY: never hardcode /sessions/<name>/mnt -- it rotates every session.
-# Mount detection uses the /sessions/*/mnt/ glob (session-agnostic). The script
-# path is anchored on $CLAUDE_PROJECT_DIR by settings.json, not a literal path.
+# PORTABILITY: never hardcode /sessions/<name>/mnt -- it rotates. Anchor on
+# $CLAUDE_PROJECT_DIR; fall back to the session-agnostic glob.
 
 TS="$(date '+%Y-%m-%d %H:%M:%S')"
 echo "=== [SKILL MAKER SessionStart hook FIRED @ ${TS}] ==="
 
-# Where is this running? The Cowork sandbox exposes /sessions/*/mnt; native
-# macOS does not. This tells us whether hooks execute in the sandbox or natively.
 if ls -d /sessions/*/mnt >/dev/null 2>&1; then
-  echo "hook-env: cowork-sandbox"
+  ENV="cowork-sandbox"
 else
-  echo "hook-env: native-or-unknown"
+  ENV="native-or-unknown"
 fi
+echo "hook-env: ${ENV}"
 
-# Detect mounted folders (sandbox only; harmless / empty elsewhere).
 MOUNTS="$(ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$' | sort -u | paste -sd, -)"
-if [ -n "$MOUNTS" ]; then
-  echo "mounted: ${MOUNTS}"
-else
-  echo "mounted: (none detected)"
-fi
+[ -n "$MOUNTS" ] && echo "mounted: ${MOUNTS}" || echo "mounted: (none detected)"
 
-# Locate the latest continuity seed so the agent can compare against its
-# REQUIRED Mount Manifest. Prefer the project root, fall back to any mount.
-SEED=""
+# --- side-effect probe: append a line to the first writable target ---
+LINE="${TS} | env=${ENV} | cpd=${CLAUDE_PROJECT_DIR:-unset} | mounts=${MOUNTS:-none}"
+SBX="$(ls -d /sessions/*/mnt/SKILL\ MAKER 2>/dev/null | head -1)"
+WROTE=""
+for tgt in "${CLAUDE_PROJECT_DIR}/.claude/hooks/fired.log" "${SBX}/.claude/hooks/fired.log" "/tmp/skillmaker_sessionstart_fired.log"; do
+  d="$(dirname "$tgt" 2>/dev/null)"
+  [ -d "$d" ] || continue
+  if printf '%s\n' "$LINE" >> "$tgt" 2>/dev/null; then WROTE="${WROTE} ${tgt}"; fi
+done
+echo "fired-log: ${WROTE:-(none writable)}"
+
+# --- seed locate + gate directive ---
 if [ -n "$CLAUDE_PROJECT_DIR" ] && [ -f "$CLAUDE_PROJECT_DIR/CONTINUITY_SEED.md" ]; then
   SEED="$CLAUDE_PROJECT_DIR/CONTINUITY_SEED.md"
 else
   SEED="$(ls -1t /sessions/*/mnt/*/CONTINUITY_SEED.md 2>/dev/null | head -1)"
 fi
-if [ -n "$SEED" ] && [ -f "$SEED" ]; then
-  echo "seed: ${SEED}"
-else
-  echo "seed: (no CONTINUITY_SEED.md found)"
-fi
+[ -n "$SEED" ] && [ -f "$SEED" ] && echo "seed: ${SEED}" || echo "seed: (none found)"
 
-echo "ACTION: Compare 'mounted' above against the REQUIRED folders in the latest"
+echo "ACTION: Compare 'mounted' against REQUIRED folders in the latest"
 echo "CONTINUITY_SEED Mount Manifest. If a REQUIRED folder is missing, STOP and"
-echo "tell the user the exact Cowork picker name(s) to add before other work."
+echo "name the exact Cowork picker folder(s) to add before other work."
 echo "=== [SKILL MAKER SessionStart hook END] ==="
 exit 0
