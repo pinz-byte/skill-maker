@@ -24,6 +24,36 @@ This is not a summary. It is a launch pad.
 
 ## What to do
 
+### Step 0: Mount check (run FIRST, before anything else)
+
+In Cowork, a fresh session only sees the folders the user selected in the picker. If a required
+folder isn't mounted, every downstream signal is partial and the briefing is built on sand. So gate
+on mounts before gathering anything.
+
+1. Detect what's mounted now:
+
+```bash
+ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$' | sort -u
+```
+
+2. Read the most recent continuity seed (from the memory directory or the project root
+   `CONTINUITY_SEED.md`) and find its **Mount Manifest**. Compare the REQUIRED folders there
+   against what's mounted now.
+3. If any REQUIRED folder is missing, do NOT proceed to the full reconstruction. Lead the hutch with
+   a MOUNTS block naming the exact picker folders to add, and stop there until the user mounts them:
+
+```
+MOUNTS  ·  ACTION NEEDED
+────────────────────────
+Missing required folders this session: [picker name], [picker name]
+Add them in the Cowork folder picker, then say "reentry" again.
+(Mounted now: [list]. Needed per last seed: [list].)
+```
+
+If there's no seed Manifest to compare against, just report what's mounted and continue -- you
+can't gate on a requirement you don't have. If all REQUIRED folders are present, emit a one-line
+`MOUNTS · OK` in the hutch and proceed.
+
 ### Step 1: Gather signals in parallel
 
 Pull from every available source simultaneously. Don't wait for one before starting another.
@@ -88,6 +118,11 @@ Output the re-entry briefing in this exact format:
 ║  REENTRY  ·  [DATE]  ·  [TIME SINCE LAST SESSION]   ║
 ╚══════════════════════════════════════════════════════╝
 
+MOUNTS  ·  [OK  ──or──  ACTION NEEDED: add (picker names)]
+─────────
+[One line. If OK, just "OK · [folder, folder] mounted". If action needed, name the
+ missing picker folders and stop the briefing here until they are added.]
+
 ACTIVE THREADS
 ──────────────
 M1 · [Initiative/Context]
@@ -143,6 +178,10 @@ the same fog they came in with.
 **Machine context is not always symmetric.** M1, M2, and M3 may be running completely different
 initiatives or different layers of the same initiative. Don't force symmetry. Reflect what's
 actually there.
+
+**Mounts gate everything.** A briefing built while a required folder is unmounted is worse than no
+briefing -- it looks authoritative but reads partial state. The mount check is Step 0 for a reason:
+if it fails, the only correct next action is "mount these folders," not a thread reconstruction.
 
 ---
 

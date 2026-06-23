@@ -192,6 +192,66 @@ Format: "Gotcha: [what] -- Fix: [how we handled it]"]
 signature. Do not dump entire files. Omit if nothing is critical.]
 ```
 
+## Worked Example (a complete, filled seed)
+
+This is what a good seed looks like fully populated -- including the Mount Manifest that prevents
+the "source isn't mounted" failure. Use it as the quality bar.
+
+```markdown
+# Continuity Seed -- AVT CarMatch (meta)
+> Generated: 2026-06-23 14:10
+> Session: scoped the B-branch normalization work; chose branch B over A.
+
+## Mount Check (READ AND ACT ON THIS FIRST)
+Run: ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$'
+Required below: "AVT CarMatch meta". If missing, STOP and ask the user to add it in the picker.
+
+## Mount Manifest
+REQUIRED:
+- AVT CarMatch meta -- primary workspace; holds the catalog, picker, and scripts
+  -- landmark: catalog_versioned_normalized.json, scripts/
+OPTIONAL:
+- (none this session)
+NOT mounted this session but needed next time:
+- extractor repo -- source of the raw listings the normalizer consumes; had to reason about it
+  blind. Ask the user to mount it before touching the ingest path.
+
+## Resume Instructions
+Mount "AVT CarMatch meta" (and ask for the extractor repo if the next step is ingest). Then continue
+the B-scope normalization: implement the mapping in scripts/normalize_b.py against
+catalog_versioned_normalized.json.
+
+## Project Context
+- **Repo:** avt-carmatch-meta
+- **Branch:** feat/normalize-b
+- **Primary folder (picker name):** AVT CarMatch meta
+- **Key files:** scripts/normalize_b.py, catalog_versioned_normalized.json, docs/B_SCOPE.md
+
+## Current State
+### Completed This Session
+- Compared A vs B scope; documented the call in docs/B_SCOPE.md
+### In Progress
+- scripts/normalize_b.py -- field mapping ~40% done; stub at line 88
+### Blocked / Deferred
+- Ingest validation deferred: extractor repo was not mounted
+
+## Decisions Made
+- Decision: take branch B (catalog-side normalization) -- Reason: A required extractor changes we
+  can't make without that repo mounted; B ships value with only the meta workspace.
+
+## Gotchas Discovered
+- Gotcha: "extractor not mounted" stalled ingest -- Fix: scoped to catalog-side only this session.
+
+## Uncommitted Changes
+ M scripts/normalize_b.py
+ A docs/B_SCOPE.md
+
+## Next Steps (Ordered)
+1. Mount "AVT CarMatch meta"; finish the mapping in normalize_b.py from line 88.
+2. Ask the user to mount the extractor repo, then wire ingest validation.
+3. Commit on feat/normalize-b.
+```
+
 ## Step 3 -- Save and Deliver
 
 ### 3a -- Save to project directory
