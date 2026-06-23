@@ -19,6 +19,26 @@ Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
 
 <!-- Add project-specific behavior rules below this line. -->
 
+## Auto session protocol (mounts + continuity, no trigger needed)
+
+The recurring "X source isn't mounted this session" failure is killed by running the
+continuity loop automatically -- the user should not have to type "reentry" or "seed".
+
+- **Session start (auto mount-check).** On the FIRST turn of any session, before other work,
+  run the reentry Step 0 mount check: `ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$'`,
+  read the latest `CONTINUITY_SEED.md` Mount Manifest, and compare. If a REQUIRED folder is
+  missing, STOP and tell the user the exact picker name(s) to add. If all present, proceed
+  silently. (Full `reentry` hutch only when the user asks or the session is clearly a resume.)
+- **Session end / heavy context (auto seed).** At ~70% context, on a natural breakpoint, or when
+  the user signals wrap-up ("new chat", "I'm done", "save this"), generate a continuity seed
+  WITHOUT being asked -- including the Mount Manifest -- and tell the user which folders to mount
+  next time.
+- **Hard limit:** mounting a folder is manual (Cowork picker only). Auto covers detection,
+  warning, and serialization -- never the mount itself.
+- **Portability:** this block governs SKILL MAKER sessions only. To get the same auto behavior in
+  another project, drop this section into that project's CLAUDE.md. The skill logic (reentry Step 0,
+  continuity-seed Manifest) already ships ecosystem-wide via the marketplace.
+
 ## Invariants (every session)
 
 - Distribution channel = a **Claude Code plugin marketplace** (`lfp-skills`),
