@@ -29,12 +29,12 @@ GROUPS = {
     ),
     "lfp-core": (
         "Core ops/build/meta/comms/QA skills for every working project.",
-        ["agent-bridge", "git-ops", "machine-bridge", "project-migrate", "self-audit", "reentry",
-         "continuity-seed",
+        ["agent-bridge", "inbox-triage", "git-ops", "machine-bridge", "project-migrate", "self-audit", "reentry",
+         "continuity-seed", "soul-builder",
          "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit",
          "gcp-iam-resolver", "herald-config-doctor",
          "projectmd-auditor", "projectmd-optimizer", "offload",
-         "qa-mirror", "qa-sequence", "carmatch-intel", "disk-doctor", "notebooklm-bridge"],
+         "qa-mirror", "qa-sequence", "carmatch-intel", "disk-doctor", "notebooklm-bridge", "pm"],
     ),
     "lfp-apex": (
         "APEX live-money trading council -- scope to trading projects only.",
