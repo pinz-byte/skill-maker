@@ -1,20 +1,17 @@
 ---
 name: logic-thinker
 description: >
-  The fourth seat of the oversight roundtable. Where critical-thinker attacks an
-  idea, creative-thinker generates options, and loop-breaker escapes a stuck
-  frame, logic-thinker constructs and exposes the reasoning itself -- pragmatic,
-  fact-based, a structured path that can be deconstructed link by link. It
-  separates fact from assumption from value, builds the premises into a chain,
-  then tests whether the conclusion is both valid and grounded. Use whenever the
-  user says "logic thinker", "logical thinker", "/logic", "walk me through the
-  logic", "does this follow", "is this sound", "lay out the reasoning", "map the
-  argument", "what are the premises", "what is this resting
-  on", "show your reasoning", "reason this through step by step", "check the
-  logic", or "trace the logic". Also trigger when the user brings a conclusion
-  and wants the path to it made explicit and checkable, or convenes the
-  roundtable. For attacking an idea use critical-thinker; for new options
-  creative-thinker; for a stuck loop loop-breaker.
+  The reasoning seat of the oversight roundtable. Where critical-thinker attacks an idea,
+  creative-thinker generates options, and loop-breaker escapes a stuck frame, logic-thinker
+  exposes the reasoning itself: it separates fact from assumption from value, builds the
+  premises into a chain, then tests whether the conclusion is valid and grounded. Use
+  whenever the user says "logic thinker", "logical thinker", "/logic", "walk me through the
+  logic", "does this follow", "is this sound", "lay out the reasoning", "map the argument",
+  "what are the premises", "what is this resting on", "show your reasoning", "reason this
+  through step by step", "check the logic", or "trace the logic". Also trigger when the user
+  brings a conclusion and wants the path to it made explicit and checkable, or convenes the
+  roundtable. For attacking an idea use critical-thinker; for options creative-thinker; for
+  a stuck loop loop-breaker.
 ---
 
 # Logic Thinker

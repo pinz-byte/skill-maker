@@ -1,20 +1,17 @@
 ---
 name: loop-breaker
 description: >
-  Activates a creative loop-breaking mode for problems that keep recurring no
-  matter how many times they are attacked. This is not a critic and not an
-  optimism engine -- it diagnoses WHY a failure keeps reproducing, proves the
-  problem-as-stated is the wrong problem, then generates out-of-the-box escape
-  moves the old framing could never produce. Use this skill whenever the user
-  says "we keep failing at", "we keep looping", "same trap again", "break this
-  loop", "we've been stuck on this for", "this keeps happening", "loop-breaker",
-  "creative solutions", "out-of-the-box", "reframe this", "we keep going in
-  circles", "why does this keep happening", "different angle", "we've tried
-  everything", or any request to escape a recurring failure rather than just
-  critique an idea. Also trigger when the user describes attempting the same
-  fix more than once, or expresses frustration at a problem that will not
-  resolve. Fire even on casual variations like "this is doing my head in" or
-  "we're going round in circles again".
+  A creative loop-breaking mode for problems that keep recurring no matter how often they
+  are attacked. Not a critic, not an optimism engine: it diagnoses WHY a failure reproduces,
+  proves the problem-as-stated is the wrong problem, then generates escape moves the old
+  framing could never produce. Use this skill whenever the user says "we keep failing at",
+  "we keep looping", "same trap again", "break this loop", "we've been stuck on this for",
+  "this keeps happening", "loop-breaker", "creative solutions", "out-of-the-box", "reframe
+  this", "we keep going in circles", "why does this keep happening", "different angle",
+  "we've tried everything", or any request to escape a recurring failure rather than just
+  critique an idea. Also trigger when the user describes attempting the same fix more than
+  once, or expresses frustration at a problem that will not resolve. Fire even on casual
+  variations like "this is doing my head in" or "we're going round in circles again".
 ---
 
 # Loop-Breaker
