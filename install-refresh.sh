@@ -8,7 +8,17 @@
 # launchd-spawned processes from executing or reading anything under ~/Documents,
 # which is why the previous in-repo wrapper failed with "Operation not permitted".
 #
-# Run once per machine:   ./install-refresh.sh
+# FIX (2026-07-03): `claude plugin marketplace update` only refreshes the
+# marketplace's own metadata/cache — it does NOT bump plugins already installed
+# from it. Those stay pinned to whatever commit was current at install time.
+# Live incident: M3's lfp-core/lfp-thinkers were pinned 52 commits / 5+ weeks stale
+# despite this job running daily, causing "Unknown skill: project-migrate" long
+# after the skill was published. The wrapper below now ALSO loops every installed
+# `@lfp-skills` plugin through `claude plugin update <plugin>@lfp-skills`.
+# Machines that installed this job before 2026-07-03 are running the OLD
+# marketplace-only wrapper until this script is re-run there.
+#
+# Run once per machine (and re-run after this 2026-07-03 fix):   ./install-refresh.sh
 # Remove it later with:   ./install-refresh.sh --uninstall
 
 set -euo pipefail
@@ -50,6 +60,13 @@ set -uo pipefail
 export PATH="$CLAUDE_DIR:/opt/homebrew/bin:/usr/local/bin:\$PATH"
 echo "===== \$(date '+%Y-%m-%d %H:%M:%S') refresh start ====="
 "$CLAUDE_BIN" plugin marketplace update lfp-skills 2>&1 || echo "marketplace update FAILED"
+# Marketplace update alone does NOT bump plugins already installed from it — they
+# stay pinned to their install-time commit (see 2026-07-03 incident above). Bump
+# every installed lfp-skills plugin explicitly.
+"$CLAUDE_BIN" plugin list 2>&1 | grep -oE '[A-Za-z0-9_-]+@lfp-skills' | sort -u | while read -r p; do
+  echo "-- updating \$p --"
+  "$CLAUDE_BIN" plugin update "\$p" 2>&1 || echo "update FAILED for \$p"
+done
 echo "===== \$(date '+%Y-%m-%d %H:%M:%S') refresh done ====="
 EOF
 chmod +x "$WRAPPER"

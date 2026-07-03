@@ -1,97 +1,117 @@
 ---
 name: workspace-plugin-audit
 description: >
-  Closes the per-workspace plugin install gap. Each Cowork workspace/project is an isolated
-  agent with its own plugin list — there is no install-once-works-everywhere. After a skill
-  is built and deployed to iCloud, it still must be added manually in every workspace that
-  needs it, which produces the recurring "that skill isn't uploaded to the system" / "skill
-  not found" surprise when the user tries a new skill in a different project. Use this skill
-  whenever the user says "skill not found", "isn't uploaded to the system", "plugin missing
-  in this workspace", "is critical-thinker installed here", "audit my plugins", "which
-  workspaces have X", "I just deployed, what do I install where", or "why doesn't this skill
-  work in this project". Also trigger right after any skill deploy to iCloud, to produce the
-  per-workspace reinstall checklist. Fire on casual variations like "the skill isn't showing
-  up", "still not showing up", "marketplace not refreshed", "it's not picking up the new skill",
-  or "it works in SKILL MAKER but not here".
+  Diagnoses a not-found or out-of-date skill in the lfp-skills GitHub marketplace
+  (live channel; iCloud is retired). Two failure modes look identical: (1) the
+  plugin was never installed on this machine, or (2) it IS installed but pinned to
+  a stale commit, because `claude plugin marketplace update` refreshes only the
+  marketplace cache and does NOT bump already-installed plugins -- confirmed
+  2026-07-03 when a plugin sat 5+ weeks / 52 commits stale despite daily
+  marketplace updates. Use whenever the user says "skill not found", "unknown
+  skill", "isn't uploaded to the system", "plugin missing", "is X installed here",
+  "audit my plugins", "which machines have X", "I just published, what needs
+  updating where", or "why doesn't this skill work here". Also trigger on "still
+  not showing up", "marketplace not refreshed", "it's not picking up the new
+  skill", "it works in SKILL MAKER but not here", or right after any publish to
+  produce the per-machine update checklist.
 ---
 
 # Workspace Plugin Audit
 
-Cowork plugins are per-workspace by design. Installing a plugin in SKILL MAKER does NOT make
-it available in APEX DESK, CarMatch, or any other project on the same machine. iCloud is the
-distribution mechanism (the file is available to install), not auto-install (it does not turn
-itself on anywhere). The recurring friction: a freshly deployed skill works where it was
-built, then "isn't uploaded to the system" the first time it is tried in another workspace.
+The live distribution channel is the `lfp-skills` GitHub marketplace (`pinz-byte/skill-maker`),
+installed per machine via `claude plugin install <plugin>@lfp-skills` at user scope. iCloud
+(`deploy-plugins.sh`, `.skill` files in Drive) is retired — do not diagnose or recommend it.
+
+The recurring friction is NOT "forgot to add it in this workspace" (the old iCloud-era framing).
+It is: a plugin is installed and enabled, the marketplace itself is current, and the skill
+inside it is STILL not found or still behaving like an old version — because the installed
+plugin is pinned to whatever commit was current the moment it was installed, and nothing
+except an explicit per-plugin update bumps that pin.
 
 ## What This Skill Does
 
-Turns "deployed to iCloud" into an explicit "install it here, here, and here" checklist, and
-diagnoses a not-found skill as either a packaging fault or a simple missing install.
+Diagnoses a not-found or stale skill as one of three things, in this order (cheapest/most
+likely first):
 
-## Diagnose: packaging fault vs missing install
+## Diagnose, in order
 
-When a skill reports not-found, it is one of two things. Check packaging FIRST (fast), because
-if the package is bad, installing it anywhere fails the same way.
-
-1. **Packaging fault** — bad zip structure, non-ASCII/emoji in the file, or description over
-   1024 chars. Verify the built `.skill`:
+1. **Stale installed version (the common case as of 2026-07-03)** — the plugin IS installed,
+   the marketplace IS current, but the installed copy is pinned to an old commit. Check:
 
    ```bash
-   cd "$HOME/Documents/Claude/Projects/SKILL MAKER"
-   python3 -c "import zipfile; print(zipfile.ZipFile('<name>.skill').namelist())"
-   # must show <name>/SKILL.md
+   claude plugin list
+   # look at the Version hash (e.g. lfp-core@lfp-skills  Version: be47cddbc8ca)
    ```
 
-   Confirm it is in iCloud:
+   That hash is a git commit in `pinz-byte/skill-maker`. If unsure whether it's current,
+   just try the fix directly — it's cheap and safe:
 
    ```bash
-   ls "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Claude/Plugins/" | grep <name>
+   claude plugin update <plugin>@lfp-skills
+   # e.g. claude plugin update lfp-core@lfp-skills
    ```
 
-   If the package is clean and present in iCloud, it is not a packaging fault — go to #2.
+   Restart Claude Code / Cowork after — plugin updates require a restart to take effect.
+   `install-refresh.sh` (patched 2026-07-03) now loops this automatically in the daily
+   launchd job — but any machine that installed that job BEFORE 2026-07-03 is still
+   running the old marketplace-only wrapper until `./install-refresh.sh` is re-run there.
 
-2. **Missing install (the common case)** — the plugin simply was not added in THIS workspace.
-   Each project agent has its own plugin set. Fix: in the workspace that needs it,
-   **Customize -> Add Plugin** (or Skills -> +), browse iCloud Drive -> Claude -> Plugins ->
-   `<name>.skill`, install. Active immediately after.
+2. **Missing install** — the plugin was never installed on this machine at all.
 
-## Post-deploy: produce the per-workspace checklist
+   ```bash
+   claude plugin marketplace list      # is lfp-skills even registered here?
+   claude plugin list                  # is the plugin in the installed list?
+   claude plugin install <plugin>@lfp-skills
+   ```
 
-After deploying skills to iCloud, do not stop at "deployed." List the active workspaces and
-state which ones still need the new skill installed. Known workspaces span M1/M2/M3 (e.g.
-SKILL MAKER, APEX DESK, CarMatch, Herald/VMC, and others). Output a concrete checklist:
+3. **Packaging / build fault** — the skill was never actually added to a `GROUPS` plugin, or
+   `build-marketplace.py`'s fail-loud guard caught something. Check the source repo natively
+   (not from a Cowork sandbox — build/publish there is unreliable, see machine-bridge):
+
+   ```bash
+   git log --oneline -- <skill-dir>/          # was it ever committed?
+   grep -A2 "'<plugin-name>'" build-marketplace.py   # is it listed in GROUPS?
+   ```
+
+## Post-publish: produce the per-machine checklist
+
+After publishing new/changed skills, do not stop at "pushed." For each machine (M1/M2/M3),
+state whether it needs a fresh `claude plugin install` (never had that plugin) or just an
+update (has the plugin, needs the commit bump):
 
 ```
-Deployed: herald-config-doctor, machine-bridge, gcp-iam-resolver, workspace-plugin-audit
-Install per workspace (Customize -> Add Plugin -> iCloud/Claude/Plugins):
-  [ ] SKILL MAKER (M2)
-  [ ] APEX DESK (M1)
-  [ ] CarMatch (M2)
-  [ ] Herald / VMC feed (M3)
-  ...one line per workspace that should carry the skill
+Published: project-migrate (added to lfp-core)
+Per machine:
+  [ ] M1 — lfp-core installed? run: claude plugin update lfp-core@lfp-skills
+  [ ] M2 — publisher machine, already current after ./publish.sh
+  [ ] M3 — lfp-core installed? run: claude plugin update lfp-core@lfp-skills
 ```
-
-Recommend doing the pass while the iCloud folder is fresh, rather than rediscovering the gap
-one workspace at a time later.
 
 ## Principles
 
-- **iCloud distributes, it does not install.** Availability in the Plugins folder is necessary
-  but not sufficient; each workspace installs separately.
-- **Check packaging before install.** A bad package fails identically everywhere — verify the
-  zip and description length once before sending the user to click through installs.
-- **Different agents, different capabilities — on purpose.** Per-workspace isolation is a
-  feature (you can give agents different tools); the fix is a checklist, not a complaint.
-- Pairs with [[machine-bridge]] (the iCloud deploy must use the self-resolving script so the
-  file actually lands) and the project deploy-plugins.sh.
+- **The marketplace and the installed plugin are two different things with two different
+  freshness states.** `marketplace update` refreshes what's available; `plugin update` (or
+  reinstall) is what actually moves an installed plugin forward. Never assume one implies
+  the other — this was the exact wrong assumption baked into this project's docs until the
+  2026-07-03 incident disproved it.
+- **Check the Version hash before guessing.** `claude plugin list` shows the real commit each
+  installed plugin is pinned to — compare against `git log -1` in the source repo instead of
+  assuming "it's probably fine."
+- **iCloud is retired.** Do not send anyone to Customize -> Add Plugin -> iCloud/Claude/Plugins
+  or to `deploy-plugins.sh` — that channel no longer exists for this project.
+- Pairs with [[machine-bridge]] (native-vs-sandbox build discipline) and `install-refresh.sh`
+  (the automated version of step 1, once every machine has re-run it post-2026-07-03).
 
 ## Edge Cases
 
-- **iCloud not synced yet:** the file may take seconds-to-minutes to appear on M2/M3. If it is
-  missing in the Plugins folder on another machine, wait for sync before assuming a deploy
-  failure.
-- **Broken alias instead of a real file:** if iCloud shows an alias/placeholder rather than a
-  real `.skill`, the deploy wrote a dead path — re-run the self-resolving deploy script (see
-  [[machine-bridge]] failure mode 1).
-- **Stale version installed:** re-installing over an old version may require removing the old
-  plugin entry first if the workspace caches it.
+- **Marketplace just published, plugin never installed anywhere yet:** step 2, not step 1 —
+  there's nothing to bump if it was never installed.
+- **`claude plugin update` reports already up to date but the skill still misbehaves:** the
+  restart didn't happen yet, or it's actually step 3 (never shipped) — check the Version hash
+  moved AND that the skill/plugin name is spelled correctly and really is in that plugin group.
+- **User-scope vs per-Cowork-workspace:** everything observed in the 2026-07-03 incident was
+  fixed at `claude plugin` user scope (machine-wide), not inside a specific Cowork project's
+  Customize panel. Whether an individual Cowork workspace can additionally restrict which
+  user-scope plugins it exposes is NOT yet verified either way — if a plugin is confirmed
+  current at user scope but still missing in one specific workspace only, treat that as an
+  open question, not a settled mechanism, and investigate rather than assuming either model.

@@ -50,10 +50,17 @@ Run once per machine:
 ```
 
 `install-refresh.sh` installs a launchd job (`com.lfp.skill-maker.refresh`) that
-daily — and at load — runs `claude plugin marketplace update lfp-skills`, logging
-to `~/Library/Logs/com.lfp.skill-maker.refresh.log`. Remove with
+daily — and at load — runs `claude plugin marketplace update lfp-skills`, then (as
+of the 2026-07-03 fix, see CORRECTION above) loops every installed `@lfp-skills`
+plugin through `claude plugin update <plugin>@lfp-skills` so installed plugins
+cannot silently pin to a stale commit. Logs to
+`~/Library/Logs/com.lfp.skill-maker.refresh.log`. Remove with
 `./install-refresh.sh --uninstall`. M1 ALSO benefits (its own Cowork consumes the
 marketplace); `publish.sh` additionally runs the update right after pushing.
+
+**Machines that installed the job before 2026-07-03 are running the OLD wrapper**
+(marketplace-only, no plugin bump) until `./install-refresh.sh` is re-run there —
+re-running it is safe/idempotent and simply rewrites the wrapper file.
 
 ### TCC gotcha (why the wrapper lives in ~/Library, not the repo)
 
@@ -63,14 +70,43 @@ repo and failed silently every run. Fix: the wrapper lives in
 `~/Library/Application Support/lfp-skill-maker/` and touches only `~/.claude` via
 `claude` — never `~/Documents`. Do not move it back into the repo.
 
-## Per-workspace re-add is NOT required (confirmed 2026-06-04)
+## CORRECTION (2026-07-03): `marketplace update` does NOT bump installed plugins
 
-Settled: after `claude plugin marketplace update lfp-skills`, a project surfaces a
-newly published skill WITHOUT any Customize -> Skills re-add. Verified by invoking
-`/projectmd-auditor` in an M2 project never touched in the UI — it resolved. So the
-chain is fully hands-off: publish on M1, the daily launchd job refreshes each
-machine, and skills become live in every workspace with no manual UI step. The old
-"manual re-add is irreducible" claim was stale and is retired.
+The 2026-06-04 claim below ("re-add is NOT required") is **wrong** and is kept only
+as a record of what was believed. Live incident on M3, 2026-07-03: `lfp-skills` was
+registered, `claude plugin marketplace update lfp-skills` ran and reported success,
+yet `project-migrate` (added to `lfp-core` on 2026-06-10) still errored `Unknown
+skill`. Root cause: `claude plugin list` showed `lfp-core@lfp-skills` and
+`lfp-thinkers@lfp-skills` both pinned at commit `be47cddbc8ca` — the marketplace
+rebuild from **2026-05-29**, 52 commits and 5+ weeks behind HEAD.
+
+`claude plugin marketplace update <marketplace>` only refreshes the marketplace's
+own metadata/cache (what versions exist). It does **not** touch plugins already
+installed from it — those stay pinned to the commit that was current at install
+time until explicitly bumped:
+
+```bash
+claude plugin update <plugin>@lfp-skills
+# e.g. claude plugin update lfp-core@lfp-skills
+```
+
+This fixed it on M3 in one shot (`be47cddbc8ca` -> `106ae4931f57`, matching HEAD;
+requires a restart of Claude Code / Cowork to take effect). `install-refresh.sh`
+was patched the same day to run this update loop automatically — see below. Until
+every machine re-runs `./install-refresh.sh` to pick up the patched wrapper, this
+class of failure can recur silently on any machine whose plugins were installed
+before a given skill/fix existed.
+
+### Original (retired) claim, kept for context
+
+~~Settled: after `claude plugin marketplace update lfp-skills`, a project surfaces
+a newly published skill WITHOUT any Customize -> Skills re-add. Verified by
+invoking `/projectmd-auditor` in an M2 project never touched in the UI — it
+resolved. So the chain is fully hands-off: publish on M1, the daily launchd job
+refreshes each machine, and skills become live in every workspace with no manual UI
+step.~~ This held for whatever was tested on 2026-06-04 but does not hold in
+general — plugin version pinning is real and the M3 incident above is reproducible
+evidence against it.
 
 ## Legacy paths (still present, not the live channel)
 
