@@ -1,6 +1,6 @@
 # Continuity Seed -- SKILL MAKER
-> Generated: 2026-06-23 19:17
-> Session: revamped continuity-seed + reentry with mount-gating; added CLAUDE.md auto session protocol; published to M2.
+> Generated: 2026-07-03 10:20
+> Session: VMC's agent-bridge concurrency patch reviewed, canonized, published (c6b6dbe); legacy .skill channel purged from git tracking.
 
 ## Mount Check (READ AND ACT ON THIS FIRST)
 Run: ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$'
@@ -9,77 +9,79 @@ Required below: "SKILL MAKER". If missing, STOP and ask the user to add it in th
 ## Mount Manifest
 REQUIRED:
 - SKILL MAKER -- the skill-authoring repo; all edits, build, and publish happen here
-  -- landmark: build-marketplace.py, publish.sh, continuity-seed/SKILL.md
+  -- landmark: build-marketplace.py, publish.sh, agent-bridge/SKILL.md
 OPTIONAL:
 - (none this session)
 NOT mounted this session but needed next time:
-- (none -- single-repo session)
+- (none identified)
 
 ## Resume Instructions
-Mount "SKILL MAKER". This session's work is shipped and verified; there is no open build. The next
-session's real job is to VERIFY the auto-protocol actually fires: start fresh and confirm the agent
-runs the mount-check on turn one without being told. If it doesn't fire reliably, build the
-SessionStart hook (see Next Steps #2).
+Everything from the VMC patch cycle is CLOSED (published + pushed in c6b6dbe, 2026-07-03 10:19).
+No in-flight work. Next session starts fresh from the Next Steps backlog below -- item 1 is
+verifying the patch propagated to M1/M3 (especially VMC on M3, the patch author).
 
 ## Project Context
-- **Repo:** skill-maker (github.com/pinz-byte/skill-maker, HTTPS + gh auth)
-- **Branch:** main (clean, pushed -- HEAD 3606d94)
+- **Repo:** pinz-byte/skill-maker (private GitHub, HTTPS + gh keyring; M2 is sole publisher)
+- **Branch:** main (in sync with origin/main)
 - **Primary folder (picker name):** SKILL MAKER
-- **Key files:** continuity-seed/SKILL.md, reentry/SKILL.md, build-marketplace.py, CLAUDE.md
+- **Key files:** agent-bridge/SKILL.md, build-marketplace.py, publish.sh, .claude/rules/inbox-registry.md, SKILL_PROPOSALS_2026-07-02.md
 
 ## Current State
 
 ### Completed This Session
-- continuity-seed: re-homed into the M2 repo (was orphaned -- not tracked, not in any GROUP),
-  added Step 1.5 Mount Manifest capture, Step 4 load-time mount gate, fixed rotating-session-path
-  bug (record stable picker names), added a full worked-example seed. Added to lfp-core GROUP.
-- reentry: added Step 0 mount-check gate (detect mounts, compare to last seed Manifest, stop on
-  missing REQUIRED folder), MOUNTS line in the hutch, "mounts gate everything" principle.
-- CLAUDE.md: added "Auto session protocol" -- auto mount-check on session start, auto-seed at
-  ~70% context / wrap-up. Portable note for other projects.
-- Published via ./publish.sh on M2. Verified committed HEAD tree contains all three artifacts;
-  working tree clean. lfp-core now 21 skills, 32 total.
+- Processed VMC's inbox message (agent-bridge concurrency patch, 4 changes): APPROVED, canonized
+  onto the 427-line canonical SKILL.md (VMC's base was a stale 255-line copy). SEND Step 0
+  (check own inbox first), RECEIVE Step 4 immediate per-message READ marking, new RECEIVE Step 6
+  re-fetch-before-report gate (old Step 6 -> Step 7), new principle "Assume concurrency, not turns".
+- Marked VMC's message READ; sent full response to VMC inbox (no response expected back).
+- Root cause of VMC's stale copy found: legacy .skill channel -- 27 .skill files were tracked in
+  the repo root, agent-bridge.skill among them at the old 255-line body.
+- Legacy purge: git rm --cached *.skill + "*.skill" in .gitignore (files remain on disk, untracked).
+- Hygiene gate run: TEAM_ONBOARDING.md dated (2026-07-02); secret scan on team-toolkit files clean.
+- Published: commit c6b6dbe (2026-07-03 10:19) -- agent-bridge patch, auditor-general description
+  compression, SKILL_PROPOSALS_2026-07-02.md, TEAM_ONBOARDING.md, build-team-toolkit.py,
+  docs/team-toolkit-publish.md, .gitignore (+team-toolkit/, +*.skill), .skill purge. Pushed.
 
 ### In Progress
-- (nothing -- session is at a clean stopping point)
+- (nothing)
 
 ### Blocked / Deferred
-- SessionStart hook NOT built. Open question whether Cowork sessions fire Claude Code
-  .claude/settings.json hooks. The CLAUDE.md directive is behavioral, not hard-enforced.
+- CONTINUITY_SEED.md bare-name advisory: tracked under bare name, but CLAUDE.md auto session
+  protocol references that exact name. Renaming requires a CLAUDE.md update in the same commit.
+  POPs' call, non-urgent.
 
 ## Decisions Made
-- Decision: re-home continuity-seed into M2 repo rather than patch the cached copy -- Reason: the
-  cache is regenerated on build; a patch there is throwaway. Source must live in the repo to persist.
-- Decision: put the hard mount gate in reentry (Step 0), not only in seed prose -- Reason: a seed
-  is passive data and cannot force the next session to check; reentry runs as logic on session start.
-- Decision: "auto" = CLAUDE.md standing instruction, not a hook (for now) -- Reason: hook firing in
-  Cowork is unverified; chose the reliable lever and flagged the hook as the stronger next step.
+- Decision: do NOT commit/install VMC's packaged agent-bridge.skill -- Reason: built on stale
+  255-line base; canonical repo patch supersedes it. POPs should discard his copy.
+- Decision: canonize at parity with VMC's verified patch; leave OUT the "verified against fresh
+  fetch at [HH:MM]" template line -- Reason: ship what was production-verified; that line is the
+  designated fix IF the false-pending failure recurs post-patch.
+- Decision: purge legacy .skill files from git tracking in the same publish -- Reason: the legacy
+  channel was actively distributing the stale skill body that caused the VMC incident.
+- Decision: no per-workspace reinstall checklist for the patch -- Reason: marketplace daily
+  auto-refresh propagates with no per-workspace re-add (confirmed 2026-06-04).
 
 ## Gotchas Discovered
-- Gotcha: continuity-seed was running from a stale deployed cache with no repo source (orphaned in
-  the M1->M2 rehome) -- Fix: created the canonical source + wired it into GROUPS.
-- Gotcha: seeds stored absolute /sessions/<name>/mnt paths that rotate every session and die on load
-  -- Fix: record folders by stable picker name + a landmark file.
-- Gotcha: reentry SKILL.md has ~272 pre-existing non-ASCII chars (box-art borders, em-dashes) the
-  builder strips, so the deployed hutch renders borderless. Pre-existing, not fixed this session.
-- Gotcha: THIS M2 session still runs the pre-publish cached skills -- the new behavior only loads in
-  a fresh session.
+- Gotcha: sandbox git commands on this repo create .git/index.lock the sandbox cannot unlink,
+  blocking native publish.sh -- Fix: native `rm -f .git/index.lock`; from sandbox always use
+  `git --no-optional-locks` read-only commands. Saved to persistent memory (sandbox-git-lock).
+- Gotcha: `claude plugin marketplace update lfp-skills` reports success even when it refreshes to
+  an old commit -- a green update is NOT proof the new version propagated. Verify against git log.
+- Gotcha: user pasted stale terminal scrollback that looked like a fresh run -- verify claimed
+  command execution against filesystem/git state, not against the paste.
 
 ## Uncommitted Changes
-(none -- working tree clean, HEAD 3606d94 pushed)
+CONTINUITY_SEED.md (this file) + CONTINUITY_SEED_2026-06-23.md (archive) -- will ride the next publish.
 
 ## Next Steps (Ordered)
-1. Open a FRESH session and verify the auto mount-check fires on turn one unprompted. That is the
-   real acceptance test for this whole effort.
-2. If it doesn't fire reliably, build a SessionStart hook in .claude/settings.json that runs the
-   mount-check as a shell command and injects the result into context. Confirm whether Cowork
-   honors the hook.
-3. Optional: ASCII-ify reentry's hutch box-art so the deployed version keeps its borders.
-4. Optional: drop the "Auto session protocol" block into other projects' CLAUDE.md (AVT, extractor)
-   where the mount errors actually bite.
+1. Verify patch propagation on M1/M3: `claude plugin marketplace update lfp-skills` there, or wait
+   for the daily refresh; confirm VMC's workspace surfaces the new agent-bridge (Step 0 present).
+2. Remind POPs to discard VMC's agent-bridge.skill artifact (lives outside this repo, M3/VMC side).
+3. Pick next build from SKILL_PROPOSALS_2026-07-02.md (skill-miner backlog, 5 clusters).
+4. Optional: resolve the CONTINUITY_SEED.md bare-name advisory (rename + CLAUDE.md update together).
 
 ## Key Code / Config
-Mount-detection command (used by both skills and the auto-protocol):
-  ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$' | sort -u
-Publish (native on M2 only -- sandbox cannot build, no unlink):
-  cd ~/Projects/SKILL\ MAKER && ./publish.sh
+- Publish (native M2 terminal only, never sandbox):
+  `cd "/Users/lfp/Projects/SKILL MAKER" && ./publish.sh`
+- VMC inbox UUID (for bridge replies): 360da327-abb1-81bf-80d5-d910c59b9476
+- SKILL MAKER inbox UUID: 360da327-abb1-8196-b98d-cfc86bbe0ec6
