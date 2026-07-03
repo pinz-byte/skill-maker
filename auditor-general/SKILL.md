@@ -11,10 +11,9 @@ description: >
   "review the build", "verify the fix", "did the fix land", "validate the
   fix", "was this really fixed", "is X actually done", "verify the deploy",
   "audit [project]", "oversight sweep", "check the system end to end",
-  "independent review", "second pair of eyes". Output is a verdict-only
-  AUDIT REPORT: PASS / FAIL / PARTIAL per claim with an evidence chain --
-  it never fixes anything. NOT self-audit (self-review before delivery),
-  NOT forensic-auditor (data provenance), NOT work-retrospective (learnings).
+  "independent review", "second pair of eyes". Output: verdict-only AUDIT
+  REPORT, PASS / FAIL / PARTIAL per claim with evidence chain -- never
+  fixes anything. NOT self-audit, forensic-auditor, or work-retrospective.
 ---
 
 # Auditor-General -- Independent Build, Fix, and System Verifier

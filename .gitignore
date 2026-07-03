@@ -2,3 +2,5 @@
 *.plugin
 .git/index.lock
 .claude/settings.local.json
+team-toolkit/
+*.skill

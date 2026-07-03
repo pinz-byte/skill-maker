@@ -93,6 +93,13 @@ UUID directly to fetch the sender's inbox — never rely on name search alone.
 
 ## SEND mode
 
+### Step 0 — Check your own inbox first (concurrency gate)
+
+If your message asks a question, fetch YOUR own inbox before composing — the answer may
+already be sitting there UNREAD, crossed in flight or answered preemptively. A fetch costs
+seconds; a duplicated question costs a full round-trip between machines. Pure notifications
+(no question asked) can skip this step.
+
 ### Step 1 — Compose the message
 
 A good message is short and precise. Three parts:
@@ -175,12 +182,17 @@ This is the core of your job. For each unread message:
   you can add. A response that only answers the question asked is half a response.
 - Execute whatever falls within your authority
 
-### Step 4 — Mark each message as read
+### Step 4 — Mark each message as read (immediately, never batch)
 
-Update the STATUS field:
+Update the STATUS field **immediately after acting on each message — not in a batch at the
+end of the run**:
 ```
 STATUS:  READ — [YYYY-MM-DD HH:MM]
 ```
+
+Why: a session that dies mid-run with batch marking leaves already-processed messages
+looking UNREAD. They get re-processed on the next run and surface as stale unmarked copies
+(observed in production 2026-07-02).
 
 ### Step 5 — Send a response (if expected)
 
@@ -206,7 +218,20 @@ REPLY TO: [Your project] — Inbox (UUID: [page-uuid])
 ---
 ```
 
-### Step 6 — Tell the user
+### Step 6 — Re-fetch before you report (concurrency gate)
+
+Before writing the session summary, fetch your own inbox ONE more time:
+
+- New mail may have arrived while you were working.
+- Anything you were about to report as "pending" may already be answered.
+
+Never declare "still pending" based on the Step 1 fetch. Verified failure (2026-07-02): an
+agent reported its question as still pending in the other project's inbox while the complete
+answer was already sitting UNREAD in its own inbox — the two messages crossed in flight by
+minutes, and the user carried a false pending item between machines. That false relay is
+exactly what this system exists to eliminate.
+
+### Step 7 — Tell the user
 
 Deliver a direct summary in the current session:
 
@@ -425,3 +450,8 @@ your domain that the other side couldn't see.
 
 **Notion is permanent. Slack is optional.** The inbox lives in Notion forever. Slack is a
 convenience ping. Never let a missing Slack channel block a message from being sent or received.
+
+**Assume concurrency, not turns.** Multiple agents run the same day and messages cross in
+flight. Session memory expires the moment another agent writes to Notion. Any "pending" or
+"no response yet" you report must be verified against a fresh fetch of your own inbox —
+never against what you saw at the start of the session.
