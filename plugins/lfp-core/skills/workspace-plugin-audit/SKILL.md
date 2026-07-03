@@ -11,7 +11,8 @@ description: >
   workspaces have X", "I just deployed, what do I install where", or "why doesn't this skill
   work in this project". Also trigger right after any skill deploy to iCloud, to produce the
   per-workspace reinstall checklist. Fire on casual variations like "the skill isn't showing
-  up" or "it works in SKILL MAKER but not here".
+  up", "still not showing up", "marketplace not refreshed", "it's not picking up the new skill",
+  or "it works in SKILL MAKER but not here".
 ---
 
 # Workspace Plugin Audit

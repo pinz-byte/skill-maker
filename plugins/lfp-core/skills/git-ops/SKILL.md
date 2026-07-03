@@ -269,6 +269,29 @@ just surface.
 
 ---
 
+## LOCK  stale `.git/index.lock` recovery
+
+Symptom: any git command fails with `fatal: Unable to create '.../.git/index.lock': File exists.`
+This is not a real concurrent process in the sandbox-to-native handoff pattern used across this
+ecosystem  it is a lock file orphaned by a prior sandbox-side git call that never released it
+(the sandbox often cannot unlink files it created against a natively-mounted repo).
+
+**Do not retry the same command in a loop.** The lock will not clear itself.
+
+1. From the **sandbox**, never write-git against a repo that will also be published natively 
+   read-only checks only, using `git --no-optional-locks status` / `--no-optional-locks log`.
+2. To clear a stuck lock, remove it from the **native** machine that owns the working tree:
+   ```bash
+   rm -f "[repo-path]/.git/index.lock"
+   ```
+3. Re-run the original command. If it fails again immediately with the same error, check for a
+   real editor or git GUI holding the repo open before removing the lock a second time.
+
+This is a recurring failure across sandbox/native handoff sessions  treat step 1 as the default
+posture (never as an afterthought), not just the fix for step 2.
+
+---
+
 ## CONFLICT  resolving merge conflicts autonomously
 
 Most conflicts are mechanical. Some require a domain decision. Know the difference and act
