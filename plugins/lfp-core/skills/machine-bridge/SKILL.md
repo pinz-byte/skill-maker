@@ -112,3 +112,12 @@ needing the local venv or real credentials) versus what you can do in the sandbo
   default hypothesis is a version/mount lag, not a code error. Reload before you rewrite.
 - Pairs with [[herald-config-doctor]] (unmounted report paths) and the project deploy script
   (which already self-resolves SRC  keep it that way).
+- **Pairs with `builder-handoff` (VMC skill).** That skill fires on the same moment this one
+  does -- about to hand the user a multi-step terminal sequence -- but takes the opposite
+  move: instead of hardening the command for the human to run, it writes a BUILDER_PROMPT
+  file for a builder-agent session to execute instead. When a BUILDER_PROMPT file is being
+  generated, this skill's checklist still applies to the command blocks inside it -- a
+  builder session is exactly as vulnerable to a hardcoded dead session path or an unfilled
+  placeholder as a human pasting a command would be. Run the Handoff Checklist against the
+  BUILDER_PROMPT's command blocks before considering it finished, not just against commands
+  aimed directly at the user.

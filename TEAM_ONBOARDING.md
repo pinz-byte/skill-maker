@@ -51,12 +51,20 @@ In Cowork: Settings -> Capabilities -> add the marketplace, then enable both plu
 
 ## Staying current
 
+`claude plugin marketplace update` only refreshes the list of available versions --
+it does NOT update plugins you already installed. Confirmed 2026-07-03: plugins can
+stay pinned to their install-time version for weeks after this command reports
+success. Run all four lines, not just the first:
+
 ```bash
 claude plugin marketplace update subastop-ai
+claude plugin update subastop-thinkers@subastop-ai
+claude plugin update subastop-core@subastop-ai
+claude plugin update subastop-design@subastop-ai
 ```
 
-Run it whenever LFP announces an update, or add a daily scheduled job. New and
-updated skills appear automatically — no reinstall per project needed.
+Run this whenever LFP announces an update. Running only the first line will report
+success while leaving your skills silently out of date.
 
 ## Using the skills
 
