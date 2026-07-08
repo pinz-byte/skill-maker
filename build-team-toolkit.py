@@ -24,10 +24,10 @@ TEAM_GROUPS = {
          "ceo-planner"],
     ),
     "subastop-core": (
-        "Core working discipline: git, self-audit, continuity, context files, delegation.",
+        "Core working discipline: git, self-audit, continuity, context files, delegation, deploy verification.",
         ["git-ops", "self-audit", "continuity-seed", "soul-builder",
          "projectmd-auditor", "projectmd-optimizer", "offload", "auditor-general",
-         "meta-no-bare-names"],
+         "meta-no-bare-names", "pwa-verify"],
     ),
     "subastop-design": (
         "Subastop Design System v3 enforcement for all ecosystem UIs.",
@@ -69,10 +69,24 @@ def main():
 
     if OUT.exists():
         try:
-            shutil.rmtree(OUT)  # clean regen (native)
+            # Clean regen, but NEVER touch OUT/.git -- team-toolkit carries its own
+            # independent repo (pushed to subascorp/ai-toolkit). A wholesale rmtree(OUT)
+            # destroys that repo and its remote on every refresh, silently downgrading
+            # every "git add -A && git commit && git push" run from inside team-toolkit/
+            # into a no-op against a missing repo (git then walks up to the SKILL MAKER
+            # parent .git instead and commits there under a misleading message).
+            for child in OUT.iterdir():
+                if child.name == ".git":
+                    continue
+                if child.is_dir():
+                    shutil.rmtree(child)
+                else:
+                    child.unlink()
         except PermissionError:
             print("WARN: sandbox blocks unlink -- overwriting in place. "
                   "If you REMOVED a skill from TEAM_GROUPS, rebuild natively.")
+    else:
+        OUT.mkdir(parents=True, exist_ok=True)
     (OUT / ".claude-plugin").mkdir(parents=True, exist_ok=True)
 
     marketplace = {
@@ -120,6 +134,18 @@ def main():
 
     n = sum(len(s) for _, (_, s) in TEAM_GROUPS.items())
     print(f"OK: {len(TEAM_GROUPS)} plugins, {n} skills -> {OUT}")
+
+    if not (OUT / ".git").exists():
+        print(
+            "\nWARNING: team-toolkit/.git does not exist -- this directory has no repo of "
+            "its own yet. DO NOT run 'git add -A && git commit && git push' from inside "
+            "team-toolkit/ right now: with no .git here, git will silently fall through to "
+            "the SKILL MAKER parent repo and commit/push there instead (this has already "
+            "happened once). Run the one-time setup first:\n"
+            "    cd team-toolkit && git init -b main && git add -A "
+            "&& git commit -m 'feat: subastop-ai team toolkit v1' "
+            "&& gh repo create subascorp/ai-toolkit --private --source . --push"
+        )
 
 
 if __name__ == "__main__":

@@ -15,13 +15,31 @@ was retired 2026-05-29). Git is the transport; the marketplace tree is the paylo
    - `plugins/<plugin>/skills/<skill>/SKILL.md`
    Plugins/groups are defined in `GROUPS` inside that script. `plugin.json` omits
    `version` on purpose, so every commit reads as a new version (drives auto-update).
-3. `publish.sh` (M1 only) runs the build, commits `skills: rebuild marketplace (date)`,
-   and pushes. One command.
+3. `publish.sh` (M2 only, per the 2026-06-10 rehome -- see MIGRATION_RUNBOOK) runs the
+   build, commits `skills: rebuild marketplace (date)`, and pushes. One command.
 
 ```bash
-# On M1, after editing any SKILL.md or GROUPS:
-cd ~/Documents/Claude/Projects/skill-maker && ./publish.sh
+# On M2, after editing any SKILL.md or GROUPS:
+cd "/Users/lfp/Projects/SKILL MAKER" && ./publish.sh
 ```
+
+### CORRECTION (2026-07-03): the example path above was wrong and machine-mislabeled
+
+This block previously said "On M1" and pointed at `~/Documents/Claude/Projects/skill-maker`
+-- stale on both counts. Forensics from the same-day incident above: `~/Documents/Claude/Projects/skill-maker`
+on M2 turned out to be an ABANDONED clone that nobody had touched in ~a month (its reflog
+stopped at `f4a3469`, 2026-06-10, while the real marketplace kept advancing daily). The
+actual publishing clone the whole time was `/Users/lfp/Projects/SKILL MAKER` -- its reflog
+shows unbroken native commits from the 2026-06-10 clone straight through to today
+(`106ae49`), including every "rebuild marketplace" commit in between. That path is also
+what Cowork mounts as this project's working folder, so edits made in a Cowork session
+here and native `./publish.sh` runs both land in the SAME clone -- which is why this path,
+not the `~/Documents` one, is the real answer to "where does M2 publish from."
+
+Recommendation, not yet done: decommission `~/Documents/Claude/Projects/skill-maker` (or at
+minimum mark it read-only / non-canonical) so a future session doesn't get sent there again
+by old muscle memory. Left as a manual decision -- deleting a git working copy isn't done
+silently.
 
 ## Fail-loud grouping guard (added 2026-06-04)
 

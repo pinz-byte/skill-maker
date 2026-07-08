@@ -3,26 +3,65 @@
 > Ground truth for all Subastop ecosystem UIs: dashboards, cockpits, landing pages, evaluators.
 > Any code that deviates from this spec is WRONG until the spec says otherwise.
 
+> **Token provenance (2026-07-03):** the token block below was verified byte-for-byte against
+> `subastop-system.css` (`:root`) in the canonical **Subastop DS** project. Two errors were found
+> and fixed in this pass: `--line-dk` was recorded as `rgba(255,255,255,.08)` — the real value is
+> `.16`; and a token named `--cream` did not exist anywhere in the source — the real token at
+> `#F4F2EC` is named `--paper`. Both were silent drift from an earlier hand-copy of this reference,
+> not intentional divergence. If you find another mismatch, the CSS file wins, not this document.
+>
+> **Scope limit — read before trusting the component patterns below:** only the *tokens* section
+> was cross-checked against the canonical DS project. The dashboard-specific component patterns
+> further down (`.section-header`, `.glass-cell`, `.fnode`, `.sig`) do **not** appear anywhere in
+> the canonical Subastop DS project — that project covers the public marketing site and a
+> React starting-point library (Button, StatusBadge, StatCard, GlassPanel), not internal
+> dashboards/cockpits. Those patterns presumably originate from an actual dashboard codebase
+> (AVT / CarMatch / VMC) that was not available to check against. Treat the tokens below as
+> verified; treat the component patterns as unverified until checked against a real dashboard repo.
+
 ---
 
 ## CSS Custom Properties (Tokens)
 
-```css
-/* Colors */
---ink:       #08152F;   /* page background */
---navy:      #0D1F4E;   /* secondary surface */
---amber:     #F59E0B;   /* accent / CTA / numbers */
---green:     #10B981;   /* success / positive */
---error:     #DC2626;   /* danger / rejection */
---blue:      #1A56DB;   /* primary action */
---line-dk:   rgba(255,255,255,.08); /* subtle dividers */
---cream:     #F4F2EC;   /* text base */
+Full `:root` block, copied verbatim from `subastop-system.css` — do not hand-restate or rename
+these; hand-copies are exactly how the `--cream` / `--line-dk` drift happened.
 
-/* Typography stacks */
---disp:  'Outfit', sans-serif;       /* display / headings / hero numbers */
---sans:  'Inter', sans-serif;        /* body / UI copy */
---mono:  'IBM Plex Mono', monospace; /* labels / metadata / code */
+```css
+:root{
+  --ink:#08152F; --navy:#0D1F4E; --navy-700:#162B6A;
+  --blue:#1A56DB; --blue-700:#1D4ED8; --amber:#F59E0B;
+  --paper:#F4F2EC; --paper-2:#EDEAE1; --white:#fff;
+  --line:rgba(8,21,47,.14); --line-dk:rgba(255,255,255,.16); --muted:#5B6473;
+  --green:#10B981; --error:#DC2626;
+  --disp:'Outfit',sans-serif; --sans:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  --rglass:18px;
+}
 ```
+
+| Token | Value | Role | Used in dashboard scope? |
+|---|---|---|---|
+| `--ink` | `#08152F` | Page/body background | Yes — always the body bg |
+| `--navy` | `#0D1F4E` | Secondary surface | Yes |
+| `--navy-700` | `#162B6A` | Navy step (dark cards) | Yes, where used |
+| `--blue` | `#1A56DB` | Primary action | Yes |
+| `--blue-700` | `#1D4ED8` | Blue hover | Yes |
+| `--amber` | `#F59E0B` | Accent / CTA / numbers | Yes |
+| `--paper` | `#F4F2EC` | Warm off-white, light-section bg | **No** — dashboards never use a light bg |
+| `--paper-2` | `#EDEAE1` | Paper hover fill | **No** — marketing-site only |
+| `--white` | `#fff` | Card surface | Rarely |
+| `--line` | `rgba(8,21,47,.14)` | Hairline on light | **No** — pairs with `--paper`, not used on dark |
+| `--line-dk` | `rgba(255,255,255,.16)` | Hairline on dark | Yes — the dashboard default divider |
+| `--muted` | `#5B6473` | Secondary text on light | **No** — light-surface only |
+| `--green` | `#10B981` | Success / positive | Yes |
+| `--error` | `#DC2626` | Danger / rejection | Yes |
+| `--disp` | `'Outfit', sans-serif` | Display / hero numbers | Yes |
+| `--sans` | `'Inter', sans-serif` | Body / UI copy | Yes |
+| `--mono` | `'IBM Plex Mono', monospace` | Labels / metadata / code | Yes |
+| `--rglass` | `18px` | Glass panel radius | Yes |
+
+`--paper`, `--paper-2`, `--muted`, and `--line` exist in the canonical token set but belong to the
+marketing site's light "paper" sections — flag any dashboard/cockpit code that references them,
+since dashboards are dark-only per the Enforcement Checklist below.
 
 ---
 
