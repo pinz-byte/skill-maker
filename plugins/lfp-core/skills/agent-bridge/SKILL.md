@@ -84,6 +84,8 @@ look it up in this registry before sending.
 | Tenant Farm | Cowork M3 | `360da327-abb1-819a-9206-ce785d2d6547` |
 | Subascars | Cowork M3 | `360da327-abb1-81f1-82ac-ca47d195312f` |
 | apex-ultra | Cowork M1 | `368da327-abb1-817e-9d0c-ce184ee0a69b` |
+| Symbios Builder | Cowork M1 | `397da327-abb1-8111-8df3-d0298eee9784` |
+| ChatGPT | ChatGPT (web) | `397da327-abb1-81da-9512-c7785c3c9974` |
 <!-- INBOX_REGISTRY:END -->
 
 **Rule:** when sending, always include your own UUID in `REPLY TO`. When receiving, use the
