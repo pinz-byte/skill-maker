@@ -17,6 +17,8 @@ Usage: python3 build-marketplace.py
 import json, re, shutil, subprocess, sys
 from pathlib import Path
 
+import yaml
+
 MARKETPLACE_NAME = "lfp-skills"
 OWNER = {"name": "LFP (pinz-byte)"}
 MARKETPLACE_DESC = "LFP ecosystem skills: oversight thinkers, core ops, and apex trading."
@@ -30,7 +32,7 @@ GROUPS = {
     "lfp-core": (
         "Core ops/build/meta/comms/QA skills for every working project.",
         ["agent-bridge", "inbox-triage", "git-ops", "machine-bridge", "project-migrate", "self-audit", "reentry",
-         "continuity-seed", "soul-builder",
+         "continuity-seed", "session-bootstrap", "soul-builder",
          "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit",
          "gcp-iam-resolver", "herald-config-doctor",
          "projectmd-auditor", "projectmd-optimizer", "offload", "auditor-general",
@@ -49,6 +51,20 @@ ROOT = Path(__file__).resolve().parent
 
 def strip_non_ascii(s: str) -> str:
     return re.sub(r"[^\x00-\x7F\n\r\t ]", "", s)
+
+
+def parse_frontmatter(skill_md_path: Path) -> dict:
+    text = skill_md_path.read_text()
+    if not text.startswith("---"):
+        raise SystemExit(f"ERROR: {skill_md_path} missing YAML frontmatter (must start with '---')")
+    parts = text.split("---", 2)
+    if len(parts) < 3:
+        raise SystemExit(f"ERROR: {skill_md_path} malformed frontmatter (need opening and closing '---')")
+    try:
+        meta = yaml.safe_load(parts[1]) or {}
+    except yaml.YAMLError as e:
+        raise SystemExit(f"ERROR: {skill_md_path} invalid YAML frontmatter: {e}")
+    return meta
 
 
 def main():
@@ -82,6 +98,26 @@ def main():
             "ERROR: these built skills are not in any GROUP and would NOT "
             f"propagate:\n  {ungrouped}\n"
             "Add each to a plugin in GROUPS (build-marketplace.py), then rebuild."
+        )
+
+    # Fail-loud guard: catch the two known Cowork silent-rejection conditions
+    # before packaging (per .claude/rules/skill-authoring.md) -- description
+    # over 1024 chars, and "claude" appearing in the skill name (reserved word).
+    # Same PRAETOR-inspired principle as the ungrouped-skill check above: catch
+    # it at the one enforcement point that already works, before it ships.
+    violations = []
+    for skill in all_skills:
+        meta = parse_frontmatter(ROOT / skill / "SKILL.md")
+        name = str(meta.get("name", skill))
+        desc = str(meta.get("description", ""))
+        if len(desc) > 1024:
+            violations.append(f"{skill}: description is {len(desc)} chars (limit 1024)")
+        if "claude" in name.lower():
+            violations.append(f"{skill}: name '{name}' contains reserved word 'claude'")
+    if violations:
+        raise SystemExit(
+            "ERROR: skill(s) would be silently rejected by Cowork:\n  "
+            + "\n  ".join(violations)
         )
 
     marketplace = {
