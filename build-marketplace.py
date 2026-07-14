@@ -37,7 +37,7 @@ GROUPS = {
          "gcp-iam-resolver", "herald-config-doctor",
          "projectmd-auditor", "projectmd-optimizer", "offload", "auditor-general",
          "qa-mirror", "qa-sequence", "pwa-verify", "carmatch-intel", "disk-doctor", "notebooklm-bridge", "pm",
-         "space-steward", "inpositive-language", "project-handover"],
+         "space-steward", "inpositive-language", "project-handover", "skillmaker-publish"],
     ),
     "lfp-apex": (
         "APEX live-money trading council -- scope to trading projects only.",
