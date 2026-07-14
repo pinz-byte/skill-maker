@@ -44,6 +44,10 @@ GROUPS = {
         ["apex-builder-gate", "apex-ultra-council", "council-call", "council-debate",
          "council-global"],
     ),
+    "lfp-copy": (
+        "Tone and copy conversion skills for sales/lead-gen outreach content.",
+        ["patel-tone-converter"],
+    ),
 }
 
 ROOT = Path(__file__).resolve().parent

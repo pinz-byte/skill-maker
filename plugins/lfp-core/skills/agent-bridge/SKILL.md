@@ -86,6 +86,7 @@ look it up in this registry before sending.
 | apex-ultra | Cowork M1 | `368da327-abb1-817e-9d0c-ce184ee0a69b` |
 | Symbios Builder | Cowork M1 | `397da327-abb1-8111-8df3-d0298eee9784` |
 | ChatGPT | ChatGPT (web) | `397da327-abb1-81da-9512-c7785c3c9974` |
+| Digital Edge | Cowork M-DigitalEdge | `392da327-abb1-81b4-b772-c929c756bc45` |
 <!-- INBOX_REGISTRY:END -->
 
 **Rule:** when sending, always include your own UUID in `REPLY TO`. When receiving, use the

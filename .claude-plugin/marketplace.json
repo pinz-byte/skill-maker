@@ -19,6 +19,11 @@
       "name": "lfp-apex",
       "source": "./plugins/lfp-apex",
       "description": "APEX live-money trading council -- scope to trading projects only."
+    },
+    {
+      "name": "lfp-copy",
+      "source": "./plugins/lfp-copy",
+      "description": "Tone and copy conversion skills for sales/lead-gen outreach content."
     }
   ]
 }
