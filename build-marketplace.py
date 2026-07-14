@@ -46,7 +46,7 @@ GROUPS = {
     ),
     "lfp-copy": (
         "Tone and copy conversion skills for sales/lead-gen outreach content.",
-        ["patel-tone-converter"],
+        ["patel-tone-converter", "copy-masterkey"],
     ),
 }
 
