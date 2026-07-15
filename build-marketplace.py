@@ -32,7 +32,7 @@ GROUPS = {
     "lfp-core": (
         "Core ops/build/meta/comms/QA skills for every working project.",
         ["agent-bridge", "inbox-triage", "git-ops", "machine-bridge", "project-migrate", "self-audit", "reentry",
-         "continuity-seed", "session-bootstrap", "soul-builder",
+         "continuity-seed", "session-bootstrap", "soul-builder", "arise",
          "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit",
          "gcp-iam-resolver", "herald-config-doctor",
          "projectmd-auditor", "projectmd-optimizer", "offload", "auditor-general",

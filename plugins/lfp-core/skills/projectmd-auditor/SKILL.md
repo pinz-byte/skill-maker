@@ -23,6 +23,27 @@ ones are bloated, stale, or missing the behavior baseline -- so you optimize the
 worst offenders deliberately instead of guessing. It changes nothing; it
 produces a ranked report. Run it before projectmd-optimizer.
 
+## Step 0: Mount check (run FIRST, before any find/scan)
+
+Cowork sessions only see folders the user selected in the picker. Running the
+scanner before confirming the target root is actually mounted produces a false
+"no CLAUDE.md found" -- indistinguishable from "you have none" when the real
+cause is "the root isn't reachable this session" (observed: a run against
+`~/Dev/*` returned empty because only an unrelated iCloud mirror was mounted,
+and the audit had to backtrack after already reporting a hollow result).
+
+1. `ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$'`
+2. Compare against the scan root (default or user-named). If the root's picker
+   folder isn't in that list, STOP before running `find` or `scan_project.py`.
+   Report which picker folder to add:
+   ```
+   MOUNTS  ACTION NEEDED
+   Scan root [root] isn't reachable this session -- mount [picker folder name]
+   in the Cowork folder picker, then re-run.
+   ```
+3. If the root is reachable (or the user explicitly accepts scanning whatever
+   is mounted), proceed to Scope below.
+
 ## Scope
 
 Default root: `~/Documents/Claude/Projects/`. Accept a different root if the
