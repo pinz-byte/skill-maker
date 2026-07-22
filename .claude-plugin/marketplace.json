@@ -24,6 +24,11 @@
       "name": "lfp-copy",
       "source": "./plugins/lfp-copy",
       "description": "Tone and copy conversion skills for sales/lead-gen outreach content."
+    },
+    {
+      "name": "lfp-design",
+      "source": "./plugins/lfp-design",
+      "description": "Personal-project design-system enforcement (non-Subastop) -- e-ink brand tokens and component drift checks."
     }
   ]
 }

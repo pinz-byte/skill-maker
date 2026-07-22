@@ -42,6 +42,12 @@ Read the CF entry as the STATE  the alive thread, what's in motion, what POPs ca
 
 **Degraded hot-load signal:** If the CF body contains "Synthesis call failed", "401", or is a stub with no real content, name it explicitly: *"CF hot-load degraded  synthesis has been failing since [last good date]. Reading forward from what's known, not from fresh synthesis."* Don't fabricate state from a failure stub.
 
+### Phase 2a  Time boundary check
+
+Run the `time-boundary` skill's protocol here  do not re-derive this logic locally; it lives once, shared across every project, so arise and every other orientation skill read the same boundary line instead of drifting out of sync.
+
+In this Cowork context, its "last contact" signal (Step 2) resolves to the CF entry's own last-edited timestamp from the Phase 2 fetch above  no separate lookup needed. Its output is one line, stated before Phase 5: *"[X since last contact  new session, not a continuation]"* or *"[continuing]"*. A casual opener ("ok", "let's go") is conversational tone, not evidence against the clock; do not let it override the Step 3 line.
+
 ### Phase 3  Focus Queue
 
 Query Focus Queue (`b5c3c737-1219-4888-a081-bbfde500e180`).

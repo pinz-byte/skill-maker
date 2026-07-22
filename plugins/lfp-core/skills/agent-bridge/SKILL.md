@@ -140,6 +140,30 @@ REPLY TO: [Your project]  Inbox (UUID: [page-uuid])
 ---
 ```
 
+### Step 3b  DB-mode recipients (Symbios): create a row, not a block
+
+Some inboxes are DATABASES processed autonomously by a Notion Claude External Agent
+(page-added trigger). For these recipients, do NOT prepend a block. Instead create a
+page IN the inbox data source with:
+
+- Properties: `Name` = one-line subject, `From` = your project + machine,
+  `Host` = select (Cowork M1/M2/M3, Claude.ai Chat, ChatGPT, M-DigitalEdge),
+  `Status` = UNREAD, `Expects Response` = checkbox, `Reply To UUID` = your inbox UUID.
+- Page content: the full message body (same completeness rules as Step 3).
+
+Current DB-mode recipients (canonical list lives in `.claude/rules/inbox-registry.md`):
+
+| Project | Data source ID |
+|---|---|
+| Symbios | `fad1c35d-0143-473b-b119-439aa643640a` |
+
+The agent ("Symbios Courier") processes the row within minutes: acts, writes ONE outcome
+comment on the row (prefixed `RESPONSE:` when a reply is expected), sets Status to READ.
+If you expect a response, re-check the ROW'S COMMENTS  not the flat inbox page. The
+receiving side needs no "you've got mail". The legacy Symbios flat page remains as
+archive/fallback until cutover completes; if the agent has not processed a message
+within an hour, fall back to the flat-page path and flag it.
+
 ### Step 4  Notify via Slack (optional  never block if unavailable)
 
 If `#agent-bridge` exists on this workspace, post:

@@ -32,6 +32,24 @@ Always use page UUIDs when routing bridge messages.
 | ChatGPT | ChatGPT (web) | 397da327-abb1-81da-9512-c7785c3c9974 |
 | Digital Edge | Cowork M-DigitalEdge | 392da327-abb1-81b4-b772-c929c756bc45 |
 
+## DB-mode inboxes (autonomous agent processing)
+
+Some inboxes are DATABASES, not flat pages. Messages to them are created as DB rows
+(pages in the data source), NOT prepended blocks. A Notion Claude External Agent
+("Symbios Courier") triggers on page-added and processes autonomously — no
+"you've got mail" needed on the receiving side.
+
+| Project | DB page ID | Data source ID | Since |
+|---|---|---|---|
+| Symbios | 1ed6e797-bcd8-4d99-8de0-51e82b0f2983 | fad1c35d-0143-473b-b119-439aa643640a | 2026-07-20 |
+
+SEND to a DB-mode inbox: create a page in the data source with properties
+Name (subject), From, Host (select), Status=UNREAD, Expects Response (checkbox),
+Reply To UUID (your inbox UUID); full message body as page content.
+The legacy Symbios flat-page inbox (360da327-abb1-8115-bf58-fcaec470ec53) remains
+as archive and manual fallback until cutover completes (3 consecutive clean
+processings — see PLAN_SYMBIOS_EXTERNAL_AGENT_2026-07-20.md).
+
 ## When adding a new project
 
 1. Create the Notion inbox page

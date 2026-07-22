@@ -1,0 +1,7 @@
+{
+  "name": "lfp-design",
+  "description": "Personal-project design-system enforcement (non-Subastop) -- e-ink brand tokens and component drift checks.",
+  "author": {
+    "name": "LFP"
+  }
+}

@@ -32,12 +32,12 @@ GROUPS = {
     "lfp-core": (
         "Core ops/build/meta/comms/QA skills for every working project.",
         ["agent-bridge", "inbox-triage", "git-ops", "machine-bridge", "project-migrate", "self-audit", "reentry",
-         "continuity-seed", "session-bootstrap", "soul-builder", "arise",
+         "continuity-seed", "session-bootstrap", "soul-builder", "arise", "time-boundary",
          "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit",
          "gcp-iam-resolver", "herald-config-doctor",
          "projectmd-auditor", "projectmd-optimizer", "offload", "auditor-general",
          "qa-mirror", "qa-sequence", "pwa-verify", "carmatch-intel", "disk-doctor", "notebooklm-bridge", "pm",
-         "space-steward", "inpositive-language", "project-handover", "skillmaker-publish"],
+         "space-steward", "inpositive-language", "project-handover", "skillmaker-publish", "verify-loop"],
     ),
     "lfp-apex": (
         "APEX live-money trading council -- scope to trading projects only.",
@@ -47,6 +47,10 @@ GROUPS = {
     "lfp-copy": (
         "Tone and copy conversion skills for sales/lead-gen outreach content.",
         ["patel-tone-converter", "copy-masterkey"],
+    ),
+    "lfp-design": (
+        "Personal-project design-system enforcement (non-Subastop) -- e-ink brand tokens and component drift checks.",
+        ["astrodiary-ds-enforcer"],
     ),
 }
 
