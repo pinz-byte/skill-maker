@@ -45,8 +45,8 @@ GROUPS = {
          "council-global"],
     ),
     "lfp-copy": (
-        "Tone and copy conversion skills for sales/lead-gen outreach content.",
-        ["patel-tone-converter", "copy-masterkey"],
+        "Tone and copy skills for VMC Subastas commercial content -- outreach sequences and marketplace listings.",
+        ["patel-tone-converter", "copy-masterkey", "vmc-listing-copy"],
     ),
     "lfp-design": (
         "Personal-project design-system enforcement (non-Subastop) -- e-ink brand tokens and component drift checks.",
