@@ -4,3 +4,5 @@
 .claude/settings.local.json
 team-toolkit/
 *.skill
+.claude/hooks/fired.log
+__pycache__/
