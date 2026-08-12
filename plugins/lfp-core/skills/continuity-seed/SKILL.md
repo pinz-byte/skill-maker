@@ -1,16 +1,17 @@
 ---
 name: continuity-seed
-description: |
-  Generates a structured handoff document for cross-session continuity -- designed to be loaded into a
-  fresh Claude session to resume work at full speed with zero re-discovery. Use this skill whenever the
-  user says "seed", "continuity seed", "save state", "generate a seed", "handoff", "session handoff",
-  "save my progress", "I'm about to run out of context", "before we lose this", "wrap this up for next
-  session", "create a checkpoint", "checkpoint this", or any request to preserve workflow state for a
-  future session. Also trigger when the user says "I need to start a new chat" or "context is getting
-  heavy". This is NOT the same as /compact -- compact compresses context within a session to free space.
-  Continuity-seed creates a loadable briefing for a NEW session. Think of compact as compression,
-  continuity-seed as serialization. Use continuity-seed at session boundaries. Use compact mid-session.
-  If unsure which one the user wants, ask.
+description: >-
+  | Generates a structured handoff document for cross-session continuity -- designed to be
+  loaded into a fresh Claude session to resume work at full speed with zero re-discovery. Use
+  this skill whenever the user says "seed", "continuity seed", "save state", "generate a
+  seed", "handoff", "session handoff", "save my progress", "I'm about to run out of context",
+  "before we lose this", "wrap this up for next session", "create a checkpoint", "checkpoint
+  this", or any request to preserve workflow state for a future session. Also trigger when the
+  user says "I need to start a new chat" or "context is getting heavy". This is NOT the same
+  as /compact -- compact compresses context within a session to free space. Continuity-seed
+  creates a loadable briefing for a NEW session. Use continuity-seed at session boundaries.
+  Use compact mid-session. If unsure which one the user wants, ask. NOT reentry, which
+  reconstructs state from the machines: this one writes the briefing.
 metadata:
   intent: orient
 ---

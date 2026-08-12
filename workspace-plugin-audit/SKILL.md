@@ -1,18 +1,16 @@
 ---
 name: workspace-plugin-audit
-description: >
-  Diagnoses a not-found or out-of-date skill in the lfp-skills GitHub marketplace
-  (live channel; iCloud is retired). Two failure modes look identical: (1) the
-  plugin was never installed on this machine, or (2) it IS installed but pinned to
-  a stale commit, because `claude plugin marketplace update` refreshes only the
-  marketplace cache and does NOT bump already-installed plugins -- confirmed
-  2026-07-03 when a plugin sat 5+ weeks / 52 commits stale despite daily
-  marketplace updates. Use whenever the user says "skill not found", "unknown
-  skill", "isn't uploaded to the system", "plugin missing", "is X installed here",
-  "audit my plugins", "which machines have X", "I just published, what needs
-  updating where", or "why doesn't this skill work here". Also trigger on "still
-  not showing up", "marketplace not refreshed", "it's not picking up the new
-  skill", "it works in SKILL MAKER but not here", or right after any publish to
+description: >-
+  Diagnoses a not-found or out-of-date skill in the lfp-skills GitHub marketplace (live
+  channel; iCloud is retired). Two failure modes look identical: (1) the plugin was never
+  installed on this machine, or (2) it IS installed but pinned to a stale commit, because
+  `claude plugin marketplace update` refreshes only the marketplace cache and does NOT bump
+  already-installed plugins . Use whenever the user says "skill not found", "unknown skill",
+  "isn't uploaded to the system", "plugin missing", "is X installed here", "audit my plugins",
+  "which machines have X", "I just published, what needs updating where", or "why doesn't this
+  skill work here". NOT auditor-general (reviews builds): this is marketplace install state.
+  Also trigger on "still not showing up", "marketplace not refreshed", "it's not picking up
+  the new skill", "it works in SKILL MAKER but not here", or right after any publish to
   produce the per-machine update checklist.
 metadata:
   intent: audit

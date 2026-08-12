@@ -92,8 +92,8 @@ PLUGIN_EXCEPT = {"apex-builder-gate": "audit"}
 # tolerated "at most one naked skill per lot", which meant a single regression
 # never failed the build -- verified by stripping toolbox's clause and watching
 # check still return PASS. Remove a name from this set the moment it is trimmed.
-TRIM_DEBT = {"workspace-plugin-audit", "space-steward", "qa-mirror",
-             "continuity-seed", "project-migrate"}
+TRIM_DEBT = set()   # emptied 2026-08-12 by partition-lots-round5.py -- all five cleared.
+                    # The gate warns if a name here is no longer naked, so it cannot rot.
 
 
 def names_a_sibling(desc, me, lotmates):
@@ -249,12 +249,16 @@ def cmd_check(skills):
     if un:
         warns.append(f"{len(un)}/{len(skills)} skills have no declared intent "
                      f"(run: skill-intent-audit.py assign --apply)")
-    fat = sorted(((len(s["desc"]), s["dir"]) for s in skills if len(s["desc"]) > WARN_CAP),
-                 reverse=True)
-    if fat:
-        warns.append(f"{len(fat)} descriptions over {WARN_CAP} chars, approaching the "
-                     f"1024 silent-failure limit: "
-                     + ", ".join(f"{d}={n}" for n, d in fat[:5]))
+    # Warn on skills that can no longer ACCEPT text, not merely long ones. "38 over 900"
+    # fired every run and demanded a catalog-wide trim that was never justified -- a
+    # warning nobody can act on is the herald-config-doctor anti-pattern. Headroom under
+    # MIN_HEADROOM is actionable: that skill cannot take a new trigger or clause.
+    tight = sorted(((1024 - len(s["desc"]), s["dir"]) for s in skills
+                    if 1024 - len(s["desc"]) < 40))
+    if tight:
+        warns.append(f"{len(tight)} skills have under 40 chars of headroom and cannot accept "
+                     f"a new trigger phrase or clause without a trim: "
+                     + ", ".join(f"{d}({h} free)" for h, d in tight[:6]))
     for w in warns:
         print("WARN  " + w)
     if not fails:

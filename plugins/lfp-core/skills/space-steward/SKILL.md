@@ -1,17 +1,17 @@
 ---
 name: space-steward
-description: >
+description: >-
   Operational-hygiene controller for Cowork workspaces - governs the machinery that
   proliferates per space: scheduled tasks (lists, disables, dedupes), installed/draft skills
-  (surfaces + tees up removals), and stale Recents threads (surfaces only; closing is UI-only).
-  Two modes. STEWARD audits and cleans the CURRENT space, then writes its inventory to a central
-  registry. ROLLUP reads that registry plus the global session list for the cross-space view and
-  duplicate detection. Use whenever the user says "space steward", "take control of this space",
-  "clean up this workspace", "what's running in this space", "audit scheduled tasks", "too many
-  scheduled tasks", "stale threads", "draft skills piling up", "this workspace is a mess",
-  "operational hygiene", "what automation is live", "prune this space", or "steward sweep". NOT
-  /pm - that reads the Dispatch Ledger (work-task state); this governs a space's live machinery.
-  Pairs with workspace-plugin-audit and skill-miner.
+  (surfaces + tees up removals), and stale Recents threads (surfaces only; closing is
+  UI-only). Two modes. STEWARD audits and cleans the CURRENT space, then writes its inventory
+  to a central registry. ROLLUP reads that registry plus the global session list for the
+  cross-space view and duplicate detection. Use whenever the user says "space steward", "take
+  control of this space", "clean up this workspace", "what's running in this space", "audit
+  scheduled tasks", "too many scheduled tasks", "stale threads", "draft skills piling up",
+  "this workspace is a mess", "prune this space", or "steward sweep". NOT /pm - that reads the
+  Dispatch Ledger (work-task state); this governs a space's live machinery. Pairs with
+  workspace-plugin-audit; NOT projectmd-optimizer, which compresses one CLAUDE.md.
 metadata:
   intent: hygiene
 ---

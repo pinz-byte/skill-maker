@@ -1,19 +1,17 @@
 ---
 name: qa-mirror
-description: >
-  Desk QA companion. The phone screen is mirrored to the Mac (iPhone Mirroring
-  app preferred; QuickTime wired or AirPlay as fallbacks); this skill grabs the
-  live screen on demand via computer control
-  and comments on the QA state -- no phone screenshots, no files, no photo-
-  gallery contamination. Use whenever the user says "look", "grab", "capture",
-  "what's on screen", "check the phone", "see the phone", "look at the phone",
-  "snapshot the phone", "QA this", "what do you see", or signals they just did
-  something on the device they want eyes on. Also fire on session activation:
-  "start QA", "QA mode", "I'm testing on the phone", "watch my QA", "mirror is
-  up". Per-turn pull model -- there is no background watching; each grab
-  captures the current live mirror. For the roaming case (testing away from the
-  Mac, no mirror) this skill does not apply -- that needs a push-to-folder
-  setup instead. Pairs with QA_MIRROR_SETUP.md for the one-time mirror config.
+description: >-
+  Desk QA companion. The phone screen is mirrored to the Mac (iPhone Mirroring app preferred;
+  QuickTime wired or AirPlay as fallbacks); this skill grabs the live screen on demand via
+  computer control and comments on the QA state -- no phone screenshots, no files, no photo-
+  gallery contamination. Use whenever the user says "look", "grab", "capture", "what's on
+  screen", "check the phone", "see the phone", "look at the phone", "snapshot the phone", "QA
+  this", "what do you see", or signals they just did something on the device they want eyes
+  on. Also fire on session activation: "start QA", "QA mode", "I'm testing on the phone",
+  "watch my QA", "mirror is up". Per-turn pull model -- there is no background watching; each
+  grab captures the current live mirror. For the roaming case (testing away from the Mac, no
+  mirror) this skill does not apply -- that needs a push-to-folder setup instead. NOT
+  carmatch-intel (reads a data pipeline): this grabs the live mirrored phone screen.
 metadata:
   intent: observe
 ---

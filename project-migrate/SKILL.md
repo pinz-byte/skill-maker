@@ -1,18 +1,17 @@
 ---
 name: project-migrate
-description: >
-  Migrates a Cowork project from one machine to another (M1/M2/M3) without losing
-  the state that does not travel with files. Git is the transport; the real work is
-  the non-portable state inventory: agent memory, launchd jobs, credentials, registry
-  rows, source-of-truth invariants. Two modes: REHOME (target becomes canonical,
-  source decommissioned) and SATELLITE (clone for occasional work, source stays
-  canonical). Use this skill whenever the user says "migrate this project",
-  "move [project] to M2/M1/M3", "rehome this project", "transfer project to another
-  machine", "this project should live on", "make M2 the home of", "clone this project
-  on", "project migration", or names two machines alongside a move verb. Also trigger
-  on "switch machines", "M1 to M2", "decommission this machine's copy", or casual
-  variations like "let's move this over to the other Mac". Scope: Cowork projects
-  with a filesystem only -- Chat-hosted projects have nothing to move.
+description: >-
+  Migrates a Cowork project from one machine to another (M1/M2/M3) without losing the state
+  that does not travel with files. Git is the transport; the real work is the non-portable
+  state inventory: agent memory, launchd jobs, credentials, registry rows, source-of-truth
+  invariants. Two modes: REHOME (target becomes canonical, source decommissioned) and
+  SATELLITE (clone for occasional work, source stays canonical). Use this skill whenever the
+  user says "migrate this project", "move [project] to M2/M1/M3", "rehome this project",
+  "transfer project to another machine", "this project should live on", "make M2 the home of",
+  "clone this project on", "project migration", or names two machines alongside a move verb.
+  Also trigger on "switch machines", "M1 to M2", "decommission this machine's copy". Scope:
+  Cowork projects with a filesystem only. NOT project-handover, which documents a transfer to
+  new owners: this moves machines.
 metadata:
   intent: relay
 ---
