@@ -14,6 +14,8 @@ description: >
   work built in this Claude session or by Claude generally -- that is a
   different skill (codex-audit-handoff), because Claude cannot audit its
   own build.
+metadata:
+  intent: audit
 ---
 
 # Audit Codex's Build

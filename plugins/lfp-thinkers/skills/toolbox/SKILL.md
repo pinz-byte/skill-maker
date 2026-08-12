@@ -12,6 +12,8 @@ description: >
   compose, or when the user is unsure what is available. This is a meta-skill: it does not
   do the work itself, it chooses and chains the skills that do. For "what skills do I have"
   as a pure list, the native skill list is enough; toolbox is for deciding what to USE.
+metadata:
+  intent: reason
 ---
 
 # Toolbox - The Skill Router

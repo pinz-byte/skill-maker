@@ -12,6 +12,8 @@ description: >
   when the user says "I found a bug" or "this is wrong"  in that case, run a retrospective audit
   to understand what the audit should have caught. This skill is the difference between an agent
   that delivers and an agent that delivers reliably.
+metadata:
+  intent: audit
 ---
 
 # Self-Audit Protocol

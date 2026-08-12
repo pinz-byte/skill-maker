@@ -12,6 +12,8 @@ description: >
   in the SKILL MAKER project. Also trigger right after a new or edited skill is added to
   this repo and the next step is shipping it, or when the user asks "how do I publish",
   "how do I run it", or "how to run it" in this project context.
+metadata:
+  intent: build
 ---
 # SKILL MAKER Publish
 

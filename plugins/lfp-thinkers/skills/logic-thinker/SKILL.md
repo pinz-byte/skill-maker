@@ -12,6 +12,8 @@ description: >
   brings a conclusion and wants the path to it made explicit and checkable, or convenes the
   roundtable. For attacking an idea use critical-thinker; for options creative-thinker; for
   a stuck loop loop-breaker.
+metadata:
+  intent: reason
 ---
 
 # Logic Thinker

@@ -13,6 +13,8 @@ description: >
   before declaring it done. Pairs with qa-mirror for the live screen capture at the desk, and
   with carmatch-deploy / phased-deploy for the deploy itself -- this skill starts where those
   leave off.
+metadata:
+  intent: audit
 ---
 
 # PWA Verify -- Post-Deploy Device Verification

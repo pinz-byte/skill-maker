@@ -13,6 +13,7 @@ description: >
   triage intent or cold-open. Pairs with agent-bridge: that skill acts, this one surfaces --
   same inbox, partitioned triggers so no phrase means both.
 metadata:
+  intent: relay
   type: comms
 ---
 

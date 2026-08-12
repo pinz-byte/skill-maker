@@ -13,6 +13,8 @@ description: >
   before emitting any bash block the user will paste, and when you write or edit a
   deploy/launchd/cron script. Fire on "why did that command fail" when it is a placeholder
   or stale path.
+metadata:
+  intent: diagnose
 ---
 
 # Machine Bridge

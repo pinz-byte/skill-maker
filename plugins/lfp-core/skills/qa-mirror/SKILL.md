@@ -14,6 +14,8 @@ description: >
   captures the current live mirror. For the roaming case (testing away from the
   Mac, no mirror) this skill does not apply -- that needs a push-to-folder
   setup instead. Pairs with QA_MIRROR_SETUP.md for the one-time mirror config.
+metadata:
+  intent: observe
 ---
 
 # qa-mirror -- Desk QA via Live Phone Mirror

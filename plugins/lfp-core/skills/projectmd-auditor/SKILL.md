@@ -12,6 +12,8 @@ description: >
   baseline presence. Outputs a ranked table worst-first with the primary issue
   and a recommended action. Never modifies anything. Pairs with
   projectmd-optimizer (this maps; optimizer executes one file at a time).
+metadata:
+  intent: audit
 ---
 
 # projectmd-auditor -- Rank CLAUDE.md Files by Optimization Need

@@ -10,6 +10,8 @@ description: >
   mail", or any request to pass information or a question from one project to another. Also
   trigger when the user says "got mail?" or just "mail". This is the connective tissue of the
   ecosystem  every cross-project communication routes through inboxes, not through the user.
+metadata:
+  intent: relay
 ---
 
 # Agent Bridge  Project Mail System

@@ -8,6 +8,8 @@ description: >
   on "rule check", "rule gate", or "what should I remember before we start". This skill exists
   so no project needs its own CLAUDE.md copy of the rules. One Notion page, one skill, all
   projects. Fire it at session open before any artifact authoring begins.
+metadata:
+  intent: orient
 ---
 
 # Session Rules

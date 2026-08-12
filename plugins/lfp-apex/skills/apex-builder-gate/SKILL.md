@@ -12,6 +12,8 @@ description: >
   apex", or starts a session in the apex-desk-v2 working directory. This gate
   exists because prior builder sessions shipped 10 known failure patterns
   repeatedly. It fires every time, no exceptions.
+metadata:
+  intent: audit
 ---
 
 # APEX Builder Gate

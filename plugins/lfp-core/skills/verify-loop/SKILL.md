@@ -14,6 +14,8 @@ description: >
   self-judgment there is theater; route to critical-thinker or self-audit. Not for
   reviewing a finished deliverable after the fact -- that is self-audit (pre-
   delivery) or auditor-general (post-hoc, external examiner).
+metadata:
+  intent: audit
 ---
 
 # Verify Loop -- Build Against an Independent Check

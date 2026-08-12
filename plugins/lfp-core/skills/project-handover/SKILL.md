@@ -14,6 +14,8 @@ description: >
   before transferring any codebase or infra to a new owner. Distinct from
   continuity-seed (session resume) and soul-builder (persistent intention) -- this is
   a one-time transfer to people outside the room.
+metadata:
+  intent: relay
 ---
 
 # Project Handover

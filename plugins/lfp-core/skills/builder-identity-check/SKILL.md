@@ -11,6 +11,8 @@ description: >
   change", "was this Claude or Codex", or "confirm the builder before
   auditing". Also trigger proactively whenever an audit is about to run
   and the builder's identity is stated ambiguously or not at all.
+metadata:
+  intent: audit
 ---
 
 # Builder Identity Check -- Shared Pre-Flight for Cross-Tool Audits

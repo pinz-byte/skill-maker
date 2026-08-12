@@ -13,6 +13,8 @@ description: >
   on "switch machines", "M1 to M2", "decommission this machine's copy", or casual
   variations like "let's move this over to the other Mac". Scope: Cowork projects
   with a filesystem only -- Chat-hosted projects have nothing to move.
+metadata:
+  intent: relay
 ---
 
 # Project Migrate -- Machine-to-Machine Cowork Project Migration

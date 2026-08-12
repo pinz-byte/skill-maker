@@ -15,6 +15,8 @@ description: >
   or unclear, ask rather than assume. Do not use this for work Codex
   built -- that is a different skill (audit-codex-build) and runs
   directly instead of via handoff.
+metadata:
+  intent: delegate
 ---
 
 # Codex Audit Handoff -- Preparing an Independent Review of Claude's Build

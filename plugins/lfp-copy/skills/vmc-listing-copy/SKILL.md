@@ -14,6 +14,8 @@ description: >
   Subastas", "texto para vmcsubastas.com/oferta/...", "copy comercial de VMC
   subasta", o peguen datos de un vehiculo/activo (marca, modelo, ano, km,
   condicion) pidiendo convertirlos en ficha de subasta.
+metadata:
+  intent: write
 ---
 
 # VMC Listing Copy -- Fichas de Oferta en Subasta

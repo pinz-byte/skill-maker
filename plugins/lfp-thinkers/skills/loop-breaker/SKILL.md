@@ -12,6 +12,8 @@ description: >
   critique an idea. Also trigger when the user describes attempting the same fix more than
   once, or expresses frustration at a problem that will not resolve. Fire even on casual
   variations like "this is doing my head in" or "we're going round in circles again".
+metadata:
+  intent: reason
 ---
 
 # Loop-Breaker

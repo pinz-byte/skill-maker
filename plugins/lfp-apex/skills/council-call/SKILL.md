@@ -13,6 +13,8 @@ description: >
   the verdict, which the user then reads back from Notion. NOT a cached-tier
   display (use council / council-global) and NOT files-free reasoning (use
   apex-ultra-council). This skill triggers real work and consumes its result.
+metadata:
+  intent: decide
 ---
 
 # Council Call  convene a live session on one ticker, from anywhere

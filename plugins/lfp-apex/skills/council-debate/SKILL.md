@@ -13,6 +13,8 @@ description: >
   (non-executable). NOT a cached-tier display (use council / council-global).
   Requires the apex-ultra repo + secrets .env + python3.13 on local disk: M1
   only. One Anthropic call per run. Prints a verdict; never places an order.
+metadata:
+  intent: decide
 ---
 
 # Council Debate  on-demand single-ticker evaluator (M1)

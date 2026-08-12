@@ -13,6 +13,8 @@ description: >
   este mensaje", "correo para ejecutivos", "mensaje de prospeccion/lead-gen", o pegue un
   borrador de email/mensaje pidiendo que se mejore  -  incluso si no menciona a Neil Patel
   explicitamente.
+metadata:
+  intent: write
 ---
 # Conversor de Tono  -  Metodologia Patel
 ## Que hace este skill

@@ -12,6 +12,8 @@ description: >
   "operational hygiene", "what automation is live", "prune this space", or "steward sweep". NOT
   /pm - that reads the Dispatch Ledger (work-task state); this governs a space's live machinery.
   Pairs with workspace-plugin-audit and skill-miner.
+metadata:
+  intent: hygiene
 ---
 
 # Space Steward - operational hygiene for a Cowork space

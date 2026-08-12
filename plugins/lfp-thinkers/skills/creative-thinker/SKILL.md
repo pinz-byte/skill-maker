@@ -14,6 +14,8 @@ description: >
   opportunity. For any problem, recurring or not -- but for problems that keep
   failing in a loop use loop-breaker, and for pure scrutiny of an existing plan
   use critical-thinker.
+metadata:
+  intent: reason
 ---
 
 # Creative Thinker

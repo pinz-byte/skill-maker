@@ -10,6 +10,8 @@ description: >
   (M1, M2, M3) alongside any state or status question. Fire even on casual openers like "ok let's
   get back to it" or "what were we building"  the re-entry need is almost always implicit at
   session start, not explicit.
+metadata:
+  intent: orient
 ---
 
 # Reentry  Session Re-Entry Protocol

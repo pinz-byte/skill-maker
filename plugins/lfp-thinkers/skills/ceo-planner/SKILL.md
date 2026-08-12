@@ -13,6 +13,8 @@ description: >
   not validate whether the idea should exist (IB Phase 0), run the final ship gate
   (pre-deliver), price dependencies (dependency-audit), or destroy premises
   (critical-thinker). It orchestrates those, never re-implements them.
+metadata:
+  intent: reason
 ---
 
 # CEO Planner -- Founder-Mode Plan Review

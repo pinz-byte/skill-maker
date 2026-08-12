@@ -11,6 +11,8 @@ description: >
   and this skill should fire immediately without waiting for the user to ask. Fire on
   "vm_bundles", "Claude taking up space", "claude sessions disk", or any mention of
   Claude app data eating storage.
+metadata:
+  intent: diagnose
 ---
 
 # Disk Doctor

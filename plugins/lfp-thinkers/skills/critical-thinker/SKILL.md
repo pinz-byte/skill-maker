@@ -12,6 +12,8 @@ description: >
   argument and the context clearly calls for honest scrutiny rather than validation.
   Fire on philosophical questions, strategic dilemmas, and any situation where the
   user seems to want a thinking partner that will push back hard.
+metadata:
+  intent: reason
 ---
 
 # Critical Thinker Companion

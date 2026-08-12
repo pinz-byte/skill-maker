@@ -12,6 +12,8 @@ description: >
   "is anything dead", "did the scrape run", "show me the numbers", or any request to
   surface the current operational state of the extractor/comparables pipeline. This
   is a READ-ONLY status pull - it never writes or deploys.
+metadata:
+  intent: observe
 ---
 
 # CarMatch Intel - On-Demand Pipeline Snapshot

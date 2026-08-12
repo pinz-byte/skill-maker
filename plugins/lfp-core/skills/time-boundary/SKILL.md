@@ -2,6 +2,8 @@
 name: time-boundary
 description: >
   All-terrain time-awareness check for the start of any conversation, on any surface (Cowork M1/M2/M3, Claude.ai Chat) and any project -- not scoped to Symbios or to any one skill. Establishes how much time has passed since the last interaction using whatever signal is actually available, and states the boundary explicitly instead of letting conversational tone ("ok", "let's go", "hey") imply continuity that the clock doesn't support. Use at the start of any conversation, on any bare or casual opener, or any point where a heavier orientation skill (arise, reentry, session-bootstrap) is about to deliver continuity-dependent content -- this runs first and feeds them. Also trigger on "what time is it", "how long has it been", "check the time", "time boundary", "are we in a new session", "are you tracking time", or any request to be aware of elapsed time. Fire it even without being asked, before any state-dependent response, same as arise and reentry -- a skipped time check is a silent failure, not a harmless one.
+metadata:
+  intent: orient
 ---
 
 ## Why this exists

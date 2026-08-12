@@ -14,6 +14,8 @@ description: >
   not showing up", "marketplace not refreshed", "it's not picking up the new
   skill", "it works in SKILL MAKER but not here", or right after any publish to
   produce the per-machine update checklist.
+metadata:
+  intent: audit
 ---
 
 # Workspace Plugin Audit
