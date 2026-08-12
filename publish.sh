@@ -10,11 +10,11 @@ python3 build-marketplace.py
 
 git add -A
 if git diff --cached --quiet; then
-  echo "Nothing changed — already published."
-  exit 0
+  echo "No source changes to commit — refreshing plugin pins anyway."
+else
+  git commit -m "skills: rebuild marketplace ($(date '+%Y-%m-%d %H:%M'))"
+  git push
 fi
-git commit -m "skills: rebuild marketplace ($(date '+%Y-%m-%d %H:%M'))"
-git push
 
 # Self-refresh this machine's marketplace and every installed lfp-skills plugin.
 # Marketplace update alone does not bump installed plugin pins.
@@ -25,9 +25,15 @@ if command -v claude >/dev/null 2>&1; then
   while read -r plugin; do
     [ -n "$plugin" ] || continue
     echo "Updating installed $plugin..."
-    claude plugin update "$plugin" || echo "  (update failed for $plugin — run it manually)"
+    claude plugin update "$plugin" --scope user  || echo "  (user-scope update failed for $plugin)"
+    claude plugin update "$plugin" --scope project || true
   done < <(claude plugin list 2>&1 | grep -oE '[A-Za-z0-9_-]+@lfp-skills' | sort -u || true)
 fi
 echo ""
 echo "Published. Other machines self-refresh via their daily launchd job."
 echo "For an immediate refresh there, run ./install-refresh.sh once to install/update that job."
+echo ""
+echo "NOT DONE BY THIS SCRIPT: the Cowork ACCOUNT plugin store."
+echo "  Local CLI pins and the account store are independent."
+echo "  Cowork/cloud sessions read the account store, which only updates"
+echo "  from the Claude desktop app. Bump lfp-* there or those sessions stay stale."
