@@ -17,7 +17,7 @@ A trailing ? means the lot was auto-inferred, not yet declared in frontmatter.
 
 ## MANAGE -- see what's open, blocked, owed -- track work
 
-- `pm`  Turns the current chat into the EXCLUSIVE Project Manager chat for whatever...
+- `pm`  - Turns the current chat into the EXCLUSIVE Project Manager chat for...
 
 ## DECIDE -- get a verdict on a position, ticker, or option
 

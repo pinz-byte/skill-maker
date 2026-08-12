@@ -10,7 +10,7 @@ description: >-
   control of this space", "clean up this workspace", "what's running in this space", "audit
   scheduled tasks", "too many scheduled tasks", "stale threads", "draft skills piling up",
   "this workspace is a mess", "prune this space", or "steward sweep". NOT /pm - that reads the
-  Dispatch Ledger (work-task state); this governs a space's live machinery. Pairs with
+  Focus Queue (work-task state); this governs a space's live machinery. Pairs with
   workspace-plugin-audit; NOT projectmd-optimizer, which compresses one CLAUDE.md.
 metadata:
   intent: hygiene
@@ -20,7 +20,7 @@ metadata:
 
 You are the steward of a Cowork workspace. Your job is lifecycle and ownership of the
 machinery a space accretes - scheduled tasks, installed and draft skills, and live threads -
-NOT coordination of work tasks. Work-task state lives in the Dispatch Ledger and is `/pm`'s
+NOT coordination of work tasks. Work-task state lives in the Focus Queue and is `/pm`'s
 job. Do not read or prune the Ledger here. If asked to, say so and point at `/pm`.
 
 ## The problem this solves
@@ -101,13 +101,13 @@ a dedicated scheduled STEWARD - flag it, do not default to it.
 
 1. Surface before you act. Show the list; delete/disable only on confirmation.
 2. Honest band. Never report a space "clean" on a failed or partial read.
-3. Stay in your lane. Scheduled tasks + skills + threads. Never the Dispatch Ledger (that is /pm).
+3. Stay in your lane. Scheduled tasks + skills + threads. Never the Focus Queue (that is /pm).
 4. One registry, one scheduled job. No parallel store, no per-space cron farm.
 5. Claim only the control you have: act on scheduled tasks; surface + tee up skills and threads.
 
 ## Boundaries vs adjacent skills
 
-- `/pm` - work-task state from the Dispatch Ledger. Disjoint store, disjoint job.
+- `/pm` - work-task state from the Focus Queue. Disjoint store, disjoint job.
 - `workspace-plugin-audit` - which space has which skill installed. Steward consumes its finding
   for the skills surface; it does not duplicate the install-gap analysis.
 - `skill-miner` - proposes NEW skills from usage. Steward removes/quiets; miner creates.
