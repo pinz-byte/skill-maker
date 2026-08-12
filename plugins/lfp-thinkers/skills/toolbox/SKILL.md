@@ -1,17 +1,17 @@
 ---
 name: toolbox
-description: >
+description: >-
   The skill router. Call it when you have a task but are not sure which skill fits, or want
   the agent to survey the whole skill set and choose deliberately instead of firing on
   whatever keyword matched. It builds a LIVE inventory of installed and deployed skills,
   classifies the task, recommends the right skill (or composition of skills, in order), and
-  then invokes them. Use whenever the user says "toolbox", "open the toolbox", "what's in
-  the box", "what skill should I use", "which skill fits this", "what do you have for this",
-  "pick the right skill", "route this", "what tools do I have for X", "catalog the skills",
-  or "what can you do here". Also fire when a task is multi-faceted and several skills might
-  compose, or when the user is unsure what is available. This is a meta-skill: it does not
-  do the work itself, it chooses and chains the skills that do. For "what skills do I have"
-  as a pure list, the native skill list is enough; toolbox is for deciding what to USE.
+  then invokes them. Use whenever the user says "toolbox", "open the toolbox", "what's in the
+  box", "what skill should I use", "which skill fits this", "pick the right skill", "route
+  this", "what tools do I have for X", "catalog the skills", or "what can you do here". Also
+  fire when a task is multi-faceted and several skills might compose, or when the user is
+  unsure what is available. This is a meta-skill: it does not do the work itself: it chooses
+  and chains critical-thinker or loop-breaker. For "what skills do I have" as a pure list, the
+  native skill list is enough; toolbox is for deciding what to USE.
 metadata:
   intent: reason
 ---

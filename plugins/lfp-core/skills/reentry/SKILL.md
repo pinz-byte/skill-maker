@@ -1,15 +1,16 @@
 ---
 name: reentry
-description: >
+description: >-
   Re-entry protocol for multi-machine, multi-initiative builds. Reconstructs full operational
   context at the start of any session  what was built, what broke, what's blocked, and where
-  to start. Use this skill whenever the user says "reentry", "/reentry", "hutch", "where were we",
-  "reconnect", "morning session", "session start", "what's the state", "catch me up", "where are
-  we", "what did we do last", "what's left", "bring me up to speed", "I'm back", or any variation
-  of starting a new work session after a gap. Also trigger when the user mentions a machine by name
-  (M1, M2, M3) alongside any state or status question. Fire even on casual openers like "ok let's
-  get back to it" or "what were we building"  the re-entry need is almost always implicit at
-  session start, not explicit.
+  to start. Use this skill whenever the user says "reentry", "/reentry", "hutch", "where were
+  we", "reconnect", "morning session", "session start", "what's the state", "catch me up",
+  "where are we", "what did we do last", "what's left", "bring me up to speed", "I'm back", or
+  any variation of starting a new work session after a gap. Also trigger when the user
+  mentions a machine by name (M1, M2, M3) alongside any state or status question. Fire even on
+  casual openers like "ok let's get back to it" or "what were we building"  the re-entry need
+  is almost always implicit at session start, not explicit. NOT continuity-seed (writes a
+  handoff doc) or session-bootstrap (mounts folders): this reconstructs build state.
 metadata:
   intent: orient
 ---

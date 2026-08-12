@@ -1,17 +1,17 @@
 ---
 name: gcp-iam-resolver
-description: >
-  Resolves GCP IAM permission errors in one pass instead of guessing roles by trial and
-  error. The Subastop/Herald stack is GCP-heavy (Cloud Run, Secret Manager, Firestore,
-  scheduler), and permission tasks have repeatedly burned multiple round-trips guessing
-  role names that do not exist or are too narrow (e.g. trying secretCreator, then
-  secretVersionAdder, before landing on the role that actually grants the permission).
-  Use this skill whenever you hit "PERMISSION_DENIED", a 403 on a GCP call, "what role do
-  I need", "add iam binding", "secretmanager permission", "service account can't", "grant
-  access to", "role ... is not supported for this resource", or any gcloud IAM task. Also
-  trigger before suggesting any add-iam-policy-binding so the role string is validated
-  first. Fire on "gcp says denied", "permission denied on resource", or "which role grants
-  X". Default project context: subastop-herald and related Subastop GCP projects.
+description: >-
+  Resolves GCP IAM permission errors in one pass instead of guessing roles by trial and error.
+  The Subastop/Herald stack is GCP-heavy (Cloud Run, Secret Manager, Firestore, scheduler),
+  and permission tasks have repeatedly burned multiple round-trips guessing role names that do
+  not exist or are too narrow (e.g. trying secretCreator, then secretVersionAdder, before
+  landing on the role that actually grants the permission). Use this skill whenever you hit
+  "PERMISSION_DENIED", a 403 on a GCP call, "what role do I need", "add iam binding",
+  "secretmanager permission", "service account can't", "grant access to", "role ... is not
+  supported for this resource", or any gcloud IAM task. Also trigger before suggesting any
+  add-iam-policy-binding so the role string is validated first. Fire on "gcp says denied",
+  "permission denied on resource", or "which role grants X". Default project context:
+  subastop-herald and related Subastop GCP projects. NOT herald-config-doctor: GCP IAM only.
 metadata:
   intent: diagnose
 ---

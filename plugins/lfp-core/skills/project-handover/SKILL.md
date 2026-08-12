@@ -1,19 +1,18 @@
 ---
 name: project-handover
-description: >
-  Produces a full, verified project handover package for transferring a project to a
-  new team or owner -- documentation plus an audit, for people who never touched the
-  project before. Two phases: DOCUMENT (architecture map, access/credentials
-  inventory, runbooks, known issues, decision log, contacts, glossary) and VERIFY
-  (confirm every access grant, credential, and recurring job is actually current, not
-  assumed -- catching stale roles, silently-broken automation, and duplicate or
-  untracked state). Built from real handover failure modes: stale org access, a job
-  silently pointing at a dead path for weeks, unsynced repo clones. Use whenever the
-  user says handover this project, hand off to the team, transfer ownership, prepare
-  handover docs, onboard the new team, or document this for handover. Also trigger
-  before transferring any codebase or infra to a new owner. Distinct from
-  continuity-seed (session resume) and soul-builder (persistent intention) -- this is
-  a one-time transfer to people outside the room.
+description: >-
+  Produces a full, verified project handover package for transferring a project to a new team
+  or owner -- documentation plus an audit, for people who never touched the project before.
+  Two phases: DOCUMENT (architecture map, access/credentials inventory, runbooks, known
+  issues, decision log, contacts, glossary) and VERIFY (confirm every access grant,
+  credential, and recurring job is actually current, not assumed -- catching stale roles,
+  silently-broken automation, and duplicate or untracked state). Use whenever the user says
+  handover this project, hand off to the team, transfer ownership, prepare handover docs,
+  onboard the new team, or document this for handover. Also trigger before transferring any
+  codebase or infra to a new owner. Distinct from continuity-seed (session resume) and
+  soul-builder (persistent intention) -- this is a one-time transfer to people outside the
+  room. NOT project-migrate (moves a project between machines): this transfers ownership to
+  people.
 metadata:
   intent: relay
 ---

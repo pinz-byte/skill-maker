@@ -1,17 +1,17 @@
 ---
 name: carmatch-intel
-description: >
+description: >-
   On-demand operator intel for the CarMatch / AVT Extractor pipeline. Pulls a live
-  RED/AMBER/GREEN snapshot of pipeline freshness, extraction health, comparables
-  coverage, anomalies, and ingestion volume from the getIntel Cloud Function, and
-  renders it ranked by what an intraday operator must act on first. Use this skill
-  whenever the user says "intel", "pull intel", "pipeline status", "extractor status",
-  "carmatch status", "how's the pipeline", "are the scrapers running", "is the data
-  fresh", "what's stale", "coverage report", "any anomalies", "ops snapshot", "what's
-  broken", or asks what the comparables data looks like right now. Also trigger on
-  "is anything dead", "did the scrape run", "show me the numbers", or any request to
-  surface the current operational state of the extractor/comparables pipeline. This
-  is a READ-ONLY status pull - it never writes or deploys.
+  RED/AMBER/GREEN snapshot of pipeline freshness, extraction health, comparables coverage,
+  anomalies, and ingestion volume from the getIntel Cloud Function, and renders it ranked by
+  what an intraday operator must act on first. Use this skill whenever the user says "intel",
+  "pull intel", "pipeline status", "extractor status", "carmatch status", "how's the
+  pipeline", "are the scrapers running", "is the data fresh", "what's stale", "coverage
+  report", "any anomalies", "ops snapshot", "what's broken", or asks what the comparables data
+  looks like right now. Also trigger on "is anything dead", "did the scrape run", "show me the
+  numbers", or any request to surface the current operational state of the
+  extractor/comparables pipeline. This is a READ-ONLY status pull - it never writes or
+  deploys. NOT qa-mirror (live phone screen): this reads the CarMatch pipeline.
 metadata:
   intent: observe
 ---

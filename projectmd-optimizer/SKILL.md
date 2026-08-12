@@ -1,19 +1,17 @@
 ---
 name: projectmd-optimizer
-description: >
-  Takes one CLAUDE.md (named directly or surfaced by projectmd-auditor) and
-  produces an optimized version -- compressed, tiered, baseline-aware -- with a
-  reviewable diff and nothing deleted silently. Use whenever the user says
-  "optimize this CLAUDE.md", "compress this context file", "claudemd optimize",
-  "reduce tokens in CLAUDE.md", "split this CLAUDE.md", "slim my context file",
-  "tier this CLAUDE.md", or wants a single context file made leaner without
-  losing meaning. Runs three passes: compression (prose to imperative one-
-  liners), tiering (ALWAYS / ON-DEMAND / ARCHIVE), and baseline (insert the
-  Karpathy behavior block if absent). Outputs a lean root CLAUDE.md plus one
-  docs/*.md per on-demand section referenced by plain-path pointers (not
-  @import, which loads every session), and a token-delta summary. Never
-  deletes content without showing it first; never rewrites
-  custom-marked sections; never paraphrases build commands.
+description: >-
+  Takes one CLAUDE.md (named directly or surfaced by projectmd-auditor) and produces an
+  optimized version -- compressed, tiered, baseline-aware -- with a reviewable diff and
+  nothing deleted silently. Use whenever the user says "optimize this CLAUDE.md", "compress
+  this context file", "claudemd optimize", "reduce tokens in CLAUDE.md", "split this
+  CLAUDE.md", "slim my context file", "tier this CLAUDE.md", or wants a single context file
+  made leaner without losing meaning. Runs three passes: compression (prose to imperative one-
+  liners), tiering (ALWAYS / ON-DEMAND / ARCHIVE), and baseline (insert the Karpathy behavior
+  block if absent). Outputs a lean root CLAUDE.md plus one docs/*.md per on-demand section
+  referenced by plain-path pointers (not @import, which loads every session), and a
+  token-delta summary. Never deletes content without showing it first; never rewrites
+  custom-marked sections; never paraphrases build commands. NOT space-steward: one CLAUDE.md.
 metadata:
   intent: hygiene
 ---

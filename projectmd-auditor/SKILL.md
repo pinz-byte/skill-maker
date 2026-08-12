@@ -1,17 +1,16 @@
 ---
 name: projectmd-auditor
-description: >
-  Read-only scanner that finds every CLAUDE.md across the ecosystem and ranks
-  which ones need optimization -- before anything is touched. Use whenever the
-  user says "audit my CLAUDE.md files", "which CLAUDE.md files are bloated",
-  "claudemd audit", "which projects need optimization", "scan for bloated
-  context files", "are my context files stale", "which CLAUDE.md should I
-  compress", or wants a map of context-file health before editing. Measures
-  per file: approximate token count, prose vs imperative density, stale markers
-  (old dates, dead infra, unresolved TODOs), @import usage, and Karpathy
-  baseline presence. Outputs a ranked table worst-first with the primary issue
-  and a recommended action. Never modifies anything. Pairs with
-  projectmd-optimizer (this maps; optimizer executes one file at a time).
+description: >-
+  Read-only scanner that finds every CLAUDE.md across the ecosystem and ranks which ones need
+  optimization -- before anything is touched. Use whenever the user says "audit my CLAUDE.md
+  files", "which CLAUDE.md files are bloated", "claudemd audit", "which projects need
+  optimization", "scan for bloated context files", "are my context files stale", "which
+  CLAUDE.md should I compress", or wants a map of context-file health before editing. Measures
+  per file: approximate token count, prose vs imperative density, stale markers (old dates,
+  dead infra, unresolved TODOs), @import usage, and Karpathy baseline presence. Outputs a
+  ranked table worst-first with the primary issue and a recommended action. Never modifies
+  anything. Pairs with projectmd-optimizer (this maps; optimizer executes one file at a time).
+  NOT auditor-general (reviews builds and fixes): this only ranks CLAUDE.md context files.
 metadata:
   intent: audit
 ---

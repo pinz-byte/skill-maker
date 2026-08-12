@@ -1,20 +1,17 @@
 ---
 name: codex-audit-handoff
-description: >
-  Prepares a handoff package so Codex can independently audit work Claude
-  built -- this skill does not itself perform an audit, because Claude
-  auditing its own build would defeat the purpose of independent review.
-  Writes an AUDIT_HANDOFF file (what was built, the original brief, and
-  instructions to use auditor-general's exact report skeleton) plus a
-  paste-ready kickoff message for the user to run in a native Codex
-  session. Use when the user asks to "have Codex check my work", "get an
-  outside audit of what Claude built", "don't let Claude grade its own
-  homework", "cross-check this with Codex", or names Claude specifically
-  as the builder of something that needs independent review. Confirm
-  Claude actually built the work before proceeding -- if that is unstated
-  or unclear, ask rather than assume. Do not use this for work Codex
-  built -- that is a different skill (audit-codex-build) and runs
-  directly instead of via handoff.
+description: >-
+  Prepares a handoff package so Codex can independently audit work Claude built -- this skill
+  does not itself perform an audit, because Claude auditing its own build would defeat the
+  purpose of independent review. Writes an AUDIT_HANDOFF file (what was built, the original
+  brief, and instructions to use auditor-general's exact report skeleton) plus a paste-ready
+  kickoff message for the user to run in a native Codex session. Use when the user asks to
+  "have Codex check my work", "get an outside audit of what Claude built", "don't let Claude
+  grade its own homework", "cross-check this with Codex", or names Claude specifically as the
+  builder of something that needs independent review. Confirm Claude actually built the work
+  before proceeding -- if that is unstated or unclear, ask rather than assume. Do not use this
+  for work Codex built -- that is a different skill (audit-codex-build) and runs directly
+  instead of via handoff. NOT offload: this packages work for Codex.
 metadata:
   intent: delegate
 ---

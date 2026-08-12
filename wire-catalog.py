@@ -23,7 +23,7 @@ Safe to re-run. Prints what it changed and what it found already done.
 
 import re, sys, pathlib
 
-BLOCK_ON_CHECK = False   # flip to True once `skill-intent-audit.py check` exits 0
+BLOCK_ON_CHECK = True    # flip to True once `skill-intent-audit.py check` exits 0
 
 ROOT = pathlib.Path(__file__).resolve().parent
 changed, skipped, failed = [], [], []

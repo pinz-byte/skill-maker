@@ -1,18 +1,17 @@
 ---
 name: offload
-description: >
-  Spin up a cheaper subagent (Sonnet or Haiku) on demand from inside an
-  Opus-locked session to do heavy read/research/analysis work, so Opus stays
-  the orchestrator and only ingests the small result. The Agent-tool model
-  override is honored even when the session model picker is locked to Opus.
-  Use whenever the user says "offload this", "delega esto", "delega a sonnet",
-  "hazlo barato", "spinea un agente barato", "spin a cheap agent", "no gastes
-  Opus en esto", "manda esto a un subagente", "delegate this", "cheap subagent
-  for this", "haz esto con sonnet/haiku", or wants to avoid burning Opus on
-  bulk or heavy work. Best for work a subagent can fully self-contain --
-  reading large files, web research, multi-file code scans, data crunching --
-  where Opus never needs to see the raw data. Not for work that needs Opus to
-  read the data itself, nor for computer-use/screenshot capture in a subagent.
+description: >-
+  Spin up a cheaper subagent (Sonnet or Haiku) on demand from inside an Opus-locked session to
+  do heavy read/research/analysis work, so Opus stays the orchestrator and only ingests the
+  small result. The Agent-tool model override is honored even when the session model picker is
+  locked to Opus. Use whenever the user says "offload this", "delega esto", "delega a sonnet",
+  "hazlo barato", "spinea un agente barato", "spin a cheap agent", "no gastes Opus en esto",
+  "manda esto a un subagente", "delegate this", "cheap subagent for this", "haz esto con
+  sonnet/haiku", or wants to avoid burning Opus on bulk or heavy work. Best for work a
+  subagent can fully self-contain -- reading large files, web research, multi-file code scans,
+  data crunching -- where Opus never needs to see the raw data. Not for work that needs Opus
+  to read the data itself, nor for computer-use/screenshot capture in a subagent. NOT
+  codex-audit-handoff (packages work for Codex): this spins a cheaper Claude subagent.
 metadata:
   intent: delegate
 ---

@@ -1,16 +1,16 @@
 ---
 name: disk-doctor
-description: >
+description: >-
   Mac disk space diagnosis and cleanup skill. Identifies what is eating disk space and
-  generates safe, targeted cleanup commands -- with special knowledge of Claude's own
-  data accumulation (vm_bundles, caches, sessions). Use whenever the user says "disk is
-  full", "running out of space", "free up space", "clean my mac", "disk doctor",
-  "disk cleanup", "what's taking space", "why is my disk full", "need more disk space",
-  or any variation. Also trigger automatically when the bash sandbox fails to start
-  with "Not enough disk space" or "Workspace unavailable" -- that is a disk emergency
-  and this skill should fire immediately without waiting for the user to ask. Fire on
-  "vm_bundles", "Claude taking up space", "claude sessions disk", or any mention of
-  Claude app data eating storage.
+  generates safe, targeted cleanup commands -- with special knowledge of Claude's own data
+  accumulation (vm_bundles, caches, sessions). Use whenever the user says "disk is full",
+  "running out of space", "free up space", "clean my mac", "disk doctor", "disk cleanup",
+  "what's taking space", "why is my disk full", "need more disk space", or any variation. Also
+  trigger automatically when the bash sandbox fails to start with "Not enough disk space" or
+  "Workspace unavailable" -- that is a disk emergency and this skill should fire immediately
+  without waiting for the user to ask. Fire on "vm_bundles", "Claude taking up space", "claude
+  sessions disk", or any mention of Claude app data eating storage. NOT machine-bridge
+  (sandbox-to-machine handoff) or gcp-iam-resolver: Mac disk space only.
 metadata:
   intent: diagnose
 ---

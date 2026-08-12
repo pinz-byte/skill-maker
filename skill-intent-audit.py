@@ -86,6 +86,16 @@ LOT_NAMES = {l[0] for l in LOTS}
 PLUGIN_PRIOR = {"lfp-thinkers": "reason", "lfp-copy": "write", "lfp-apex": "decide"}
 PLUGIN_EXCEPT = {"apex-builder-gate": "audit"}
 
+# Skills whose descriptions are too long to carry a clause without breaching the
+# 1024 ceiling (see partition-lots-round2.py, MIN_HEADROOM). This is DEBT, listed
+# explicitly so the gate stays strict for everything else: an earlier version
+# tolerated "at most one naked skill per lot", which meant a single regression
+# never failed the build -- verified by stripping toolbox's clause and watching
+# check still return PASS. Remove a name from this set the moment it is trimmed.
+TRIM_DEBT = {"workspace-plugin-audit", "space-steward", "qa-mirror",
+             "continuity-seed", "project-migrate"}
+
+
 def names_a_sibling(desc, me, lotmates):
     """A description is disambiguated when it NAMES another skill in its own lot.
 
@@ -218,11 +228,23 @@ def cmd_check(skills):
     by = collections.defaultdict(list)
     for s in skills:
         by[s["lot"]].append(s)
+    debt_seen = []
     for lot, rows in sorted(by.items()):
-        naked = [r["dir"] for r in rows if not r["disambig"]]
-        if len(rows) > 1 and len(naked) > 1:
-            fails.append(f"lot '{lot}': {len(rows)} skills, {len(naked)} with no "
-                         f"disambiguation clause -> {', '.join(sorted(naked))}")
+        if len(rows) < 2:
+            continue
+        naked = sorted(r["dir"] for r in rows if not r["disambig"])
+        excused = [n for n in naked if n in TRIM_DEBT]
+        unexcused = [n for n in naked if n not in TRIM_DEBT]
+        debt_seen += excused
+        if unexcused:
+            fails.append(f"lot '{lot}': names no sibling -> {', '.join(unexcused)}")
+    if debt_seen:
+        warns.append(f"{len(debt_seen)} skills excused as TRIM_DEBT (description too long "
+                     f"for a clause): {', '.join(sorted(debt_seen))}")
+    stale_debt = TRIM_DEBT - set(debt_seen)
+    if stale_debt:
+        warns.append(f"TRIM_DEBT lists {', '.join(sorted(stale_debt))} but they are no longer "
+                     f"naked -- remove from the set")
     un = sorted(s["dir"] for s in skills if not s["declared"])
     if un:
         warns.append(f"{len(un)}/{len(skills)} skills have no declared intent "

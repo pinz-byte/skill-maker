@@ -1,17 +1,17 @@
 ---
 name: self-audit
-description: >
+description: >-
   Self-auditing protocol for Cowork agents and Claude Code builders. Runs automatically before
-  delivering any completed task — code, research, file operations, document creation, multi-step
-  workflows, or data transformations. The agent reviews its own work for correctness, completeness,
-  and quality; fixes what it can silently; and presents a brief audit summary alongside the deliverable.
-  
-  Use this skill on every task completion, not just when things feel uncertain. Trigger on: "audit
-  my work", "check this before delivering", "self-review", "verify this", "quality check", or
-  automatically at the end of any non-trivial task before the agent presents its output. Also trigger
-  when the user says "I found a bug" or "this is wrong" — in that case, run a retrospective audit
-  to understand what the audit should have caught. This skill is the difference between an agent
-  that delivers and an agent that delivers reliably.
+  delivering any completed task — code, research, file operations, document creation,
+  multi-step workflows, or data transformations. The agent reviews its own work for
+  correctness, completeness, and quality; fixes what it can silently; and presents a brief
+  audit summary alongside the deliverable. Use this skill on every task completion, not just
+  when things feel uncertain. Trigger on: "audit my work", "check this before delivering",
+  "self-review", "verify this", "quality check", or automatically at the end of any
+  non-trivial task before the agent presents its output. Also trigger when the user says "I
+  found a bug" or "this is wrong" — in that case, run a retrospective audit to understand what
+  the audit should have caught. This skill is the difference between an agent that delivers
+  and an agent that delivers reliably. NOT auditor-general: the builder checks its own work.
 metadata:
   intent: audit
 ---

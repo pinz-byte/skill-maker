@@ -1,19 +1,17 @@
 ---
 name: apex-ultra-council
-description: >
-  Convene a LIVE APEX MASTERS Council pass under extended reasoning on a named
-  ticker or setup — the seven voices (Elliott, Hannah, Marco, Theodore, Iris,
-  Felix, Gideon) each argue, then synthesize into a single verdict: GO /
-  NEAR-MISS / PASS with a 0-100 asymmetry score, action, R:R against the hard
-  2:1 floor, entry, and the Gideon-override flag. This is the GENERATIVE
-  counterpart to the read-only "council" skill: council SHOWS cached machine
-  verdicts; apex-ultra-council DELIBERATES a fresh one. Trigger on "apex ultra",
-  "ultra council", "/ultra", "convene the council", "deep council", "full
-  council pass", "run the council on X", "what would the council say about X",
-  "deliberate X", "ultra verdict", or any request to reason out a new Council
-  verdict rather than display an existing one. Fire even on casual variants like
-  "throw X at the council" or "give me the full seven-voice read on X". If the
-  user just wants today's cached tiers, use "council" instead.
+description: >-
+  Convene a LIVE APEX MASTERS Council pass under extended reasoning on a named ticker or setup
+  — the seven voices (Elliott, Hannah, Marco, Theodore, Iris, Felix, Gideon) each argue, then
+  synthesize into a single verdict: GO / NEAR-MISS / PASS with a 0-100 asymmetry score,
+  action, R:R against the hard 2:1 floor, entry, and the Gideon-override flag. This is the
+  GENERATIVE counterpart to the read-only "council" skill: council SHOWS cached machine
+  verdicts; apex-ultra-council DELIBERATES a fresh one. Trigger on "apex ultra", "ultra
+  council", "/ultra", "convene the council", "deep council", "full council pass", "run the
+  council on X", "what would the council say about X", "deliberate X", "ultra verdict", or any
+  request to reason out a new Council verdict rather than display an existing one. Fire even
+  on casual variants like "throw X at the council" or "give me the full seven-voice read on
+  X". For cached tiers use council-global instead.
 metadata:
   intent: decide
 ---

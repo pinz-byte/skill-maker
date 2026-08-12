@@ -1,19 +1,15 @@
 ---
 name: inpositive-language
-description: >
-  Enforces the InPositive Language System -- Subastop's positive-language framework --
-  on all copywriting: landing pages, ads, emails, product copy. Core rule: copy should
-  read as affirmative and possibility-oriented, never negated or deficit-framed. Runs
-  a 3-step edit pass: (1) flag negation and limiting words (no, not, don't, can't,
-  never, impossible, problem, fail, lack, difficult, worry, struggle); (2) reframe
-  each flag into an affirmative statement with the same factual meaning; (3) polish
-  for tone (ambitious, resilient, optimistic). Use whenever the user asks to write,
-  edit, review, or QA copy for Subastop or a brand deliverable, or says apply
-  InPositive, check the language, positive language pass, is this copy InPositive,
-  reframe this negative copy, no negative words, or run the InPositive check. Also
-  trigger before finalizing marketing copy, landing pages, ad creative, or email in a
-  Subastop project. Preserves negation required for legal, safety, or factual accuracy
-  -- flags those instead of rewriting.
+description: >-
+  Enforces the InPositive Language System -- Subastop's positive-language framework -- on all
+  copywriting: landing pages, ads, emails, product copy. Core rule: copy should read as
+  affirmative and possibility-oriented, never negated or deficit-framed. Use whenever the user
+  asks to write, edit, review, or QA copy for Subastop or a brand deliverable, or says apply
+  InPositive, check the language, positive language pass, is this copy InPositive, reframe
+  this negative copy, no negative words, or run the InPositive check. Also trigger before
+  finalizing marketing copy, landing pages, ad creative, or email in a Subastop project.
+  Preserves negation required for legal, safety, or factual accuracy. NOT patel-tone-converter
+  (persuasive rewrite): this enforces affirmative framing.
 metadata:
   intent: write
 ---

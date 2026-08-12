@@ -1,15 +1,16 @@
 ---
 name: notebooklm-bridge
-description: >
-  Two-way bridge between Google NotebookLM and Cowork. Queries any NotebookLM notebook
-  from inside a Cowork session using Chrome browser automation -- types the question,
-  submits it, waits for the sourced response, and returns the full answer. Enables
-  iterative Q&A: ask once, get more if needed, chain queries. Use whenever the user
-  says "ask the notebook", "query notebooklm", "get from the notebook", "what does the
-  notebook say about", "pull from notebooklm", "notebook bridge", "ask notebooklm",
-  "check the notebook", or provides a notebooklm.google.com URL alongside a question.
-  Also trigger when the user wants to retrieve research from NotebookLM to act on in
-  Cowork (summarize, draft, reformat, share). Default notebook: Claude AIOS Blueprint.
+description: >-
+  Two-way bridge between Google NotebookLM and Cowork. Queries any NotebookLM notebook from
+  inside a Cowork session using Chrome browser automation -- types the question, submits it,
+  waits for the sourced response, and returns the full answer. Enables iterative Q&A: ask
+  once, get more if needed, chain queries. Use whenever the user says "ask the notebook",
+  "query notebooklm", "get from the notebook", "what does the notebook say about", "pull from
+  notebooklm", "notebook bridge", "ask notebooklm", "check the notebook", or provides a
+  notebooklm.google.com URL alongside a question. Also trigger when the user wants to retrieve
+  research from NotebookLM to act on in Cowork (summarize, draft, reformat, share). Default
+  notebook: Claude AIOS Blueprint. NOT agent-bridge (project-to-project inboxes): this queries
+  a NotebookLM notebook.
 metadata:
   intent: relay
 ---

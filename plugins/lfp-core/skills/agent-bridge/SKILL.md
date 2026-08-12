@@ -1,6 +1,6 @@
 ---
 name: agent-bridge
-description: >
+description: >-
   Project-to-project messaging system for Claude agents across M1, M2, and M3. Every project
   has a permanent Notion inbox. Agents send messages directly to another project's inbox and
   respond to messages in their own. The only trigger the user ever needs is "you've got mail"
@@ -10,6 +10,7 @@ description: >
   mail", or any request to pass information or a question from one project to another. Also
   trigger when the user says "got mail?" or just "mail". This is the connective tissue of the
   ecosystem  every cross-project communication routes through inboxes, not through the user.
+  NOT inbox-triage (surfaces without acting): this reads, acts, and responds.
 metadata:
   intent: relay
 ---

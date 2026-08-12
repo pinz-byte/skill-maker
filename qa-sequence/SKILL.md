@@ -1,18 +1,17 @@
 ---
 name: qa-sequence
-description: >
-  Reviews a recorded QA pass cheaply by delegating all image analysis to a
-  Sonnet subagent, so screenshot/frame tokens never hit an Opus-locked main
-  session. Input is a screen recording (.mov/.mp4) or a folder of frames in a
-  mounted QA folder; output is a QA timeline (timestamp -> screen state ->
-  anomalies). Use whenever the user says "review the QA sequence", "analiza la
-  grabacion", "review the recording", "revisa el clip", "analiza el mov",
-  "qa sequence", "review the QA pass", "analiza la secuencia", "check the
-  recording", or hands over a screen recording of a QA session. Also fire when
-  the user wants QA analysis done without spending Opus on the images. This is
-  the batch/recorded counterpart to qa-mirror (live, on-demand grabs); use
-  qa-sequence when a recording exists and cost matters, qa-mirror for live
-  single looks. Pairs with QA_SEQUENCE_SETUP.md for the capture step.
+description: >-
+  Reviews a recorded QA pass cheaply by delegating all image analysis to a Sonnet subagent, so
+  screenshot/frame tokens never hit an Opus-locked main session. Input is a screen recording
+  (.mov/.mp4) or a folder of frames in a mounted QA folder; output is a QA timeline (timestamp
+  -> screen state -> anomalies). Use whenever the user says "review the QA sequence", "analiza
+  la grabacion", "review the recording", "revisa el clip", "analiza el mov", "qa sequence",
+  "review the QA pass", "analiza la secuencia", "check the recording", or hands over a screen
+  recording of a QA session. Also fire when the user wants QA analysis done without spending
+  Opus on the images. This is the batch/recorded counterpart to qa-mirror (live, on-demand
+  grabs); use qa-sequence when a recording exists and cost matters, qa-mirror for live single
+  looks. Pairs with QA_SEQUENCE_SETUP.md for the capture step. NOT self-audit or verify-loop:
+  this reviews a recorded QA pass frame by frame.
 metadata:
   intent: audit
 ---

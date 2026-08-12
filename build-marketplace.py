@@ -176,7 +176,7 @@ def main():
         print(f"  {plugin}: {len(skills)} skills")
 
 
-_BLOCK_ON_CHECK = False
+_BLOCK_ON_CHECK = True
 
 
 def _post_build():

@@ -1,18 +1,17 @@
 ---
 name: pwa-verify
-description: >
+description: >-
   Post-deploy device verification protocol for PWAs (CarMatch, AVT, and any installed-PWA
   product in the ecosystem). Turns the manual "check it on the phone" loop into a checklist:
   bust the service-worker cache first, verify each fix from the deploy diff individually, then
-  write an explicit VERIFIED / UNVERIFIED verdict per fix. Exists because stale service-worker
-  bundles have repeatedly masked whether a fix landed -- one defect survived six deploys this
-  way before the stale cache was identified as the root cause. Use whenever the user says
-  "verify the deploy on device", "did the fix land on the phone", "pwa verify", "bust the cache
-  and check", "runtime verify this", "check if it's live on the phone", "verify on device", or
+  write an explicit VERIFIED / UNVERIFIED verdict per fix. Use whenever the user says "verify
+  the deploy on device", "did the fix land on the phone", "pwa verify", "bust the cache and
+  check", "runtime verify this", "check if it's live on the phone", "verify on device", or
   "hard reload and check". Also trigger proactively right after any CarMatch or AVT deploy,
   before declaring it done. Pairs with qa-mirror for the live screen capture at the desk, and
   with carmatch-deploy / phased-deploy for the deploy itself -- this skill starts where those
-  leave off.
+  leave off. NOT verify-loop (checks work before delivery) or self-audit: this verifies a
+  shipped deploy on a real device.
 metadata:
   intent: audit
 ---
