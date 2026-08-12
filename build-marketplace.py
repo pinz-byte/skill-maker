@@ -176,5 +176,23 @@ def main():
         print(f"  {plugin}: {len(skills)} skills")
 
 
+_BLOCK_ON_CHECK = False
+
+
+def _post_build():
+    """Regenerate CATALOG.md so the intent index never drifts from source.
+    Added 2026-08-12 by wire-catalog.py. See CATALOG.md / intent-map.tsv."""
+    import subprocess, sys as _sys
+    audit = ROOT / "skill-intent-audit.py"
+    if not audit.exists():
+        print("  (skill-intent-audit.py absent -- CATALOG.md not regenerated)")
+        return
+    subprocess.run([_sys.executable, str(audit), "catalog", str(ROOT)], check=False)
+    if _BLOCK_ON_CHECK:
+        r = subprocess.run([_sys.executable, str(audit), "check", str(ROOT)], check=False)
+        if r.returncode != 0:
+            raise SystemExit("build blocked: intent partition check failed")
+
 if __name__ == "__main__":
     main()
+    _post_build()

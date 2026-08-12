@@ -1,6 +1,7 @@
 # SKILL MAKER — Project Context
 
 @DISPATCH_INBOX.md
+@CATALOG.md
 
 Skill authoring lab for the LFP ecosystem. Produces a plugin marketplace that
 extends Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
