@@ -36,6 +36,7 @@ GROUPS = {
          "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit",
          "gcp-iam-resolver", "herald-config-doctor",
          "projectmd-auditor", "projectmd-optimizer", "offload", "auditor-general",
+         "audit-codex-build", "codex-audit-handoff", "builder-identity-check",
          "qa-mirror", "qa-sequence", "pwa-verify", "carmatch-intel", "disk-doctor", "notebooklm-bridge", "pm",
          "space-steward", "inpositive-language", "project-handover", "skillmaker-publish", "verify-loop"],
     ),
@@ -76,14 +77,7 @@ def parse_frontmatter(skill_md_path: Path) -> dict:
 
 
 def main():
-    # Single source of truth for inbox UUIDs: regenerate agent-bridge's embedded
-    # registry table from canonical (.claude/rules/inbox-registry.md) before packaging.
-    # Fails loud if the markers are missing. Closes the hand-sync drift gap.
-    subprocess.run([sys.executable, str(ROOT / "gen-inbox-registry.py")], check=True)
-
     plugins_dir = ROOT / "plugins"
-    if plugins_dir.exists():
-        shutil.rmtree(plugins_dir)  # regenerate clean
 
     all_skills = [s for _, (_, skills) in GROUPS.items() for s in skills]
     missing = [s for s in all_skills if not (ROOT / s / "SKILL.md").exists()]
@@ -127,6 +121,14 @@ def main():
             "ERROR: skill(s) would be silently rejected by Cowork:\n  "
             + "\n  ".join(violations)
         )
+
+    # All fail-loud checks must finish before mutating canonical or generated files.
+    # This preserves the last known-good marketplace when a new catalog definition
+    # is invalid.
+    subprocess.run([sys.executable, str(ROOT / "gen-inbox-registry.py")], check=True)
+
+    if plugins_dir.exists():
+        shutil.rmtree(plugins_dir)  # regenerate clean only after validation passes
 
     marketplace = {
         "name": MARKETPLACE_NAME,

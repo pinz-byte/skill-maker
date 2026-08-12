@@ -2,8 +2,9 @@
 
 @DISPATCH_INBOX.md
 
-Skill authoring lab for the LFP ecosystem. Produces `.skill` files that extend
-Codex agents across Cowork (M1/M2/M3) and Codex.ai Chat.
+Skill authoring lab for the LFP ecosystem. Produces a plugin marketplace for
+Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat; Codex maintains the
+same sources.
 
 ## Behavior rules
 
@@ -41,8 +42,8 @@ continuity loop automatically -- the user should not have to type "reentry" or "
 
 ## Invariants (every session)
 
-- Distribution channel = a **Codex plugin marketplace** (`lfp-skills`),
-  not loose files. `build-marketplace.py` generates `.Codex-plugin/marketplace.json`
+- Distribution channel = a **Claude Code plugin marketplace** (`lfp-skills`),
+  not loose files. `build-marketplace.py` generates `.claude-plugin/marketplace.json`
   + the `plugins/` tree from each `<skill>/SKILL.md`. `publish.sh` rebuilds +
   commits + pushes it. Private git (`https://github.com/pinz-byte/skill-maker.git`,
   HTTPS + `gh` keyring auth -- NOT SSH; verified 2026-06-10) is the transport;
@@ -55,22 +56,22 @@ continuity loop automatically -- the user should not have to type "reentry" or "
 - Publish from M2 only: `./publish.sh` (rebuild + commit + push, one command).
   M1's working copy and its `com.lfp.skillmaker.publish` launchd job are
   decommissioned (2026-06-10) -- two publishers = split-brain.
-- Marketplace is GitHub-sourced (`pinz-byte/skill-maker`), so `Codex` updates
-  from GitHub into `~/.Codex` -- consumer machines do NOT need `git pull`. All 3
+- Marketplace is GitHub-sourced (`pinz-byte/skill-maker`), so `claude` updates
+  from GitHub into `~/.claude` -- consumer machines do NOT need `git pull`. All 3
   machines stay current via `./install-refresh.sh` (run once each): a daily launchd
-  job running `Codex plugin marketplace update lfp-skills`. Its wrapper MUST live
+  job running `claude plugin marketplace update lfp-skills`. Its wrapper MUST live
   in `~/Library` not the repo -- macOS TCC blocks launchd from `~/Documents`
   ("Operation not permitted"). `publish.sh` also self-refreshes the publishing
   machine (M2) after pushing.
-  CONFIRMED 2026-06-04: after a refresh, projects surface new skills with NO
-  per-workspace Customize re-add (verified via `/projectmd-auditor`). Fully
-  hands-off. The older per-`.skill` path (`ship-skill.sh` / `sync-skills.sh`)
-  still exists but the marketplace is the live channel.
+  CORRECTED 2026-07-03: marketplace refresh alone does not bump installed
+  plugins; `install-refresh.sh` also runs `claude plugin update` for each installed
+  `@lfp-skills` plugin. The older per-`.skill` path (`ship-skill.sh` /
+  `sync-skills.sh`) is retained only as legacy history.
 - Strip non-ASCII before packaging -- Cowork rejects it silently (builder does this).
 - Skill description <= 1024 chars (hard limit, silent failure).
-- Skill name must NOT contain "Codex" (Cowork reserved word). NB: the skill is
+- Skill name must NOT contain "claude" (Cowork reserved word). NB: the skill is
   `projectmd-auditor`, NOT "claudemd-auditor".
-- Inbox UUIDs live in ONE place: `.Codex/rules/inbox-registry.md` (canonical).
+- Inbox UUIDs live in ONE place: `.claude/rules/inbox-registry.md` (canonical).
   `agent-bridge/SKILL.md`'s table is GENERATED from it by `gen-inbox-registry.py`
   (run automatically by `build-marketplace.py`); never hand-edit that table. Add a
   project = add a row to canonical, then `./publish.sh`.

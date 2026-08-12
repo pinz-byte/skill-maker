@@ -12,6 +12,8 @@ description: >
   compose, or when the user is unsure what is available. This is a meta-skill: it does not
   do the work itself, it chooses and chains the skills that do. For "what skills do I have"
   as a pure list, the native skill list is enough; toolbox is for deciding what to USE.
+metadata:
+  intent: reason
 ---
 
 # Toolbox - The Skill Router
@@ -29,20 +31,19 @@ Two surfaces matter and they differ:
 
 - **Installed here** - the skills active in THIS workspace. This is the in-context skill
   list the environment loads. These are callable right now.
-- **Deployed but maybe not installed** - skills that exist in the ecosystem but are not
-  active in this workspace. Enumerate from the iCloud Plugins folder:
+- **Deployed but maybe not installed** - skills present in the live GitHub marketplace but
+  not active in this workspace. First inspect installed plugin scopes and versions:
 
 ```bash
-for f in "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Claude/Plugins"/*.skill; do
-  [ -f "$f" ] || continue
-  n=$(basename "$f" .skill)
-  d=$(python3 -c "import zipfile,re; c=zipfile.ZipFile('$f').read('$n/SKILL.md').decode(); m=re.search(r'description:\s*>(.*?)\n---',c,re.S); print(' '.join(m.group(1).split())[:160] if m else '')" 2>/dev/null)
-  echo "- $n: $d"
-done
+claude plugin marketplace list
+claude plugin list
 ```
 
-If a skill you want to recommend is deployed but not installed here, say so and route the
-user through [[workspace-plugin-audit]] to install it - do not assume it is callable.
+When the canonical `SKILL MAKER` repository is mounted, enumerate deployed skills from
+`plugins/*/skills/*/SKILL.md`; those files are the generated marketplace payload. Outside
+that repository, do not invent a complete deployed-skill list from plugin names alone. Use
+the in-context skill list as callable truth and route any missing/stale candidate through
+[[workspace-plugin-audit]]. Never inspect the retired iCloud `.skill` directory.
 
 ## Step 2 - Orient with the category map
 
@@ -61,13 +62,18 @@ lag (last reviewed 2026-05-29).
   context mid-session), `data-capsule` (save one discrete fact), `reentry` (reconstruct state
   at session start), `wake`/`memory-bridge` (Symbios memory corpus).
 - **Cross-project comms** - `agent-bridge` (Notion inbox messaging between projects).
-- **Build / deploy discipline** - `phased-deploy` (generic), `carmatch-deploy` (CarMatch-
-  specific), `git-ops` (git lifecycle), `project-init` + `projectmd-gen` (scaffold a repo),
-  `dependency-audit` (pre-build cost/viability gate), `apex-builder-gate` (APEX pre-flight),
-  `self-audit` (pre-delivery review), `work-retrospective` (post-work learning capture).
+- **Build / deploy discipline** - `git-ops` (git lifecycle), `projectmd-auditor` and
+  `projectmd-optimizer` (project instructions), `pwa-verify` (deployed PWA truth),
+  `apex-builder-gate` (APEX pre-flight), `verify-loop` (build against an oracle),
+  `self-audit` (pre-delivery review), and `auditor-general` (independent post-hoc verdict).
+- **Cross-tool audit routing** - `builder-identity-check` establishes who built the work;
+  `audit-codex-build` audits Codex-built work from Claude; `codex-audit-handoff` packages
+  Claude-built work for an independent Codex audit. These compose with `auditor-general`;
+  they are directional counterparts, not interchangeable audit aliases.
 - **Ops / infra remediation** - `herald-config-doctor` (fix recurring Herald config drift),
   `machine-bridge` (sandbox->machine command/path handoff), `gcp-iam-resolver` (GCP IAM
-  permission errors), `workspace-plugin-audit` (per-workspace install gap).
+  permission errors), `workspace-plugin-audit` (marketplace/install freshness),
+  `disk-doctor` (storage pressure), and `skillmaker-publish` (catalog publication).
 - **Research / finance** - `deep-research` (multi-source briefing), `source-scout` (new data
   sources for the extractor), `bigdata-com:*` (company/sector/earnings/macro analysis),
   `financial-research-analyst`.
@@ -120,5 +126,6 @@ with a dated header. Regenerate it from the live scan each time - do not let it 
   `skill-miner` to confirm the gap is real and recurring before building.
 - **Several skills fit equally:** present the 2-3 candidates with the trade-off in one line
   each and let the user pick - this is the one time a short menu beats a single pick.
-- **iCloud folder unreachable (sandbox without the mount):** fall back to the in-context skill
-  list for "installed here" and note that the deployed-but-not-installed set could not be read.
+- **Marketplace source unavailable:** fall back to the in-context skill list for "installed
+  here" and state that the deployed-but-not-installed set could not be enumerated. Do not
+  substitute legacy iCloud bundles as catalog evidence.

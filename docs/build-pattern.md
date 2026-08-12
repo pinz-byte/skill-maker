@@ -1,49 +1,45 @@
 # Build Pattern (on-demand)
 
-> LIVE CHANNEL = the `lfp-skills` **marketplace** (`./publish.sh`). See
-> `docs/distribution.md`. The per-`.skill` flow below is the legacy per-file
-> path -- still works, but `publish.sh` + the marketplace is what reaches M2/M3.
+The live distribution channel is the private `lfp-skills` Claude Code plugin
+marketplace. Root `<skill>/SKILL.md` directories are canonical; generated
+`plugins/` copies and `.claude-plugin/marketplace.json` are the payload.
 
-Every skill produces ONE output file: `name.skill`. The `.plugin` format is
-deprecated -- Cowork's validator rejects it. Use `.skill` only.
+## Add or change a skill
 
-```bash
-# Build a skill
-python3 build-skill.py <skill-name>
-
-# Distribute: commit + push to the private remote (M2/M3 pull via sync-skills.sh)
-git add -A && git commit -m "feat(<skill>): ..." && git push
-```
-
-Or manually:
-
-```python
-import zipfile, re
-
-NAME = "my-skill"
-
-def strip_non_ascii(s):
-    return re.sub(r'[^\x00-\x7F\n\r\t ]', '', s)
-
-skill_md = strip_non_ascii(open(f'{NAME}/SKILL.md').read())
-
-with zipfile.ZipFile(f'{NAME}.skill', 'w', zipfile.ZIP_DEFLATED) as zf:
-    zf.writestr(f'{NAME}/SKILL.md', skill_md)
-    # add reference files if needed:
-    # zf.writestr(f'{NAME}/references/ref.md', ref_md)
-```
-
-Install: Cowork -> Customize -> Skills -> + -> select `name.skill`
-
-## Git
+1. Edit `<skill>/SKILL.md` and optional `<skill>/references/`.
+2. Assign every new skill exactly once in `GROUPS` inside
+   `build-marketplace.py`.
+3. Validate locally:
 
 ```bash
-# Pre-commit hook is live — validates SKILL.md and .plugin structure before every commit
-# Hook location: .git/hooks/pre-commit (symlinked from .claude/hooks/pre-commit.sh)
-git add -A && git commit -m "feat(self-audit): add self-audit plugin v1.0.0"
+python3 build-marketplace.py
 ```
 
-## Packaging verification
+The builder fails on missing sources, duplicate assignments, ungrouped skills,
+invalid frontmatter, descriptions over 1,024 characters, and reserved names.
+Validation completes before the last generated marketplace is removed.
 
-- Verify zip contents before deploying:
-  `python3 -c "import zipfile; print(zipfile.ZipFile('x.skill').namelist())"`
+## Publish
+
+Publish from M2 only:
+
+```bash
+./publish.sh
+```
+
+That command rebuilds, stages, commits, pushes, refreshes the marketplace, and
+updates this machine's installed `@lfp-skills` plugins. Consumer machines use
+the daily job installed by `./install-refresh.sh`.
+
+## Generated-copy verification
+
+Generated skill bodies equal their canonical sources after the builder's
+required ASCII normalization. Never edit `plugins/<plugin>/skills/` directly;
+the next build replaces those files.
+
+## Legacy per-file channel
+
+`build-skill.py`, `ship-skill.sh`, `sync-skills.sh`, root `.skill` bundles, and
+`deploy-plugins.sh` belong to the retired iCloud/per-workspace channel. They are
+not the supported build or distribution path and must not be recommended for
+new work.

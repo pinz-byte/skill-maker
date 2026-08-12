@@ -16,13 +16,18 @@ fi
 git commit -m "skills: rebuild marketplace ($(date '+%Y-%m-%d %H:%M'))"
 git push
 
-# Self-refresh this machine's own Cowork so newly published skills are visible here immediately.
-# (Marketplace is GitHub-sourced, so this pulls the commit just pushed.)
+# Self-refresh this machine's marketplace and every installed lfp-skills plugin.
+# Marketplace update alone does not bump installed plugin pins.
 if command -v claude >/dev/null 2>&1; then
   echo ""
   echo "Refreshing this machine's marketplace cache..."
   claude plugin marketplace update lfp-skills || echo "  (update failed — run it manually)"
+  while read -r plugin; do
+    [ -n "$plugin" ] || continue
+    echo "Updating installed $plugin..."
+    claude plugin update "$plugin" || echo "  (update failed for $plugin — run it manually)"
+  done < <(claude plugin list 2>&1 | grep -oE '[A-Za-z0-9_-]+@lfp-skills' | sort -u || true)
 fi
 echo ""
-echo "Published. M2/M3 self-refresh via their daily launchd job, or run there now:"
-echo "  claude plugin marketplace update lfp-skills"
+echo "Published. Other machines self-refresh via their daily launchd job."
+echo "For an immediate refresh there, run ./install-refresh.sh once to install/update that job."

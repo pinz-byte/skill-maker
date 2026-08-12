@@ -1,29 +1,43 @@
-# File structure + version bump (on-demand)
+# File structure and versioning (on-demand)
 
-```
+```text
 SKILL MAKER/
-├── CLAUDE.md                        # root context (ALWAYS tier)
-├── deploy-plugins.sh                # legacy: deploy .plugin files to iCloud
-├── [name]/SKILL.md                  # skill source (editable)
-├── [name].skill                     # built bundle (install this)
-├── docs/                            # on-demand context (read when needed)
-│   ├── build-pattern.md             # build steps + git
-│   ├── distribution.md              # M2/M3 sync + install detail
-│   └── file-structure.md            # this file
-└── .claude/                         # AUTO-LOADED by Cowork every session
-    ├── rules/plugin-packaging.md    # packaging rules (zip structure, emoji stripping)
-    ├── rules/skill-authoring.md     # SKILL.md format and trigger language rules
-    ├── rules/inbox-registry.md      # Notion inbox UUIDs for agent-bridge routing
-    ├── rules/deploy-target.md       # iCloud deploy target (legacy)
-    ├── agents/skill-maker-builder.md # workspace agent context
-    └── hooks/pre-commit.sh          # validates SKILL.md before commit
+|-- CLAUDE.md                         # Claude/Cowork project context
+|-- AGENTS.md                         # Codex project context
+|-- <skill>/SKILL.md                  # canonical skill source
+|-- <skill>/references/               # optional canonical references
+|-- build-marketplace.py              # validates and generates marketplace
+|-- publish.sh                        # M2-only build, commit, push, refresh
+|-- install-refresh.sh                # per-machine installed-plugin updater
+|-- .claude-plugin/marketplace.json   # generated marketplace manifest
+|-- plugins/<plugin>/                 # generated LFP plugin payloads
+|-- team-skills/                      # team-only canonical sources
+|-- build-team-toolkit.py             # generates curated Subastop catalog
+|-- team-toolkit/                     # ignored, independent generated repo
+|-- docs/                             # on-demand operational references
+`-- .claude/                          # Cowork rules, hooks, and registry
 ```
 
-Note: `.claude/` auto-loads every session, so on-demand content lives in `docs/`
-(not auto-loaded) and is referenced from CLAUDE.md by plain-path pointer.
+Root `.skill` files and `build-skill.py`, `ship-skill.sh`, `sync-skills.sh`, and
+`deploy-plugins.sh` are legacy artifacts. They are not canonical and are not the
+live distribution channel.
 
-## Version bump rules
+## Source-of-truth rules
 
-- Patch (1.0.x): wording fixes, description tweaks
-- Minor (1.x.0): new sections, new capability, new reference files
-- Major (x.0.0): breaking changes to message format or trigger interface
+- Edit only root `<skill>/SKILL.md` and its `references/`.
+- Assign every canonical skill exactly once in `build-marketplace.py::GROUPS`.
+- Treat `plugins/` as generated output; never repair drift there by hand.
+- Treat `team-toolkit/` as an independent generated marketplace, not a second
+  canonical copy.
+- Marketplace versions are git commits; plugin manifests intentionally omit a
+  manual semantic version.
+
+## Change classification
+
+- Wording or trigger clarification: small catalog change.
+- New behavior, section, or reference: capability change.
+- Changed message contract or routing semantics: breaking change requiring
+  explicit migration notes.
+
+The live version identifier is the git commit hash surfaced by
+`claude plugin list`, not a version number embedded in `SKILL.md`.

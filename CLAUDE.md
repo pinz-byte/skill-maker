@@ -2,8 +2,8 @@
 
 @DISPATCH_INBOX.md
 
-Skill authoring lab for the LFP ecosystem. Produces `.skill` files that extend
-Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
+Skill authoring lab for the LFP ecosystem. Produces a plugin marketplace that
+extends Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
 
 ## Behavior rules
 
@@ -62,10 +62,10 @@ continuity loop automatically -- the user should not have to type "reentry" or "
   in `~/Library` not the repo -- macOS TCC blocks launchd from `~/Documents`
   ("Operation not permitted"). `publish.sh` also self-refreshes the publishing
   machine (M2) after pushing.
-  CONFIRMED 2026-06-04: after a refresh, projects surface new skills with NO
-  per-workspace Customize re-add (verified via `/projectmd-auditor`). Fully
-  hands-off. The older per-`.skill` path (`ship-skill.sh` / `sync-skills.sh`)
-  still exists but the marketplace is the live channel.
+  CORRECTED 2026-07-03: marketplace refresh alone does not bump installed
+  plugins; `install-refresh.sh` also runs `claude plugin update` for each installed
+  `@lfp-skills` plugin. The older per-`.skill` path (`ship-skill.sh` /
+  `sync-skills.sh`) is retained only as legacy history.
 - Strip non-ASCII before packaging -- Cowork rejects it silently (builder does this).
 - Skill description <= 1024 chars (hard limit, silent failure).
 - Skill name must NOT contain "claude" (Cowork reserved word). NB: the skill is

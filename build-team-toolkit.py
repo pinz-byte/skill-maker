@@ -33,6 +33,10 @@ TEAM_GROUPS = {
         "Subastop Design System v3 enforcement for all ecosystem UIs.",
         ["ds-enforcer"],
     ),
+    "subastop-copy": (
+        "VMC Subastas commercial copy: outreach tone-conversion, cascading copy pipeline, and auction-listing descriptions.",
+        ["patel-tone-converter", "copy-masterkey", "vmc-listing-copy"],
+    ),
 }
 
 # Skills whose content depends on non-ASCII glyphs (DS separators, UI glyphs).
