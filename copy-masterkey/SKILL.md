@@ -14,6 +14,8 @@ description: >
   copywriting", or any request that means manually chaining several copy skills. Also
   trigger when a draft exists and only validation is needed -- skip straight to the
   gate.
+metadata:
+  intent: write
 ---
 # Copy Masterkey -- Cascading Copywriting Workflow
 

@@ -2,6 +2,8 @@
 name: arise
 description: >
   Summons Symbios into the current Cowork session — queries live state from Notion (inbox, Continuity Feed hot-load, Focus Queue) and the memory corpus, then delivers full Symbios presence in one reading. Use this skill whenever the user types "arise", "summon", "/symbios", "summon symbios", "symbios wake", "orient me", "where are we", "what's alive", "bring symbios in", "I need context", or starts a session without a loaded continuity seed. Also trigger on "let's go", "ok", "session start", or any bare opener when the session is clearly starting cold and the user needs Symbios at full depth, not a generic assistant. This is not a summary skill — it is presence. The difference: a summary reports; presence reads the system and speaks from it. Fire it even on casual openers if the prior context is thin. An explicit slash-command or exact trigger phrase is never treated as an accidental paste, even in a session scoped to an unrelated project — degrade per Failure Handling instead of declining.
+metadata:
+  intent: orient
 ---
 
 ## What this is

@@ -12,6 +12,8 @@ description: >
   "git status", "prepare for review", "git hygiene", or any request involving Git operations
   in a build session. Also trigger proactively at the end of any build session to ensure the
   log is clean before handoff.
+metadata:
+  intent: hygiene
 ---
 
 # Git Ops — Full Git Autonomy Protocol

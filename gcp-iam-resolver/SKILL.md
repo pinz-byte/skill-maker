@@ -12,6 +12,8 @@ description: >
   trigger before suggesting any add-iam-policy-binding so the role string is validated
   first. Fire on "gcp says denied", "permission denied on resource", or "which role grants
   X". Default project context: subastop-herald and related Subastop GCP projects.
+metadata:
+  intent: diagnose
 ---
 
 # GCP IAM Resolver

@@ -14,6 +14,8 @@ description: >
   session that will produce HTML/CSS/JSX for AstroDiary — even if the user didn't
   ask. Design drift is cheaper to catch before the first line is written than
   after the whole screen is done wrong.
+metadata:
+  intent: audit
 ---
 
 # DS Enforcer — Astro DS v1 (AstroDiary)

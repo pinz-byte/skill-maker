@@ -1,0 +1,56 @@
+# intent-map.tsv -- hand-adjudicated intent lots, 2026-08-12
+# Read by skill-intent-audit.py; overrides keyword inference.
+# Migration aid only: new skills declare intent: in frontmatter at creation.
+# Lines marked CORRECTED were wrong in the v2 keyword pass.
+agent-bridge	relay
+apex-builder-gate	audit
+apex-ultra-council	decide
+arise	orient
+astrodiary-ds-enforcer	audit	CORRECTED from write
+audit-codex-build	audit
+auditor-general	audit
+builder-identity-check	audit
+carmatch-intel	observe
+ceo-planner	reason
+codex-audit-handoff	delegate	CORRECTED from audit
+continuity-seed	orient
+copy-masterkey	write
+council-call	decide
+council-debate	decide
+council-global	decide
+creative-thinker	reason
+critical-thinker	reason
+disk-doctor	diagnose	CORRECTED from hygiene
+gcp-iam-resolver	diagnose
+git-ops	hygiene
+herald-config-doctor	diagnose
+inbox-triage	relay
+inpositive-language	write
+logic-thinker	reason
+loop-breaker	reason
+machine-bridge	diagnose
+meta-no-bare-names	hygiene
+notebooklm-bridge	relay
+offload	delegate	CORRECTED from audit
+patel-tone-converter	write
+pm	manage
+project-handover	relay
+project-migrate	relay	CORRECTED from write
+projectmd-auditor	audit
+projectmd-optimizer	hygiene
+pwa-verify	audit	CORRECTED from reason
+qa-mirror	observe	CORRECTED from audit
+qa-sequence	audit
+reentry	orient
+self-audit	audit
+session-bootstrap	orient
+session-rules	orient	CORRECTED from relay
+skill-miner	build	CORRECTED from diagnose
+skillmaker-publish	build
+soul-builder	build	CORRECTED from orient
+space-steward	hygiene
+time-boundary	orient
+toolbox	reason
+verify-loop	audit
+vmc-listing-copy	write
+workspace-plugin-audit	audit	CORRECTED from build

@@ -13,6 +13,8 @@ description: >
   was this last updated?", "check my context files", or "audit my project
   context". This gate is universal -- runs before any git operation and at
   session close, no exceptions.
+metadata:
+  intent: hygiene
 ---
 
 # Persistent Context Hygiene Gate

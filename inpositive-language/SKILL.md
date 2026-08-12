@@ -14,6 +14,8 @@ description: >
   trigger before finalizing marketing copy, landing pages, ad creative, or email in a
   Subastop project. Preserves negation required for legal, safety, or factual accuracy
   -- flags those instead of rewriting.
+metadata:
+  intent: write
 ---
 
 # InPositive Language Enforcer

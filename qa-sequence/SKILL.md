@@ -13,6 +13,8 @@ description: >
   the batch/recorded counterpart to qa-mirror (live, on-demand grabs); use
   qa-sequence when a recording exists and cost matters, qa-mirror for live
   single looks. Pairs with QA_SEQUENCE_SETUP.md for the capture step.
+metadata:
+  intent: audit
 ---
 
 # qa-sequence -- Cheap Recorded-QA Review via Sonnet Subagent

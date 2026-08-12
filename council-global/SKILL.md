@@ -13,6 +13,8 @@ description: >
   present locally — works on M1; does NOT work in Claude.ai Chat (no shell, no
   filesystem). For a Chat-callable council, use apex-ultra-council (generative)
   or the Notion morning push instead.
+metadata:
+  intent: decide
 ---
 
 # Council (global) — cross-project verdict view

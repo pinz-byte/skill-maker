@@ -13,6 +13,8 @@ description: >
   reading large files, web research, multi-file code scans, data crunching --
   where Opus never needs to see the raw data. Not for work that needs Opus to
   read the data itself, nor for computer-use/screenshot capture in a subagent.
+metadata:
+  intent: delegate
 ---
 
 # offload -- Delegate Heavy Work to a Cheaper Subagent

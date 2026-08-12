@@ -11,6 +11,8 @@ description: |
   Continuity-seed creates a loadable briefing for a NEW session. Think of compact as compression,
   continuity-seed as serialization. Use continuity-seed at session boundaries. Use compact mid-session.
   If unsure which one the user wants, ask.
+metadata:
+  intent: orient
 ---
 
 # Continuity Seed -- Cross-Session State Transfer

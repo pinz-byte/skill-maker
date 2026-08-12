@@ -14,6 +14,8 @@ description: >-
   Project-agnostic: it reads each project's requirements from that project's own
   config, so one skill bootstraps every co-worker. Fire it even on casual cold
   openers ("ok, back to it", "continuemos").
+metadata:
+  intent: orient
 ---
 
 # Session Bootstrap

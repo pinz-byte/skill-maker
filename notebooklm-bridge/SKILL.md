@@ -10,6 +10,8 @@ description: >
   "check the notebook", or provides a notebooklm.google.com URL alongside a question.
   Also trigger when the user wants to retrieve research from NotebookLM to act on in
   Cowork (summarize, draft, reformat, share). Default notebook: Claude AIOS Blueprint.
+metadata:
+  intent: relay
 ---
 
 # NotebookLM Bridge

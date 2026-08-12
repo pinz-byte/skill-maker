@@ -14,6 +14,8 @@ description: >
   verdict rather than display an existing one. Fire even on casual variants like
   "throw X at the council" or "give me the full seven-voice read on X". If the
   user just wants today's cached tiers, use "council" instead.
+metadata:
+  intent: decide
 ---
 
 # APEX Ultra Council — Live Deliberative Verdict

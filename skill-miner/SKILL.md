@@ -12,6 +12,8 @@ description: >
   time". This is the intelligence layer that closes the loop between ecosystem
   usage and skill creation — run it periodically (weekly or when the backlog runs
   dry) to keep SKILL MAKER building the right things.
+metadata:
+  intent: build
 ---
 
 # Skill Miner

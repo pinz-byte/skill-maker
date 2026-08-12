@@ -12,6 +12,7 @@ description: >
   mid-session -- update SOUL.md so the correction persists. Continuity seeds persist STATE; the
   soul persists the MODEL.
 metadata:
+  intent: build
   type: meta-grounding
 ---
 

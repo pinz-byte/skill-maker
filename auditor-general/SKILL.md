@@ -14,6 +14,8 @@ description: >
   "independent review", "second pair of eyes". Output: verdict-only AUDIT
   REPORT, PASS / FAIL / PARTIAL per claim with evidence chain -- never
   fixes anything. NOT self-audit, forensic-auditor, or work-retrospective.
+metadata:
+  intent: audit
 ---
 
 # Auditor-General -- Independent Build, Fix, and System Verifier

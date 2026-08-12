@@ -14,6 +14,8 @@ description: >
   @import, which loads every session), and a token-delta summary. Never
   deletes content without showing it first; never rewrites
   custom-marked sections; never paraphrases build commands.
+metadata:
+  intent: hygiene
 ---
 
 # projectmd-optimizer -- Compress, Tier, and Baseline One CLAUDE.md

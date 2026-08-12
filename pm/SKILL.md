@@ -12,6 +12,7 @@ description: >
   its PM chat; do the doing in other chats. Pairs with the central Ledger Operator
   (tools/ledger_operator.py in pops-symbios), which is the cross-project roll-up.
 metadata:
+  intent: manage
   type: comms
 ---
 

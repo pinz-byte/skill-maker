@@ -12,6 +12,8 @@ description: >
   herald-health-monitor or herald-accuracy-audit run reporting repeat/pending findings,
   and whenever the report shows a 403 (dead URL), 401 (rotated key), or unmounted-path
   write error. Fire on "herald's complaining again" or "make the herald noise stop".
+metadata:
+  intent: diagnose
 ---
 
 # Herald Config Doctor
