@@ -1,16 +1,17 @@
 ---
 name: soul-builder
-description: >
+description: >-
   Builds and maintains a project's SOUL.md -- the always-present, distilled INTENTION of a
   project (its model, invariant, core flow), wired to load every session so a co-worker never
-  loses the thread. Use whenever starting/initializing a project, when an IB is done and should
-  become persistent guidance, when a session keeps losing comprehension or reasoning from the
-  data up instead of the model down, when the user says the agent "lost the thread", or when
-  setting up the harness-loaded primitives. Trigger on: "soul", "SOUL.md", "soul builder",
-  "distill the IB", "make the intention persist", "project soul", "ground the session", "the
-  co-worker doesn't understand the initiative". Also fire when a project's model gets clarified
-  mid-session -- update SOUL.md so the correction persists. Continuity seeds persist STATE; the
-  soul persists the MODEL.
+  loses the thread. Use whenever starting/initializing a project, when an IB is done and
+  should become persistent guidance, when a session keeps losing comprehension or reasoning
+  from the data up instead of the model down, when the user says the agent "lost the thread",
+  or when setting up the harness-loaded primitives. Trigger on: "soul", "SOUL.md", "soul
+  builder", "distill the IB", "make the intention persist", "project soul", "ground the
+  session", "the co-worker doesn't understand the initiative". Also fire when a project's
+  model gets clarified mid-session -- update SOUL.md so the correction persists. Continuity
+  seeds persist STATE; the soul persists the MODEL. NOT skill-miner (proposes skills) or
+  skillmaker-publish (ships them): this writes a project's SOUL.md.
 metadata:
   intent: build
   type: meta-grounding

@@ -1,13 +1,15 @@
 ---
 name: session-rules
-description: >
+description: >-
   Fetches and surfaces the canonical cross-project critical-thinker reinforcement rules at the
-  start of any session. Use this skill whenever the user says "session rules", "load the rules",
-  "what are the rules", "check the rules", "apply session rules", or at the start of any working
-  session where builder prompts, audits, IBs, or structural decisions will be made. Also trigger
-  on "rule check", "rule gate", or "what should I remember before we start". This skill exists
-  so no project needs its own CLAUDE.md copy of the rules. One Notion page, one skill, all
-  projects. Fire it at session open before any artifact authoring begins.
+  start of any session. Use this skill whenever the user says "session rules", "load the
+  rules", "what are the rules", "check the rules", "apply session rules", or at the start of
+  any working session where builder prompts, audits, IBs, or structural decisions will be
+  made. Also trigger on "rule check", "rule gate", or "what should I remember before we
+  start". This skill exists so no project needs its own CLAUDE.md copy of the rules. One
+  Notion page, one skill, all projects. Fire it at session open before any artifact authoring
+  begins. NOT arise (loads live project state) or session-bootstrap (mounts folders and
+  credentials): this fetches only the cross-project reasoning rules.
 metadata:
   intent: orient
 ---

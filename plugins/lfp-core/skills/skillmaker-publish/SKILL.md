@@ -1,17 +1,18 @@
 ---
 name: skillmaker-publish
-description: >
+description: >-
   SKILL MAKER's publish pre-flight and runner: validates every skill's SKILL.md (GROUP
-  assignment in build-marketplace.py, description under 1024 chars, no reserved "claude"
-  in the name) and scans for non-ASCII content the pipeline would silently mangle --
+  assignment in build-marketplace.py, description under 1024 chars, no reserved "claude" in
+  the name) and scans for non-ASCII content the pipeline would silently mangle --
   transliterates it to clean ASCII with --fix instead of losing bytes -- then runs
-  ./publish.sh natively or hands off the exact command when the session is sandboxed
-  (Cowork agents cannot git-write or unlink in this repo). Use this skill whenever the
-  user says "publish this", "publish the skill", "ship it", "run publish", "publish the
-  marketplace", "push the marketplace", "deploy skills", or "./publish.sh" while working
-  in the SKILL MAKER project. Also trigger right after a new or edited skill is added to
-  this repo and the next step is shipping it, or when the user asks "how do I publish",
-  "how do I run it", or "how to run it" in this project context.
+  ./publish.sh natively or hands off the exact command when the session is sandboxed (Cowork
+  agents cannot git-write or unlink in this repo). Use this skill whenever the user says
+  "publish this", "publish the skill", "ship it", "run publish", "publish the marketplace",
+  "push the marketplace", "deploy skills", or "./publish.sh" while working in the SKILL MAKER
+  project. Also trigger right after a new or edited skill is added to this repo and the next
+  step is shipping it, or when the user asks "how do I publish", "how do I run it", or "how to
+  run it" in this project context. NOT skill-miner (proposes new skills): this validates and
+  ships what already exists.
 metadata:
   intent: build
 ---

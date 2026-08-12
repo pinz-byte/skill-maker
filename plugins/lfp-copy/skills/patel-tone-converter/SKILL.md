@@ -1,18 +1,17 @@
 ---
 name: patel-tone-converter
-description: >
+description: >-
   Convierte correos y mensajes ya escritos (para ejecutivos, generacion de leads, ventas B2B)
   al tono persuasivo y la estructura de conversion aprendida de la metodologia de email
-  marketing de Neil Patel / NP Digital  -  nunca copiando su texto, solo su metodo (gancho de
-  contraste, ritmo skimmable, urgencia dosificada, P.D. como segunda oferta). Pensado en
-  primer lugar para las iniciativas de VMC Subastas / Echo Chamber (correos a ejecutivos y
-  leads de subastas), pero usable para reescribir cualquier mensaje de venta o prospeccion
-  que necesite mas gancho y menos tono corporativo plano. Usalo siempre que el usuario pida
-  "convierte este correo", "dale el tono de Neil Patel", "reescribe esto con mas gancho",
-  "hazlo mas vendedor", "esto suena muy plano, mejoralo", "aplica la metodologia de Patel a
-  este mensaje", "correo para ejecutivos", "mensaje de prospeccion/lead-gen", o pegue un
-  borrador de email/mensaje pidiendo que se mejore  -  incluso si no menciona a Neil Patel
-  explicitamente.
+  marketing de Neil Patel / NP Digital - nunca copiando su texto, solo su metodo (gancho de
+  contraste, ritmo skimmable, urgencia dosificada, P.D. como segunda oferta). Usalo siempre
+  que el usuario pida "convierte este correo", "dale el tono de Neil Patel", "reescribe esto
+  con mas gancho", "hazlo mas vendedor", "esto suena muy plano, mejoralo", "aplica la
+  metodologia de Patel a este mensaje", "correo para ejecutivos", "mensaje de
+  prospeccion/lead-gen", o pegue un borrador de email/mensaje pidiendo que se mejore - incluso
+  si no menciona a Neil Patel explicitamente. Usable para cualquier mensaje de venta o
+  prospeccion que necesite mas gancho. NO es copy-masterkey (pipeline completo) ni
+  vmc-listing-copy (fichas de subasta).
 metadata:
   intent: write
 ---

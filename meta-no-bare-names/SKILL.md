@@ -1,18 +1,17 @@
 ---
 name: meta-no-bare-names
-description: >
-  Persistent context hygiene gate. Two jobs: (1) block bare skill-default file
-  names from being committed to any repo; (2) enforce dated headers on all
-  persistent context files (CLAUDE.md, memory files, capsules, seeds, IB
-  artifacts) so stale content is never invisible. Universal scope -- every
-  project, every repo. Trigger on: "git add", "git commit", "commit this",
-  "stage files", "push", "hygiene sweep", "clean up files", "git status",
-  "session close", "before we wrap", or any git operation. Also fire when the
-  user mentions CLAUDE.md, CONTINUITY_SEED.md, IB.md, memory files, capsules,
-  MEMORY.md, or any persistent context file. Fire on "is this stale?", "when
-  was this last updated?", "check my context files", or "audit my project
-  context". This gate is universal -- runs before any git operation and at
-  session close, no exceptions.
+description: >-
+  Persistent context hygiene gate. Two jobs: (1) block bare skill-default file names from
+  being committed to any repo; (2) enforce dated headers on all persistent context files
+  (CLAUDE.md, memory files, capsules, seeds, IB artifacts) so stale content is never
+  invisible. Universal scope -- every project, every repo. Trigger on: "git add", "git
+  commit", "commit this", "stage files", "push", "hygiene sweep", "clean up files", "git
+  status", "session close", "before we wrap", or any git operation. Also fire when the user
+  mentions CLAUDE.md, CONTINUITY_SEED.md, IB.md, memory files, capsules, MEMORY.md, or any
+  persistent context file. Fire on "is this stale?", "when was this last updated?", "check my
+  context files", or "audit my project context". This gate is universal -- runs before any git
+  operation and at session close, no exceptions. NOT git-ops, which performs the commit
+  itself: this gate only blocks bad file names and stale headers.
 metadata:
   intent: hygiene
 ---

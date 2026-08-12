@@ -1,17 +1,16 @@
 ---
 name: git-ops
-description: >
+description: >-
   Full Git autonomy skill for co-worker agents. Covers the complete Git lifecycle without
-  requiring user intervention: writing clean structured commit messages, squashing and cleaning
-  messy WIP history, reading the git log to produce a build state summary, managing branches
-  (create, rename, delete stale), and resolving merge conflicts autonomously — escalating to
-  the user only when a genuine domain decision is required. Use this skill whenever the user or
-  an agent needs to commit, clean history, read the log, summarize build state, manage branches,
-  or resolve conflicts. Trigger on: "commit this", "clean the log", "squash these commits",
-  "what does the log say", "build state from git", "clean up branches", "there's a conflict",
-  "git status", "prepare for review", "git hygiene", or any request involving Git operations
-  in a build session. Also trigger proactively at the end of any build session to ensure the
-  log is clean before handoff.
+  requiring user intervention: writing clean structured commit messages, squashing and
+  cleaning messy WIP history, reading the git log to produce a build state summary, managing
+  branches (create, rename, delete stale), and resolving merge conflicts autonomously —
+  escalating to the user only when a genuine domain decision is required. Trigger on: "commit
+  this", "clean the log", "squash these commits", "what does the log say", "build state from
+  git", "clean up branches", "there's a conflict", "git status", "prepare for review", "git
+  hygiene", or any request involving Git operations in a build session. Also trigger
+  proactively at the end of any build session to ensure the log is clean before handoff. NOT
+  meta-no-bare-names (gates file names and dated headers pre-commit).
 metadata:
   intent: hygiene
 ---

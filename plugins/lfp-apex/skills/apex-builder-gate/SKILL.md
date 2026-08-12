@@ -1,17 +1,17 @@
 ---
 name: apex-builder-gate
-description: >
-  Mandatory pre-execution gate for every APEX Desk builder session. Loads the
-  10 failure patterns from memory, runs grep audits against files the builder
-  is about to touch, and blocks execution until all checks pass. Use this skill
-  whenever starting any APEX builder session, executing an APEX brief, touching
-  APEX code, or any session in the apex-desk project. Trigger on: "apex builder",
-  "execute apex", "run apex brief", "start apex session", "apex gate", "APEX_",
-  or any time a builder brief like APEX_27, APEX_50 etc. is about to be executed.
-  Also trigger when the user says "load the gate", "run the audit", "pre-flight
-  apex", or starts a session in the apex-desk-v2 working directory. This gate
-  exists because prior builder sessions shipped 10 known failure patterns
-  repeatedly. It fires every time, no exceptions.
+description: >-
+  Mandatory pre-execution gate for every APEX Desk builder session. Loads the 10 failure
+  patterns from memory, runs grep audits against files the builder is about to touch, and
+  blocks execution until all checks pass. Use this skill whenever starting any APEX builder
+  session, executing an APEX brief, touching APEX code, or any session in the apex-desk
+  project. Trigger on: "apex builder", "execute apex", "run apex brief", "start apex session",
+  "apex gate", "APEX_", or any time a builder brief like APEX_27, APEX_50 etc. is about to be
+  executed. Also trigger when the user says "load the gate", "run the audit", "pre-flight
+  apex", or starts a session in the apex-desk-v2 working directory. This gate exists because
+  prior builder sessions shipped 10 known failure patterns repeatedly. It fires every time, no
+  exceptions. NOT self-audit (an agent grading its own finished work) or auditor-general
+  (post-hoc review): this fires BEFORE execution and blocks it.
 metadata:
   intent: audit
 ---

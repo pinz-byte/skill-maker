@@ -86,8 +86,22 @@ LOT_NAMES = {l[0] for l in LOTS}
 PLUGIN_PRIOR = {"lfp-thinkers": "reason", "lfp-copy": "write", "lfp-apex": "decide"}
 PLUGIN_EXCEPT = {"apex-builder-gate": "audit"}
 
-DISAMBIG = re.compile(r"\bNOT\b|distinct from|not the same as|pairs with|"
-                      r"instead of \(use|rather than \(use|use \w[\w-]* instead", re.I)
+def names_a_sibling(desc, me, lotmates):
+    """A description is disambiguated when it NAMES another skill in its own lot.
+
+    This replaces a prose-pattern regex (\\bNOT\\b|pairs with|...) that measured
+    writing style rather than meaning: it missed logic-thinker's "For attacking an
+    idea use critical-thinker", vmc-listing-copy's Spanish "Distinto de
+    patel-tone-converter", and would pass a description that said "NOT" about
+    nothing. Naming the sibling is the invariant that actually partitions intent.
+    """
+    for other in lotmates:
+        if other == me:
+            continue
+        pat = r"[\s\-_]?".join(re.escape(w) for w in other.split("-")) + r"s?\b"
+        if re.search(pat, desc, re.I):
+            return True
+    return False
 
 
 def plugin_map(root="."):
@@ -164,8 +178,12 @@ def load(root="."):
             lot, conf = infer(desc, d, pmap)
         out.append(dict(dir=d, path=p, desc=desc, declared=declared,
                         lot=declared or lot or "unsorted", conf=conf,
-                        plugin=pmap.get(d, "-"),
-                        disambig=bool(DISAMBIG.search(desc))))
+                        plugin=pmap.get(d, "-"), disambig=False))
+    lots = collections.defaultdict(list)
+    for s in out:
+        lots[s["lot"]].append(s["dir"])
+    for s in out:
+        s["disambig"] = names_a_sibling(s["desc"], s["dir"], lots[s["lot"]])
     return out
 
 

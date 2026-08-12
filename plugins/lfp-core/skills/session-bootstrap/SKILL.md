@@ -1,19 +1,17 @@
 ---
 name: session-bootstrap
 description: >-
-  Brings a fresh, blank Cowork session up to full working state for ANY project or
-  co-worker  verifies the project's mounted folders, live MCP connectors, loaded
-  memory, and (when the project needs live data) mounts + verifies a read-only
-  credential (service-account / API key) with a real connection check, then prints
-  the project's data map and working rules. Cowork is stateless  every session
-  boots blank  so this is how you reconstitute a workspace instead of re-deriving
-  it. Use at the START of any session, and whenever the user says "bootstrap",
-  "start session", "new session", "clone the workspace", "levanta/arranca la
-  sesin", "reconnect", "reconecta", "connect the data", "mount the key", "start
-  [project]", "get me set up", or asks how to bring a cold session up to speed.
-  Project-agnostic: it reads each project's requirements from that project's own
-  config, so one skill bootstraps every co-worker. Fire it even on casual cold
-  openers ("ok, back to it", "continuemos").
+  Brings a fresh, blank Cowork session up to full working state for ANY project or co-worker 
+  verifies the project's mounted folders, live MCP connectors, loaded memory, and (when the
+  project needs live data) mounts + verifies a read-only credential (service-account / API
+  key) with a real connection check, then prints the project's data map and working rules. Use
+  at the START of any session, and whenever the user says "bootstrap", "start session", "new
+  session", "clone the workspace", "levanta/arranca la sesin", "reconnect", "reconecta",
+  "connect the data", "mount the key", "start [project]", "get me set up", or asks how to
+  bring a cold session up to speed. Project-agnostic: it reads each project's requirements
+  from that project's own config, so one skill bootstraps every co-worker. Fire it even on
+  casual cold openers ("ok, back to it", "continuemos"). NOT arise or reentry (both read
+  existing state): this mounts and verifies.
 metadata:
   intent: orient
 ---

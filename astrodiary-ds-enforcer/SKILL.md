@@ -1,19 +1,17 @@
 ---
 name: astrodiary-ds-enforcer
-description: >
-  Design system enforcement for AstroDiary (Astro DS, the e-ink design system) —
-  screens and components produced by any UI builder or agent for the AstroDiary PWA.
-  Fires BEFORE and AFTER writing any HTML/CSS/JSX for AstroDiary to catch design
-  drift before it ships. Use whenever writing, reviewing, or reworking UI for
-  AstroDiary — Splash, Landing, Today, Foundation, Calendar, Settings, or any new
-  screen. Trigger on: "ds enforcer", "astro ds", "check the design", "enforce the
-  ds", "is this on-spec", "does this match astro ds", "audit this ui", "does this
-  follow the design", "fix the design", "the moon disc looks wrong", "this doesn't
-  match the e-ink suite", "enforce design tokens", or any request to review or
-  correct AstroDiary UI code. Also trigger PROACTIVELY at the start of any build
-  session that will produce HTML/CSS/JSX for AstroDiary — even if the user didn't
-  ask. Design drift is cheaper to catch before the first line is written than
-  after the whole screen is done wrong.
+description: >-
+  Design system enforcement for AstroDiary (Astro DS, the e-ink design system) — screens and
+  components produced by any UI builder or agent for the AstroDiary PWA. Fires BEFORE and
+  AFTER writing any HTML/CSS/JSX for AstroDiary to catch design drift before it ships. Use
+  whenever writing, reviewing, or reworking UI for AstroDiary — Splash, Landing, Today,
+  Foundation, Calendar, Settings, or any new screen. Trigger on: "ds enforcer", "astro ds",
+  "check the design", "enforce the ds", "is this on-spec", "does this match astro ds", "audit
+  this ui", "does this follow the design", "fix the design", "the moon disc looks wrong",
+  "this doesn't match the e-ink suite", "enforce design tokens", or any request to review or
+  correct AstroDiary UI code. Also trigger PROACTIVELY at the start of any build session that
+  will produce HTML/CSS/JSX for AstroDiary — even if the user didn't ask. NOT verify-loop or
+  self-audit: AstroDiary UI only.
 metadata:
   intent: audit
 ---

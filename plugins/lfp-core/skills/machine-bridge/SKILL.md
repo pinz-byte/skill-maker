@@ -1,18 +1,16 @@
 ---
 name: machine-bridge
-description: >
-  Hardening skill for the sandbox-to-machine handoff. Cowork agents run in a Linux sandbox
-  whose session path rotates every session and whose mounts can lag the user's machine,
-  producing a recurring failure class: scripts that hardcode a dead session path, commands
-  shipped with literal placeholders the user pastes verbatim, and stale launchd/venv/git
-  state on the machine. Use whenever you are about to hand the user a command to run on
-  their machine, deploy across the sandbox-iCloud boundary, or commit from their terminal.
-  Trigger on "run this on my machine", "give me the terminal commands", "deploy to icloud",
-  "this path is broken again", "commit from my terminal", "it pasted the placeholder",
-  "launchd is running an old version", or "the sandbox is behind". Also fire proactively
-  before emitting any bash block the user will paste, and when you write or edit a
-  deploy/launchd/cron script. Fire on "why did that command fail" when it is a placeholder
-  or stale path.
+description: >-
+  Hardening skill for the sandbox-to-machine handoff. scripts that hardcode a dead session
+  path, commands shipped with literal placeholders the user pastes verbatim, and stale
+  launchd/venv/git state on the machine. Use whenever you are about to hand the user a command
+  to run on their machine, deploy across the sandbox-iCloud boundary, or commit from their
+  terminal. Trigger on "run this on my machine", "give me the terminal commands", "deploy to
+  icloud", "this path is broken again", "commit from my terminal", "it pasted the
+  placeholder", "launchd is running an old version", or "the sandbox is behind". Also fire
+  proactively before emitting any bash block the user will paste, and when you write or edit a
+  deploy/launchd/cron script. Fire on "why did that command fail" when it is a placeholder or
+  stale path. NOT gcp-iam-resolver (cloud IAM) or disk-doctor.
 metadata:
   intent: diagnose
 ---

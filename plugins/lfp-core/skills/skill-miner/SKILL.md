@@ -1,17 +1,17 @@
 ---
 name: skill-miner
-description: >
-  Analyzes session transcripts across all Cowork projects to surface friction
-  patterns, repeated failures, and untapped opportunities  then generates ranked
-  skill proposals ready to build in SKILL MAKER. Use this skill whenever the user
-  says "mine sessions", "what skills should we build", "what are the pain points",
-  "analyze transcripts", "skill proposals", "what keeps breaking", "find patterns",
-  "what should we automate", "skill opportunities", "what do agents struggle with",
-  or any request to discover skill ideas from real usage data. Also trigger when
-  the user asks "what's causing the most overhead" or "where are agents wasting
-  time". This is the intelligence layer that closes the loop between ecosystem
-  usage and skill creation  run it periodically (weekly or when the backlog runs
-  dry) to keep SKILL MAKER building the right things.
+description: >-
+  Analyzes session transcripts across all Cowork projects to surface friction patterns,
+  repeated failures, and untapped opportunities  then generates ranked skill proposals ready
+  to build in SKILL MAKER. Use this skill whenever the user says "mine sessions", "what skills
+  should we build", "what are the pain points", "analyze transcripts", "skill proposals",
+  "what keeps breaking", "find patterns", "what should we automate", "skill opportunities",
+  "what do agents struggle with", or any request to discover skill ideas from real usage data.
+  Also trigger when the user asks "what's causing the most overhead" or "where are agents
+  wasting time". This is the intelligence layer that closes the loop between ecosystem usage
+  and skill creation  run it periodically (weekly or when the backlog runs dry) to keep SKILL
+  MAKER building the right things. NOT skillmaker-publish (ships finished skills) or
+  soul-builder (writes SOUL.md): this only proposes what to build next.
 metadata:
   intent: build
 ---

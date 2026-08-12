@@ -1,17 +1,16 @@
 ---
 name: herald-config-doctor
-description: >
-  Remediation skill for HERALD config drift. The herald-health-monitor DETECTS stale
-  config every run but never FIXES it, so the same three findings recur ("4th run, still
-  pending") while masking real regressions. This skill closes the loop: reads the latest
-  monitor report, applies the known mechanical fixes (decommissioned Cloud Run URL,
-  rotated API key, unmounted output path), self-heals the monitor's SKILL.md, re-runs to
-  confirm clean. Use on "fix herald config", "herald is noisy again", "silence the herald
-  findings", "herald config drift", "patch the monitor", "herald keeps reporting the same
-  thing", or "why does the health monitor keep flagging that". Also trigger after any
-  herald-health-monitor or herald-accuracy-audit run reporting repeat/pending findings,
-  and whenever the report shows a 403 (dead URL), 401 (rotated key), or unmounted-path
-  write error. Fire on "herald's complaining again" or "make the herald noise stop".
+description: >-
+  Remediation skill for HERALD config drift. This skill closes the loop: reads the latest
+  monitor report, applies the known mechanical fixes (decommissioned Cloud Run URL, rotated
+  API key, unmounted output path), self-heals the monitor's SKILL.md, re-runs to confirm
+  clean. Use on "fix herald config", "herald is noisy again", "silence the herald findings",
+  "herald config drift", "patch the monitor", "herald keeps reporting the same thing", or "why
+  does the health monitor keep flagging that". Also trigger after any herald-health-monitor or
+  herald-accuracy-audit run reporting repeat/pending findings, and whenever the report shows a
+  403 (dead URL), 401 (rotated key), or unmounted-path write error. Fire on "herald's
+  complaining again" or "make the herald noise stop". NOT machine-bridge (sandbox-to-machine
+  handoff) or gcp-iam-resolver (cloud IAM).
 metadata:
   intent: diagnose
 ---
