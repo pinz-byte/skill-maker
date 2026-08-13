@@ -79,6 +79,26 @@ def parse_frontmatter(skill_md_path: Path) -> dict:
 def main():
     plugins_dir = ROOT / "plugins"
 
+    # Dead-channel gate (added 2026-08-12). The retired per-.skill / iCloud pipeline
+    # (build-skill.py, ship-skill.sh, sync-skills.sh, deploy-plugins.sh) shipped a SECOND
+    # artifact for every skill. That is how 32 skills came to exist twice in the Cowork
+    # account stores and 3 of them three times. The scripts are gone; this gate makes sure
+    # a stray artifact or a resurrected script fails the build loudly instead of quietly
+    # re-manufacturing duplicates.
+    strays = sorted(
+        [p.name for p in ROOT.glob("*.skill")]
+        + [p.name for p in ROOT.glob("*.plugin")]
+        + [n for n in ("build-skill.py", "ship-skill.sh", "sync-skills.sh", "deploy-plugins.sh")
+           if (ROOT / n).exists()]
+    )
+    if strays:
+        raise SystemExit(
+            "ERROR: dead-channel artifacts present in repo root: "
+            + ", ".join(strays)
+            + "\n  There is exactly ONE channel: grouped plugins via this script + ./publish.sh."
+            + "\n  See .claude/rules/deploy-target.md. Delete these; do not resurrect them."
+        )
+
     all_skills = [s for _, (_, skills) in GROUPS.items() for s in skills]
     missing = [s for s in all_skills if not (ROOT / s / "SKILL.md").exists()]
     if missing:
