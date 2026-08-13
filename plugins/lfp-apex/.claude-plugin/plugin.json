@@ -1,6 +1,6 @@
 {
   "name": "lfp-apex",
-  "description": "APEX live-money trading council -- scope to trading projects only.",
+  "description": "APEX live-money trading council and runtime health -- scope to trading projects only.",
   "author": {
     "name": "LFP"
   }

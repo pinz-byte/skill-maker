@@ -6,3 +6,6 @@ team-toolkit/
 *.skill
 .claude/hooks/fired.log
 __pycache__/
+
+_retired/
+_to_delete/

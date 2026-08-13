@@ -1,0 +1,7 @@
+{
+  "name": "lfp-product",
+  "description": "Subastop / VMC / CarMatch product line -- build, deploy, design-system and pre-ship gates. Scope to product projects only.",
+  "author": {
+    "name": "LFP"
+  }
+}

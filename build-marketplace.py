@@ -26,32 +26,50 @@ MARKETPLACE_DESC = "LFP ecosystem skills: oversight thinkers, core ops, and apex
 # plugin -> (description, [skill dirs])
 GROUPS = {
     "lfp-thinkers": (
-        "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox.",
-        ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker", "ceo-planner", "toolbox"],
+        "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox -- plus the Master Key creative process, the Intention Builder framework and extended-reasoning escalation.",
+        ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker",
+         "ceo-planner", "toolbox", "masterkey", "ib", "ultrathink"],
     ),
     "lfp-core": (
         "Core ops/build/meta/comms/QA skills for every working project.",
-        ["agent-bridge", "inbox-triage", "git-ops", "machine-bridge", "project-migrate", "self-audit", "reentry",
-         "continuity-seed", "session-bootstrap", "soul-builder", "arise", "time-boundary",
-         "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit",
-         "gcp-iam-resolver", "herald-config-doctor",
+        ["agent-bridge", "inbox-triage", "git-ops", "machine-bridge", "project-migrate",
+         "self-audit", "reentry", "continuity-seed", "session-bootstrap", "soul-builder",
+         "arise", "time-boundary", "session-rules", "meta-no-bare-names", "skill-miner",
+         "workspace-plugin-audit", "gcp-iam-resolver", "herald-config-doctor",
          "projectmd-auditor", "projectmd-optimizer", "offload", "auditor-general",
-         "audit-codex-build", "codex-audit-handoff", "builder-identity-check",
-         "qa-mirror", "qa-sequence", "pwa-verify", "carmatch-intel", "disk-doctor", "notebooklm-bridge", "pm",
-         "space-steward", "inpositive-language", "project-handover", "skillmaker-publish", "verify-loop"],
+         "audit-codex-build", "codex-audit-handoff", "builder-identity-check", "qa-mirror",
+         "qa-sequence", "pwa-verify", "carmatch-intel", "disk-doctor", "notebooklm-bridge",
+         "pm", "space-steward", "inpositive-language", "project-handover",
+         "skillmaker-publish", "verify-loop", "builder-handoff", "projectmd-gen",
+         "project-init", "cc-session-analyzer", "work-retrospective", "forensic-auditor",
+         "data-analyst"],
     ),
     "lfp-apex": (
-        "APEX live-money trading council -- scope to trading projects only.",
+        "APEX live-money trading council and runtime health -- scope to trading projects only.",
         ["apex-builder-gate", "apex-ultra-council", "council-call", "council-debate",
-         "council-global"],
+         "council-global", "apex-health", "council", "council-run"],
     ),
     "lfp-copy": (
-        "Tone and copy skills for VMC Subastas commercial content -- outreach sequences and marketplace listings.",
-        ["patel-tone-converter", "copy-masterkey", "vmc-listing-copy"],
+        "Tone and copy skills for VMC Subastas commercial content -- outreach sequences, marketplace listings, page copy and source grounding.",
+        ["patel-tone-converter", "copy-masterkey", "vmc-listing-copy", "copy-deck",
+         "voice-bench-gate"],
     ),
     "lfp-design": (
         "Personal-project design-system enforcement (non-Subastop) -- e-ink brand tokens and component drift checks.",
         ["astrodiary-ds-enforcer"],
+    ),
+    "lfp-product": (
+        "Subastop / VMC / CarMatch product line -- build, deploy, design-system and pre-ship gates. Scope to product projects only.",
+        ["brief-bridge", "dashboard-section", "ds-enforcer", "factory-gate", "carmatch-deploy",
+         "phased-deploy", "source-scout", "pre-deliver", "dependency-audit"],
+    ),
+    "lfp-symbios": (
+        "Symbios personal-OS layer -- session consciousness, capture and weekly continuity. Scope to Symbios and personal projects.",
+        ["wake", "investigator", "data-capsule", "cowork-friday-handoff"],
+    ),
+    "lfp-labs": (
+        "Narrow single-project instruments -- voice architecture and production series artwork. Install only where the project lives.",
+        ["amorata-voice-system", "apu-series-generator"],
     ),
 }
 

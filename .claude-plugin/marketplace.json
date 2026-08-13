@@ -8,7 +8,7 @@
     {
       "name": "lfp-thinkers",
       "source": "./plugins/lfp-thinkers",
-      "description": "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox."
+      "description": "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox -- plus the Master Key creative process, the Intention Builder framework and extended-reasoning escalation."
     },
     {
       "name": "lfp-core",
@@ -18,17 +18,32 @@
     {
       "name": "lfp-apex",
       "source": "./plugins/lfp-apex",
-      "description": "APEX live-money trading council -- scope to trading projects only."
+      "description": "APEX live-money trading council and runtime health -- scope to trading projects only."
     },
     {
       "name": "lfp-copy",
       "source": "./plugins/lfp-copy",
-      "description": "Tone and copy skills for VMC Subastas commercial content -- outreach sequences and marketplace listings."
+      "description": "Tone and copy skills for VMC Subastas commercial content -- outreach sequences, marketplace listings, page copy and source grounding."
     },
     {
       "name": "lfp-design",
       "source": "./plugins/lfp-design",
       "description": "Personal-project design-system enforcement (non-Subastop) -- e-ink brand tokens and component drift checks."
+    },
+    {
+      "name": "lfp-product",
+      "source": "./plugins/lfp-product",
+      "description": "Subastop / VMC / CarMatch product line -- build, deploy, design-system and pre-ship gates. Scope to product projects only."
+    },
+    {
+      "name": "lfp-symbios",
+      "source": "./plugins/lfp-symbios",
+      "description": "Symbios personal-OS layer -- session consciousness, capture and weekly continuity. Scope to Symbios and personal projects."
+    },
+    {
+      "name": "lfp-labs",
+      "source": "./plugins/lfp-labs",
+      "description": "Narrow single-project instruments -- voice architecture and production series artwork. Install only where the project lives."
     }
   ]
 }

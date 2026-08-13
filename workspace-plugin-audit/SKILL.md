@@ -33,6 +33,27 @@ except an explicit per-plugin update bumps that pin.
 Diagnoses a not-found or stale skill as one of three things, in this order (cheapest/most
 likely first):
 
+## Step 0 -- ALWAYS run the duplicate detector first
+
+Before diagnosing anything else, run `dedupe-check.py` from the SKILL MAKER repo **inside a
+Cowork session** (it reads `~/.claude/skills/synced` + `~/.claude/plugins/synced`, which exist
+only there -- it is a no-op from a native shell, so it cannot be wired into publish.sh):
+
+    python3 dedupe-check.py
+
+Exit 0 = every skill name resolves to one source. Exit 1 = the same name is installed from more
+than one place, and the picker will show it 2-3 times. This ran silently wrong for ~5 months:
+36 names duplicated, 3 triplicated, found by a human eyeballing the slash-command picker.
+
+Deletion is MANUAL and cannot be automated -- the Cowork account stores have no API, `claude
+plugin` has no verb for them, and the Claude desktop app is not a computer-use target. Delete
+standalone copies in Customize -> Skills, uninstall single-skill plugins in Customize ->
+Plugins, and always keep the GROUPED plugin copy. It is per-ACCOUNT, so do it once, not per
+machine.
+
+Caveat that matters: a session's synced cache FREEZES at session start. A run in the session
+that did the deleting still reports the old count. Only a fresh session tells the truth.
+
 ## Diagnose, in order
 
 1. **Stale installed version (the common case as of 2026-07-03)** — the plugin IS installed,

@@ -38,7 +38,7 @@ Reason: Cowork plugin validator rejects non-ASCII characters with a silent failu
 ## Deploy after every build
 
 ```bash
-./deploy-plugins.sh
+./publish.sh
 ```
 Never manually copy individual files — the script handles all plugins atomically.
 

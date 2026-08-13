@@ -7,7 +7,7 @@ SKILL.md file packaged into a zip bundle with a specific internal structure.
 
 ## Runtime
 - No code runtime — pure Markdown + Python packaging scripts
-- Deploy: deploy-plugins.sh -> iCloud Drive/Claude/Plugins -> manual install via Cowork
+- Deploy: ./publish.sh -> git marketplace, then the desktop 3-store ritual (see .claude/rules/deploy-target.md). iCloud and .skill files are DEAD channels.
 
 ## File map
 
@@ -18,7 +18,7 @@ SKILL.md file packaged into a zip bundle with a specific internal structure.
 | `git-ops/SKILL.md` | Full git autonomy skill |
 | `self-audit/SKILL.md` | Self-audit skill with references |
 | `*.plugin` | Built plugin bundles ready for install |
-| `deploy-plugins.sh` | Copies all .plugin files to iCloud/Claude/Plugins |
+| `deploy-plugins.sh` | DEAD -- retired iCloud channel, do not run |
 | `reentry-workspace/` | Eval test cases and HTML eval viewer |
 
 ## Plugin format — exact structure required
@@ -73,7 +73,7 @@ with zipfile.ZipFile('NAME.plugin', 'w', zipfile.ZIP_DEFLATED) as zf:
 
 1. Edit `skills/[name]/SKILL.md`
 2. Build: run python3 package script -> produces `[name].plugin`
-3. Deploy: `./deploy-plugins.sh` -> syncs to iCloud Drive/Claude/Plugins
+3. Deploy: `./publish.sh` -> git marketplace + desktop 3-store ritual. NEVER deploy-plugins.sh (DEAD).
 4. Install: Cowork -> Customize -> Add Plugin on each machine
 
 ## Conventions

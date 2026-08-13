@@ -5,11 +5,12 @@ description: >-
   it's in. Trigger on "/pm", "pm", "project manager", "manage this project", "what's the state
   of this project", "what's open here", "where are we on this project", "status of this
   project", "run pm". The per-project PM reads the Focus Queue filtered to THIS project
-  (Assignee = project), surfaces current focus / open / blocked / recently-closed
+  (Assignee or Domain = project), surfaces current focus / open / blocked / recently-closed
   blockers-first, and closes finished tasks there. It rides the Focus Queue spine -- no
   separate board, no parallel store. It manages and surfaces; it never makes consequential
   decisions for POPs. Keep ONE chat per project as its PM chat; do the doing in other chats.
   The Focus Queue itself is the cross-project roll-up.
+  NOT builder-handoff (packages sandbox-blocked work for a real machine): this reads the Focus Queue for THIS project and closes its rows.
 metadata:
   intent: manage
   type: comms
@@ -24,8 +25,15 @@ per-project board to maintain.
 ## On invocation
 1. Read this project's rows from the Focus Queue
    (db cd49d2c6-f9d6-40af-bacb-d9662e3323d6, data source
-   collection://b5c3c737-1219-4888-a081-bbfde500e180), filter Assignee = <this project>,
-   excluding terminal status Done and Deferred. Title property is `Item`, not `Task`.
+   collection://b5c3c737-1219-4888-a081-bbfde500e180), matching rows where
+   Assignee = <this project> OR Domain = <this project>. Most rows carry Domain and leave
+   Assignee empty -- 99 of 136 on 2026-08-12 -- so an Assignee-only filter hides about two
+   thirds of live work. Do not "simplify" this back to one property. Exclude terminal status
+   Done and Deferred. Title property is `Item`, not `Task`.
+   Then, in EVERY brief regardless of project, also surface any live row that has NEITHER
+   Assignee NOR Domain under a "needs attention -- unrouted" heading. Those rows belong to no
+   project and are otherwise invisible to every /pm everywhere; dropping them is the same bug
+   the OR filter above fixes, one size smaller.
 2. Brief POPs in one breath, blockers first: Waiting (what's stuck and on what) /
    In Progress / Open / Recently Done. Lead each item with Priority; carry `Next Action`
    verbatim -- it is the row's whole point. Surface `Due Date` when set, and flag any row

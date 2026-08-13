@@ -1,0 +1,291 @@
+---
+name: dashboard-section
+description: >-
+  Builds dashboard sections (new or rebuild) across any Subastop product — AVT backoffice,
+  CarMatch, AVT PLUS. Compresses the audit→reframe→spec→verify lifecycle from 2-3 hours of ad-
+  hoc work to 30-45 minutes. Use this skill whenever the user says "build dashboard section",
+  "redo tab X", "audit tab Y", "BI view for Z", "make tab productive", "rebuild as BI
+  surface", "convert flat browser to dashboard", "dashboard for [thing]", "dash next section",
+  "let's tackle [tab name]", "new section in the dash", "Inventario-style rebuild of X", "this
+  tab is desaprovechada", "what does X show and why", or mentions any tab name (Vehículos,
+  Chats, Pipeline, Mensajes, Comparables, MSRP, Notif, Usuarios, Scrape, AI Copy, Onboard
+  Store, Admins, Overview, Market Data) alongside a change verb (redo, audit, rebuild, fix,
+  improve). Auto-detects product from path, routes to correct archetype (Analytical BI /
+  Operational Monitoring / Directory CRUD), orchestrates 4-phase lifecycle. NOT pre-deliver
+  (the ship gate for strategic artifacts): this runs the audit-reframe-spec-verify lifecycle
+  for one dashboard section.
+metadata:
+  intent: audit
+---
+
+# Dashboard Section Builder
+
+The orchestrator that takes a dashboard work request from "let's tackle X" to "builder prompt dispatched + verification gates locked" in 30-45 minutes instead of 2-3 hours of ad-hoc iteration.
+
+## When this skill fires
+
+Trigger keywords (non-exhaustive — fire on intent, not exact match):
+- "build dashboard section", "redo tab X", "audit tab Y"
+- "BI view for Z", "make tab productive", "rebuild as BI surface"
+- "convert flat browser to dashboard", "dashboard for [thing]"
+- "dash next section", "let's tackle [tab name]", "new section in the dash"
+- "Inventario-style rebuild of X", "Vehículos pattern for Y"
+- "this tab is desaprovechada", "what does X show and why" (audit-only intent)
+- Any specific tab name + change-intent verb (redo, audit, rebuild, expand, fix, improve, productize)
+- "next tab", "tackle the next one"
+
+## Why this skill exists
+
+POPs rebuilds dashboard sections frequently (one per session is typical). The methodology converged across AdminsTab + Market Data + AVT Inventario into a stable 4-phase pattern. Without this skill, each new section costs 2-3 hours of: re-explaining the audit-first discipline, re-asking the same scope questions, re-deriving the file naming, re-writing the verification gates, re-warning about the same anti-patterns. This skill captures all of that as muscle memory.
+
+## Pre-conditions (read these BEFORE Phase 1)
+
+Read POPs's auto-memory directory and surface the entries that apply to dashboard work:
+
+```bash
+ls /Users/lfp/Library/Application\ Support/Claude/local-agent-mode-sessions/*/spaces/*/memory/feedback_*.md \
+   /Users/lfp/Library/Application\ Support/Claude/local-agent-mode-sessions/*/spaces/*/memory/project_*.md 2>/dev/null
+```
+
+The load-bearing ones for dashboard work (read the actual file when you encounter the trigger):
+- `feedback_audit_measurement_basis` — wrong basis produces high-confidence wrong outputs
+- `feedback_macro_means_filter_not_catalogue` — 3-5 items per category, not exhaustive
+- `feedback_code_existence_not_runtime_success` — runtime gates required, code-only PASS doesn't close
+- `feedback_audit_agent_hallucination_risk` — file:line cites mandatory
+- `feedback_dont_ask_pops_implementation_choices` — strategic forks ask, hygiene decide
+- `feedback_pipeline_truth_first` — bundle SHA on canonical URL is the deploy gate
+- `feedback_deploy_order_commit_before_build` — git commit BEFORE npm run build
+- `feedback_builder_partial_success_mislabeled` — per-step PASS/FAIL matrix, no roll-up
+- `feedback_ib_scope_contamination` — extension scope vs platform scope
+- `feedback_verify_test_count` — never invent counts; quote spec
+- `feedback_audit_findings_to_single_owner` — one owner prompt, not N fix prompts
+- `project_avt_training_lake_principle` — every vehicle observation persists for training (relevant to AVT inventory work)
+- `feedback_recommended_hint_anchors_wrong_scope` — don't tag "(Recommended)" without strong evidence
+- `feedback_meta_owns_prompt_authoring` — META authors strategic artifacts, builders execute
+
+These memories evolve. Always read the actual file content at fire-time, don't quote from memory.
+
+## Product detection (cross-product)
+
+Before any phase, detect which product the user is talking about:
+
+```
+Path / mention                          → Product             → Project ID        → Canonical URL
+/Users/lfp/Dev/AVT (and /backoffice)    → AVT backoffice      → avt-ai-v0          → avt-backoffice.web.app
+/Users/lfp/Dev/AVT/plus (or AVT PLUS)   → AVT PLUS           → avt-ai-v0          → avt-plus.web.app
+/Users/lfp/Dev/CarMatch                 → CarMatch (consumer) → carmatch-ai-v0     → carmatch-ai.com
+/Users/lfp/Dev/CarMatch/backoffice      → CarMatch backoffice → carmatch-ai-v0     → carmatch-backoffice.web.app
+"AVT", "backoffice"                     → ask if ambiguous
+```
+
+Canonical write location for ALL artifacts: `/Users/lfp/Dev/AVT_CarMatch_meta/`
+
+See `references/product-detection.md` for the full mapping including design tokens, sibling architecture rules, and project-specific gotchas.
+
+## Archetype routing
+
+Three dashboard archetypes. Identify which one before generating any prompt. **Ask the user explicitly if uncertain** — wrong archetype = wrong spec.
+
+### Archetype A — Analytical BI (drill-down inventory intelligence)
+- **Examples:** AVT Inventario, Market Data
+- **Shape:** Funnel KPIs (drill-down scope) → main metric + time-series → 3-6 segmentation panels → secondary trends → drill-through wiring from snapshot tabs
+- **Trigger phrases:** "inventory view", "patio business view", "segmentar", "rescatar insights", "intelligence", "BI", "depth analysis", "drill-down"
+- **Read:** `references/archetype-analytical-bi.md`
+
+### Archetype B — Operational Monitoring (real-time status)
+- **Examples:** Pipeline, Activity (before deletion), CarMatch tab cross-project monitoring
+- **Shape:** Real-time alerts + health gauges + recent events stream + thresholds
+- **Trigger phrases:** "monitoring", "pipeline health", "alerts", "real-time", "status", "errors", "what's happening", "live data"
+- **Read:** `references/archetype-operational-monitoring.md`
+
+### Archetype C — Directory/CRUD (manage records)
+- **Examples:** Onboard Store, Admins
+- **Shape:** Form + table + row actions + optional audit log
+- **Trigger phrases:** "create", "manage", "list", "add", "remove", "grant access", "provision", "users", "admins"
+- **Read:** `references/archetype-directory-crud.md`
+
+Each archetype reference contains the full spec template (sections, KPIs, panels, gates) ready to fill in with product-specific details.
+
+## The 4-phase lifecycle
+
+### Phase 1 — AUDIT (skip if greenfield)
+
+**Purpose:** Establish baseline. Project rule: never modify what you haven't measured.
+
+**When to run:** If a tab/surface already exists. Skip if user is creating something new from scratch.
+
+**Procedure:**
+1. Confirm with the user: "Rebuild of existing surface, or greenfield new section?"
+2. If rebuild: invoke the audit-prompt template at `assets/audit-prompt-template.md` and fill in the product/path details
+3. Write the audit prompt to canonical: `BUILDER_PROMPT_{PRODUCT}_{TAB_NAME}_AUDIT_YYYY-MM-DD.md`
+4. Generate paste-ready dispatch for the builder
+5. STOP. Wait for builder report.
+
+**What the audit must surface (universal):**
+- File location (file:line, separate or inline)
+- Data source (Firestore collection, query, transforms)
+- Columns/fields rendered
+- Actions per row
+- Filtering/search/sorting/pagination
+- Loading/empty/error states
+- Overlap with other tabs (shared hooks, shared data)
+- Performance characteristics (limits, virtualization, snapshot listener count)
+- Git log recent changes
+- Surprises (bugs, drift, schema inconsistency)
+
+**Output:** `BUILDER_PROMPT_{PRODUCT}_{TAB}_AUDIT_YYYY-MM-DD.md` + dispatch text.
+
+After builder returns the audit report: surface to the user the load-bearing findings (data model surprises, performance cliffs, schema drift, blind spots) BEFORE moving to Phase 2. The audit often reveals that the user's mental model of the tab is wrong — re-align before locking scope.
+
+### Phase 2 — REFRAME (always run)
+
+**Purpose:** Convert user vision + audit findings into a locked spec.
+
+**Procedure:**
+1. Determine action: replace existing? extend? rename? net-new?
+2. Lock naming. Push back on names that collide with product brand (e.g., "AVT" as section name inside "AVT.ai Backoffice" is recursive — propose alternatives).
+3. Branch by archetype:
+   - **Analytical BI:** lock 3-6 segmentation dimensions from candidate list (propose 8-10 candidates, user picks 3-5 — never enumerate everything per `feedback_macro_means_filter_not_catalogue`). Lock time window for trends. Lock overlap resolution with existing snapshot/overview tabs (paralela or reemplazo).
+   - **Operational Monitoring:** lock threshold values for alerts, lock event stream window, lock which signals drive the health gauges.
+   - **Directory/CRUD:** lock form fields (3-5 max), lock row actions, decide on audit log requirement.
+4. **NO "(Recommended)" tags in AskUserQuestion options without strong evidence** (per `feedback_recommended_hint_anchors_wrong_scope`). When ambiguity is genuine, present options without recommendation.
+5. **Watch for mid-session reframes from the user.** Per memory: a user reframe is a signal that the previous frame was wrong — re-read the initial ask before extending the current branch.
+6. Capture all decisions in `DECISIONS_{PRODUCT}_{TAB}_YYYY-MM-DD.md`.
+
+**Key reframe questions by archetype:**
+
+| Question | Analytical BI | Op Monitoring | Directory CRUD |
+|---|---|---|---|
+| What's the primary user task? | Understand inventory/market | Detect anomalies fast | Manage records |
+| Snapshot or trend-first? | Funnel KPIs at top, trends central | Snapshot of current health, alerts above | List of current records |
+| What's the source of truth? | Verify collection + JOIN paths in audit | Verify event source + listener health | Verify single-writer rule |
+| Auth model alignment? | (Usually open to all admins) | (Same) | **Critical** — see AdminsTab lesson: backoffice auth model determined the entire pattern |
+
+**Output:** `DECISIONS_{PRODUCT}_{TAB}_YYYY-MM-DD.md` with all locked decisions + rationale.
+
+### Phase 3 — BUILDER PROMPT (always run)
+
+**Purpose:** Convert locked decisions into an executable builder prompt.
+
+**Procedure:**
+1. Load the archetype reference (`references/archetype-{type}.md`) for the spec template structure
+2. Load the audit report (if Phase 1 ran) for the existing code patterns to mirror or replace
+3. Fill in the template:
+   - Header (date, author=META, executor=AVT/CarMatch builder, target URL, scope)
+   - Why this exists (one paragraph capturing user vision + audit findings + reframe outcome)
+   - Scope IN
+   - Scope OUT (v2 backlog)
+   - Pattern dependencies (what existing primitives to reuse — be specific with file:line from audit)
+   - Phase 0 recon (MANDATORY before any write; builder stops + reports before Phase 1)
+   - Phase 1 implementation (sub-tasks numbered)
+   - Phase 2 verification gates (numbered, mark runtime vs code-only)
+   - Phase 3 report-back specification
+   - Binding rules (project + memory references)
+   - Anti-pattern check (NO list)
+   - Definition of done
+4. Write to canonical: `BUILDER_PROMPT_{PRODUCT}_{TAB_NAME}_YYYY-MM-DD.md`
+5. Generate paste-ready dispatch text
+
+**Universal binding rules to bake into every builder prompt** (per memories):
+
+```markdown
+1. Sibling architecture — touch only the named product. If a shared primitive needs change, STOP and surface to META.
+2. Single-writer Firestore — frontend never writes the canonical collection; Functions only.
+3. Mirror existing patterns — do NOT invent new component patterns, new modal libraries, new state managers, new token systems.
+4. Deploy order — git commit BEFORE npm run build (per `feedback_deploy_order_commit_before_build`)
+5. Esbuild stderr fatal — scan build output (per `feedback_deploy_chain_verification`)
+6. Src grep not trusted — verify dist/assets/*.js per CLAUDE.md
+7. Builder partial-success forbidden — per-step PASS/FAIL matrix, no roll-up (per `feedback_builder_partial_success_mislabeled`)
+8. File:line cites in audit work (per `feedback_audit_agent_hallucination_risk`)
+9. zsh-safe shell in report-backs (per `feedback_zsh_nullglob_meta_ops`)
+10. Runtime gates required — code-only PASS does NOT close runtime gates (per `feedback_code_existence_not_runtime_success`)
+11. Pipeline-truth gate — bundle SHA on canonical URL matches git HEAD post-deploy (per `feedback_pipeline_truth_first`)
+```
+
+**Universal anti-pattern checklist:**
+
+```markdown
+- ❌ Rendering N raw nodes for analytics views (use aggregates, not per-doc cards)
+- ❌ Creating a NEW Firestore collection when an existing one with discriminator field works
+- ❌ Wrappear cada Function with custom auth middleware when global gate exists
+- ❌ Hardcoding lists that should derive from data
+- ❌ Generating temp passwords when the target auth model is Google OAuth + allowlist
+- ❌ Persisting filter state in Firestore — client state (URL/Context/lifted) only
+- ❌ Tagging "(Recommended)" in scope questions without strong prior evidence
+```
+
+**Output:** `BUILDER_PROMPT_{PRODUCT}_{TAB}_YYYY-MM-DD.md` + dispatch text.
+
+### Phase 4 — VERIFICATION GATES (after deploy)
+
+**Purpose:** Runtime verification by POPs in browser. Code-merged + CI-green does NOT close.
+
+**Procedure:**
+1. After builder reports deploy + CI green, generate a runtime checklist
+2. Numbered steps, each gate labeled runtime vs code-only
+3. Universal gates list (every archetype):
+   - Nav check (new tab appears, old tab gone if replacement)
+   - Render in <3 seconds
+   - Console clean (no errors mentioning the new component or related Firestore paths)
+   - Network tab shows real queries firing (no 4xx/5xx)
+   - Bundle SHA matches HEAD on canonical URL
+   - No regression: 3-5 adjacent tabs tested
+4. Archetype-specific gates (see archetype reference)
+5. Write: `GATES_{PRODUCT}_{TAB}_YYYY-MM-DD.md`
+6. Surface checklist inline in chat (POPs walks through in browser)
+7. Collect per-gate PASS/FAIL matrix from POPs
+
+**Critical reminder per memory `feedback_code_existence_not_runtime_success`:** Phase 4 is mandatory. Even if Phase 3 shipped clean, Phase 4 is where bugs surface (silent error states, blind spots like dealer garage vs consumer vehicles, schema drift). Do not declare the dashboard section done until POPs personally walks through.
+
+**Output:** `GATES_{PRODUCT}_{TAB}_YYYY-MM-DD.md` + inline walkthrough.
+
+## File naming conventions
+
+All artifacts live in `/Users/lfp/Dev/AVT_CarMatch_meta/`.
+
+| Artifact | Pattern |
+|---|---|
+| Audit prompt | `BUILDER_PROMPT_{PRODUCT}_{TAB}_AUDIT_YYYY-MM-DD.md` |
+| Audit report (builder writes) | `BUILDER_REPORT_{PRODUCT}_{TAB}_AUDIT_YYYY-MM-DD.md` |
+| Decisions doc | `DECISIONS_{PRODUCT}_{TAB}_YYYY-MM-DD.md` |
+| Builder prompt (spec) | `BUILDER_PROMPT_{PRODUCT}_{TAB}_YYYY-MM-DD.md` |
+| Builder report (post-deploy) | `BUILDER_REPORT_{PRODUCT}_{TAB}_YYYY-MM-DD.md` |
+| Verification gates | `GATES_{PRODUCT}_{TAB}_YYYY-MM-DD.md` |
+
+`{PRODUCT}` examples: `AVT_BACKOFFICE`, `AVT_PLUS`, `CARMATCH_BACKOFFICE`, `CARMATCH_CONSUMER`.
+`{TAB}` is the canonical tab name in SCREAMING_SNAKE: `AVT_INVENTARIO`, `ADMINS`, `MARKET_DATA`, `VEHICULOS`.
+
+When a previous version of a prompt becomes wrong-premise (mid-session reframe invalidates it), MOVE the old file to `archive/YYYY-MM-DD_{ORIGINAL_NAME}_{REASON}.md` with a banner explaining why. Reasons we've used: `wrong-premise`, `overengineered`, `unnecessary-builder`, `auth-model-mismatch`, `pre-tab-pattern`, `superseded`. Per project rule: don't accumulate addendums, consolidate.
+
+## Sibling architecture awareness
+
+Per `project_sibling_shared_structure_specialized_payload` memory: AVT, CarMatch, AVT PLUS share primitives via a shared backend with cross-team contracts. **Do not unilaterally edit shared code.** Builder prompts touching the named product's backoffice/frontend ONLY. If a primitive needs change across siblings, STOP and surface.
+
+Three-tier parity model applies for visual consistency (Tier 1 component CSS + Tier 2 parent chain + Tier 3 document context). When generating spec for a tab that mirrors a sibling tab, all three tiers must match.
+
+## When to NOT use this skill
+
+- User asks for help with a single small fix to an existing tab (e.g., "fix the typo in the Mensajes tab title") — that's an Edit, not a dashboard section build.
+- User wants to discuss product strategy at a level above individual sections (e.g., "should we redesign the whole backoffice nav?") — that's IB territory; use `anthropic-skills:ib` instead.
+- User is asking purely operational questions ("how do I deploy?" "where is X in the code?") without intent to build.
+- User wants a single Cloud Function or backend-only change without UI work.
+
+In those cases, hand back to the conversation flow without invoking the 4-phase lifecycle.
+
+## Composition with other skills
+
+This skill plays well with:
+- `anthropic-skills:ib` — Run IB BEFORE this skill for greenfield sections where the product purpose itself needs structure
+- `anthropic-skills:critical-thinker` — Layer on top during Phase 2 reframe to challenge weak scope decisions
+- `anthropic-skills:phased-deploy` — Builder will use this naturally during Phase 1 implementation deploys
+- `anthropic-skills:self-audit` — Builder uses this on report-back of Phase 1 implementation
+
+The skill does NOT replace these — it orchestrates them.
+
+## Success criteria
+
+The next dashboard section after this skill is created should take **30-45 minutes from "let's tackle X" to "builder prompt dispatched"**, down from the 2-3 hours of ad-hoc iteration that produced AdminsTab, Market Data, and AVT Inventario. If a session runs past 90 minutes for any single section, evaluate which phase ate the time and refine the skill.
+
+## Skill self-evolution
+
+If a session reveals a new pattern (e.g., a fourth archetype emerges, or a new universal gate is needed), update this skill's references rather than fix in-session. Per `feedback_work_retrospective` cousin pattern: capture learnings to memory; refine the skill in a separate update prompt. Don't bloat SKILL.md mid-flight.
