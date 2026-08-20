@@ -1,6 +1,6 @@
 # SKILL CATALOG
 
-Generated 2026-08-13 by skill-intent-audit.py from 82 SKILL.md files.
+Generated 2026-08-20 by skill-intent-audit.py from 83 SKILL.md files.
 DO NOT HAND-EDIT. Regenerate: python3 skill-intent-audit.py catalog
 
 Indexed by INTENT -- what you want, not what the skill is called.
@@ -42,6 +42,7 @@ A trailing ? means the lot was auto-inferred, not yet declared in frontmatter.
 ## DIAGNOSE -- something is broken -- find and fix the cause
 
 - `disk-doctor`           - Mac disk space diagnosis and cleanup skill
+- `gcloud-auth-doctor`    - Fixes recurring gcloud "Reauthentication required" loops in one pass:...
 - `gcp-iam-resolver`      - Resolves GCP IAM permission errors in one pass instead of guessing roles...
 - `herald-config-doctor`  - Remediation skill for HERALD config drift
 - `machine-bridge`        - Hardening skill for the sandbox-to-machine handoff

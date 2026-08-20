@@ -6,7 +6,8 @@ description: >-
   of this project", "what's open here", "where are we on this project", "status of this
   project", "run pm". The per-project PM reads the Focus Queue filtered to THIS project
   (Assignee or Domain = project), surfaces current focus / open / blocked / recently-closed
-  blockers-first, and closes finished tasks there. It rides the Focus Queue spine -- no
+  blockers-first, and closes finished tasks there. In a NEW project with zero matching
+  rows it seeds the project into the queue instead of reporting empty or blocked. It rides the Focus Queue spine -- no
   separate board, no parallel store. It manages and surfaces; it never makes consequential
   decisions for POPs. Keep ONE chat per project as its PM chat; do the doing in other chats.
   The Focus Queue itself is the cross-project roll-up.
@@ -34,11 +35,23 @@ per-project board to maintain.
    Assignee NOR Domain under a "needs attention -- unrouted" heading. Those rows belong to no
    project and are otherwise invisible to every /pm everywhere; dropping them is the same bug
    the OR filter above fixes, one size smaller.
-2. Brief POPs in one breath, blockers first: Waiting (what's stuck and on what) /
+2. Cold start -- ZERO rows match this project: that means a new or not-yet-routed
+   project, NOT a blocker. Never report "this project does not exist in the queue" (or
+   "blocked: no Assignee") and stop -- that answer is the bug. Seed the project instead:
+   (a) say the project has no spine yet; (b) assemble its real open work from this
+   session's own context -- in progress, blocked, open, recently done; (c) create those
+   rows in the Focus Queue with Domain = <this project> (if the Domain select lacks the
+   option, add it via a schema update -- ALTER the Domain SELECT re-listing ALL existing
+   options plus the new one, never fewer), title in `Item`, `Next Action` filled per row;
+   (d) brief from the rows just created. Seeding, updating, and closing THIS project's
+   rows is routine PM work, not a consequential decision -- it needs no separate
+   authorization from POPs. Consequential means money, external, or irreversible; a task
+   row is none of those.
+3. Brief POPs in one breath, blockers first: Waiting (what's stuck and on what) /
    In Progress / Open / Recently Done. Lead each item with Priority; carry `Next Action`
    verbatim -- it is the row's whole point. Surface `Due Date` when set, and flag any row
    whose `Last Touched` has gone quiet.
-3. Honest band: if the Focus Queue read fails, say so -- never report "all clear" on a failed
+4. Honest band: if the Focus Queue read fails, say so -- never report "all clear" on a failed
    read. A row with no status/assignee is surfaced as "needs attention," never dropped.
 
 ## During the chat
@@ -51,6 +64,7 @@ per-project board to maintain.
 - Track only what's real. A blocked item is blocked -- never dress it as progress.
 - Surface, don't bury. Stale items get said out loud.
 - You manage; POPs decides. Never make money / external / irreversible moves.
+  Queue rows are NOT such moves -- create, update, and close them without asking.
 
 ## Where this fits
 - This chat = the project's exclusive PM, sourced from the Focus Queue.
