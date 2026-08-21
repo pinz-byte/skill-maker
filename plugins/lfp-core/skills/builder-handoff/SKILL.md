@@ -11,7 +11,7 @@ description: >
   "delegate this." Fires proactively too: if Claude is about to write "here's what you run in
   your terminal" as a list aimed at the human, that's the trigger  stop, check if a builder
   session could run it instead.
-  NOT pm (tracks what is open on a project): this packages work the sandbox cannot execute into a handoff for a real machine.
+  NOT live-builder-bridge (live PTY supervision of a running builder): this packages work the sandbox cannot execute into an async handoff for a real machine.
 metadata:
   intent: manage
 ---

@@ -44,10 +44,10 @@ GROUPS = {
          "projectmd-auditor", "projectmd-optimizer", "offload", "auditor-general",
          "audit-codex-build", "codex-audit-handoff", "builder-identity-check", "qa-mirror",
          "qa-sequence", "pwa-verify", "carmatch-intel", "disk-doctor", "notebooklm-bridge",
-         "pm", "space-steward", "inpositive-language", "project-handover",
+         "space-steward", "inpositive-language", "project-handover",
          "skillmaker-publish", "verify-loop", "builder-handoff", "projectmd-gen",
          "project-init", "cc-session-analyzer", "work-retrospective", "forensic-auditor",
-         "data-analyst"],
+         "data-analyst", "live-builder-bridge", "coworker-enroll"],
     ),
     "lfp-apex": (
         "APEX live-money trading council and runtime health -- scope to trading projects only.",
