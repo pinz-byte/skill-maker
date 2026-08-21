@@ -6,6 +6,11 @@
   "description": "LFP ecosystem skills: oversight thinkers, core ops, and apex trading.",
   "plugins": [
     {
+      "name": "lfp-pm",
+      "source": "./plugins/lfp-pm",
+      "description": "Project Manager loader -- pm-live reads the canonical PM protocol from Notion at invocation time, so protocol edits land everywhere instantly without republishing. Fresh plugin on purpose: breaks the stale account-store cache that pinned the old pm."
+    },
+    {
       "name": "lfp-thinkers",
       "source": "./plugins/lfp-thinkers",
       "description": "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox -- plus the Master Key creative process, the Intention Builder framework and extended-reasoning escalation."

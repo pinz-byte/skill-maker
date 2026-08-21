@@ -1,0 +1,7 @@
+{
+  "name": "lfp-pm",
+  "description": "Project Manager loader -- pm-live reads the canonical PM protocol from Notion at invocation time, so protocol edits land everywhere instantly without republishing. Fresh plugin on purpose: breaks the stale account-store cache that pinned the old pm.",
+  "author": {
+    "name": "LFP"
+  }
+}

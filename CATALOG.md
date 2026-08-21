@@ -1,6 +1,6 @@
 # SKILL CATALOG
 
-Generated 2026-08-20 by skill-intent-audit.py from 83 SKILL.md files.
+Generated 2026-08-20 by skill-intent-audit.py from 84 SKILL.md files.
 DO NOT HAND-EDIT. Regenerate: python3 skill-intent-audit.py catalog
 
 Indexed by INTENT -- what you want, not what the skill is called.
@@ -22,6 +22,7 @@ A trailing ? means the lot was auto-inferred, not yet declared in frontmatter.
 
 - `builder-handoff`  Converts work Cowork's sandbox can't or shouldn't execute (prod secrets,...
 - `pm`               - Turns the current chat into the EXCLUSIVE Project Manager chat for...
+- `pm-live`          - Turns the current chat into the EXCLUSIVE Project Manager chat for...
 
 ## DECIDE -- get a verdict on a position, ticker, or option
 

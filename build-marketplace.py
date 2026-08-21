@@ -25,6 +25,10 @@ MARKETPLACE_DESC = "LFP ecosystem skills: oversight thinkers, core ops, and apex
 
 # plugin -> (description, [skill dirs])
 GROUPS = {
+    "lfp-pm": (
+        "Project Manager loader -- pm-live reads the canonical PM protocol from Notion at invocation time, so protocol edits land everywhere instantly without republishing. Fresh plugin on purpose: breaks the stale account-store cache that pinned the old pm.",
+        ["pm-live"],
+    ),
     "lfp-thinkers": (
         "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox -- plus the Master Key creative process, the Intention Builder framework and extended-reasoning escalation.",
         ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker",
