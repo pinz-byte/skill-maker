@@ -57,7 +57,7 @@ GROUPS = {
     "lfp-copy": (
         "Tone and copy skills for VMC Subastas commercial content -- outreach sequences, marketplace listings, page copy and source grounding.",
         ["patel-tone-converter", "copy-masterkey", "vmc-listing-copy", "copy-deck",
-         "voice-bench-gate"],
+         "voice-bench-gate", "human-reactor"],
     ),
     "lfp-design": (
         "Personal-project design-system enforcement (non-Subastop) -- e-ink brand tokens and component drift checks.",
