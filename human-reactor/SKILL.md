@@ -3,7 +3,7 @@ name: human-reactor
 description: >
   Human reactor for text: reviews, rewrites, or generates prose so it reads as
   written by a specific person, not assembled by a model. Kills three layers of AI
-  tells -- lexical (dashes as clause glue, "not X but Y" / "no es X, es Y" false
+  tells: lexical (dashes as clause glue, "not X but Y" / "no es X, es Y" false
   contrasts, framers like "cabe destacar", stock vocabulary), structural (uniform
   sentence length, rule-of-three everywhere, synthesis closers, framing openers,
   bolded list lead-ins) and voice (no concrete detail, no stake, flat register).
@@ -35,7 +35,7 @@ Three modes:
 - **SCAN** (user asks "does this sound like AI?" or "revisa"): report only, with the
   exact sentences flagged. No rewrite unless asked.
 
-## Step 0 -- Resolve the voice anchor (never skip)
+## Step 0: Resolve the voice anchor (never skip)
 
 "Human" is undefined until you know which human. Resolve in this order; the anchor
 you used is stated as the first line of the Reactor report, nowhere else:
@@ -61,7 +61,7 @@ material even when the draft never mentions them. In REVIEW mode you are authori
 to inject them; the report lists which ones you injected. They are not the anchor;
 the anchor is the voice, the facts are layer 3 material.
 
-## Step 1 -- Scan: the three layers
+## Step 1: Scan the three layers
 
 Run `references/scan_tells.py` on the text when a shell is available (it counts layer 1
 patterns and measures sentence-length variance). Read the text yourself regardless.
@@ -73,7 +73,7 @@ fragment, a short sentence, or a fourth item to move a number; text engineered t
 pass a detector is the signature this skill exists to remove. On pieces under about
 80 words the spread number is advisory only.
 
-### Layer 1 -- Lexical and typographic tells (mechanical, must reach zero)
+### Layer 1: Lexical and typographic tells (mechanical, must reach zero)
 
 | Tell | EN forms | ES forms |
 |---|---|---|
@@ -88,7 +88,7 @@ pass a detector is the signature this skill exists to remove. On pieces under ab
 | Emoji as structure | bullets or headers carrying emoji | same |
 | Hedge stacking | "may potentially", "could possibly", "it seems that it might" | "podria eventualmente", "quizas tal vez", "en cierta medida podria" |
 
-### Layer 2 -- Structural tells (statistical, must drop below thresholds)
+### Layer 2: Structural tells (statistical, must drop below thresholds)
 
 These survive every blacklist and are what a careful reader actually detects.
 
@@ -126,7 +126,7 @@ These survive every blacklist and are what a careful reader actually detects.
   author would have written joining two clauses the draft never dashed is fine, one
   per piece.
 
-### Layer 3 -- Voice absence (qualitative, the part that makes it human)
+### Layer 3: Voice absence (qualitative, the part that makes it human)
 
 - **No concrete nouns.** "Stakeholders", "solutions", "outcomes" where a person
   would say the name of the thing, the number, the date, the city.
@@ -144,7 +144,7 @@ These survive every blacklist and are what a careful reader actually detects.
   jokes, "honestly", "look,". That is a model imitating a human, and it reads as
   such. Restraint.
 
-## Step 2 -- Rewrite, by layer, in this order
+## Step 2: Rewrite, by layer, in this order
 
 1. **Layer 1 to zero.** Every dash sentence gets restructured (split into two
    sentences, subordinate clause, or a parenthesis when the aside is a real aside).
@@ -157,7 +157,7 @@ These survive every blacklist and are what a careful reader actually detects.
    decide. Delete the opener and closer paragraphs, then check the piece still lands
    without them (it almost always does). Unbold list lead-ins or turn the list into
    a paragraph.
-3. **Layer 3 by anchor.** Add the concrete noun, the number, the name -- **only from
+3. **Layer 3 by anchor.** Add the concrete noun, the number, the name. **Use only
    material the user gave or the project holds. Never invent a fact, a figure, or a
    quote to make text feel specific.** If specificity needs a fact you do not have,
    leave a bracketed slot `[dato: ...]` and flag it. Insert stake where the anchor
@@ -181,7 +181,7 @@ Constraints on the rewrite:
   two do not conflict, because false contrasts are negations InPositive would also
   remove.
 
-## Step 3 -- Re-scan and deliver
+## Step 3: Re-scan and deliver
 
 Run the scan again on the rewrite. Deliver:
 
