@@ -1,4 +1,4 @@
-import type { EngineInterface, Register } from 'claude-code'
+import type { EngineInterface, Register, RenderChildren } from 'claude-code'
 
 import type { Pending, Position, Snapshot, WatchItem } from '../types'
 
@@ -149,11 +149,30 @@ export const register: Register = on => {
     const now = await $.clock.now()
     const isWide = (e.viewport?.columns ?? 100) >= 78
 
+    // Desk palette (thinkorswim / Binance dark): fixed, so the desk reads the same in any app theme.
+    const C = {
+      bg: '#000000',
+      card: '#1c1c1e',
+      label: '#8e8e93',
+      text: '#ffffff',
+      up: '#30d158',
+      down: '#ff453a',
+      amber: '#ff9f0a',
+      gold: '#f0b90b',
+      chip: '#2b2f36',
+      alert: '#5c1010',
+    }
+    const dir = (v: number | null | undefined) => (typeof v !== 'number' || v === 0 ? C.text : v > 0 ? C.up : C.down)
+
     if (!snap) {
       return (
-        <Box flexDirection="column" gap={1} paddingX={1}>
-          <Text bold>APEX BOOK</Text>
-          <Text color="warning">{problem ?? 'Leyendo snapshot...'}</Text>
+        <Box flexDirection="column" gap={1} paddingX={1} paddingY={1} backgroundColor={C.bg}>
+          <Text bold color={C.text}>
+            APEX BOOK
+          </Text>
+          <Box backgroundColor={C.alert} paddingX={1}>
+            <Text color={C.text}>{problem ?? 'Leyendo snapshot...'}</Text>
+          </Box>
         </Box>
       )
     }
@@ -162,133 +181,187 @@ export const register: Register = on => {
     const stale = isStale(s, now)
     const naked = s.naked_flags ?? []
 
-    const cell = (key: string, width: number, text: string, opts: { color?: string; bold?: boolean; dim?: boolean; right?: boolean } = {}) => (
-      <Box key={key} width={width} justifyContent={opts.right ? 'flex-end' : 'flex-start'} paddingRight={1}>
-        <Text color={opts.color} bold={opts.bold} dimColor={opts.dim} wrap="truncate">
-          {text}
+    // One table cell: a main line and an optional second line beneath it, thinkorswim style.
+    const cell = (
+      key: string,
+      width: number,
+      main: string,
+      opts: { color?: string; bold?: boolean; right?: boolean; sub?: string; subColor?: string } = {},
+    ) => (
+      <Box key={key} width={width} flexDirection="column" alignItems={opts.right ? 'flex-end' : 'flex-start'} paddingRight={1}>
+        <Text color={opts.color ?? C.text} bold={opts.bold} wrap="truncate">
+          {main}
         </Text>
+        {opts.sub !== undefined && (
+          <Text color={opts.subColor ?? C.label} wrap="truncate">
+            {opts.sub}
+          </Text>
+        )}
       </Box>
     )
-    const heading = (title: string, count?: number) => (
-      <Box key={`h-${title}`} justifyContent="space-between">
-        <Text bold>{title}</Text>
-        {count !== undefined && <Text dimColor>{count}</Text>}
+    const label = (key: string, width: number, text: string, right?: boolean) => (
+      <Box key={key} width={width} justifyContent={right ? 'flex-end' : 'flex-start'} paddingRight={1}>
+        <Text color={C.label}>{text}</Text>
       </Box>
     )
-    const tile = (key: string, label: string, value: string, color?: string) => (
-      <Box key={key} flexDirection="column" borderStyle="round" borderColor={color ?? 'subtle'} paddingX={1} flexGrow={1}>
-        <Text dimColor>{label}</Text>
-        <Text bold color={color}>
+    const card = (key: string, title: string, count: number, body: RenderChildren) => (
+      <Box key={key} flexDirection="column" backgroundColor={C.card} paddingX={1} paddingY={1}>
+        <Box justifyContent="space-between">
+          <Text bold color={C.text}>
+            {title}
+          </Text>
+          <Text color={C.label}>{count}</Text>
+        </Box>
+        {body}
+      </Box>
+    )
+    const kpi = (key: string, name: string, value: string, color?: string) => (
+      <Box key={key} flexDirection="column" backgroundColor={C.card} paddingX={1} flexGrow={1}>
+        <Text color={C.label}>{name}</Text>
+        <Text bold color={color ?? C.text}>
           {value}
         </Text>
       </Box>
     )
+    const chip = (key: string, text: string, color: string, bg: string = C.chip) => (
+      <Text key={key} color={color} backgroundColor={bg}>
+        {` ${text} `}
+      </Text>
+    )
 
     return (
-      <Box flexDirection="column" gap={1} paddingX={1}>
+      <Box flexDirection="column" gap={1} paddingX={1} paddingY={1} backgroundColor={C.bg}>
         <Box justifyContent="space-between">
-          <Text bold>
-            APEX BOOK{s.dry_run ? '  ' : ''}
-            {s.dry_run && (
-              <Text color="warning" inverse>
-                {' DRY RUN '}
-              </Text>
-            )}
-          </Text>
-          <Text color={stale ? 'warning' : undefined} dimColor={!stale}>
-            {stale ? 'DESACTUALIZADO  ' : ''}
-            {ago(s.generated_at, now)}
-          </Text>
+          <Box gap={1}>
+            <Text bold color={C.text}>
+              APEX BOOK
+            </Text>
+            {s.dry_run && chip('dry', 'DRY RUN', '#000000', C.gold)}
+          </Box>
+          <Box gap={1}>
+            <Text color={C.label}>{s.market_state?.phase ?? ''}</Text>
+            {stale ? chip('stale', `DESACTUALIZADO ${ago(s.generated_at, now)}`, C.text, C.alert) : <Text color={C.label}>{ago(s.generated_at, now)}</Text>}
+          </Box>
         </Box>
-        {s.market_state?.banner && <Text dimColor>{s.market_state.banner}</Text>}
+        {s.market_state?.banner && <Text color={C.label}>{s.market_state.banner}</Text>}
+
         {s.positions.length > 0 && (
-          <Box flexWrap="wrap" columnGap={3}>
+          <Box flexWrap="wrap" columnGap={2}>
             {sortPositions(s.positions).map((p, i) => (
               <Text key={`tape-${p.ticker}-${i}`}>
-                <Text bold>{p.ticker}</Text> <Text color={tone(p.change_pct)}>{pct(p.change_pct)}</Text>
+                <Text bold color={C.text}>
+                  {p.ticker}
+                </Text>{' '}
+                <Text color={dir(p.change_pct)}>{pct(p.change_pct)}</Text>
               </Text>
             ))}
           </Box>
         )}
 
-        <Box gap={1}>
-          {tile('nl', 'NET LIQ', money(s.header.net_liq))}
-          {tile('cash', 'CASH', typeof s.header.cash_pct === 'number' ? `${s.header.cash_pct.toFixed(1)}%` : 'pendiente')}
-          {tile('pl', 'P/L DEL DIA', signedMoney(s.header.day_pl_total), tone(s.header.day_pl_total))}
-          {naked.length > 0 && tile('naked', 'SIN STOP', String(naked.length), 'warning')}
-        </Box>
-
-        <Box flexDirection="column">
-          {heading('POSICIONES', s.positions.length)}
-          <Box>
-            {cell('h1', 9, 'TICKER', { dim: true })}
-            {cell('h2', 13, 'TIPO', { dim: true })}
-            {cell('h3', 7, 'CANT', { dim: true, right: true })}
-            {cell('h4', 10, 'PRECIO', { dim: true, right: true })}
-            {cell('h5', 9, 'HOY', { dim: true, right: true })}
-            {cell('h6', 11, 'P/L DIA', { dim: true, right: true })}
-            {isWide && cell('h7', 10, 'A STOP', { dim: true, right: true })}
-            {isWide && cell('h8', 16, 'STOP > TP1', { dim: true, right: true })}
+        {naked.map((n, i) => (
+          <Box key={`naked-${n.ticker}-${i}`} backgroundColor={C.alert} paddingX={1}>
+            <Text bold color={C.text}>
+              SIN STOP  {n.ticker} {n.position_type}  -  decision manual
+            </Text>
           </Box>
-          {s.positions.length === 0 && <Text dimColor>Sin posiciones.</Text>}
-          {sortPositions(s.positions).map((p, i) => (
-            <Box key={`p-${p.ticker}-${i}`}>
-              {cell('t', 9, `${p.naked ? '! ' : ''}${p.ticker}`, { bold: true, color: p.naked ? 'warning' : undefined })}
-              {cell('l', 13, legLabel(p), { dim: true })}
-              {cell('q', 7, String(p.quantity), { right: true })}
-              {cell('c', 10, price(p.current_price), { right: true })}
-              {cell('d', 9, pct(p.change_pct), { right: true, color: tone(p.change_pct) })}
-              {cell('pl', 11, signedMoney(p.day_pl), { right: true, color: tone(p.day_pl) })}
-              {isWide && cell('s', 10, p.naked ? 'sin stop' : pct(p.dist_to_stop_pct, 1), { right: true, color: p.naked ? 'warning' : undefined, dim: !p.naked })}
-              {isWide && cell('tp', 16, rangeBar(p)?.text ?? '-', { right: true, color: rangeBar(p)?.color, dim: !rangeBar(p) })}
-            </Box>
-          ))}
+        ))}
+
+        <Box gap={1}>
+          {kpi('nl', 'Net Liq', money(s.header.net_liq))}
+          {kpi('cash', 'Cash', typeof s.header.cash_pct === 'number' ? `${s.header.cash_pct.toFixed(1)}%` : 'pendiente')}
+          {kpi('pl', 'P/L del dia', signedMoney(s.header.day_pl_total), dir(s.header.day_pl_total))}
+          {kpi('naked', 'Sin stop', String(naked.length), naked.length ? C.down : C.text)}
         </Box>
 
-        <Box flexDirection="column">
-          {heading('WATCHLIST', s.watchlist.length)}
-          {s.watchlist.length === 0 && <Text dimColor>Watchlist vacia.</Text>}
-          {sortWatchlist(s.watchlist).map((w, i) => (
-            <Box key={`w-${w.ticker}-${i}`}>
-              <Box width={10} paddingRight={1}>
-                {w.alarm_state === 'FIRED' ? (
-                  <Text color="error" inverse bold>
-                    {' DISPARO '}
-                  </Text>
-                ) : w.alarm_state === 'APPROACHING' ? (
-                  <Text color="warning" inverse>
-                    {' CERCA '}
-                  </Text>
-                ) : (
-                  <Text dimColor>espera</Text>
-                )}
+        {card(
+          'positions',
+          'POSICIONES',
+          s.positions.length,
+          <Box flexDirection="column" gap={1}>
+            <Box>
+              {label('h1', 14, 'Symbol')}
+              {label('h2', 11, 'Last', true)}
+              {label('h3', 7, 'Qty', true)}
+              {label('h4', 11, 'P/L dia', true)}
+              {isWide && label('h5', 9, 'A stop', true)}
+              {isWide && label('h6', 16, 'Stop > TP1', true)}
+            </Box>
+            {s.positions.length === 0 && <Text color={C.label}>Sin posiciones.</Text>}
+            {sortPositions(s.positions).map((p, i) => {
+              const bar = rangeBar(p)
+              return (
+                <Box key={`p-${p.ticker}-${i}`}>
+                  {cell('sym', 14, `${p.naked ? '! ' : ''}${p.ticker}`, { bold: true, color: p.naked ? C.down : C.text, sub: legLabel(p), subColor: C.amber })}
+                  {cell('last', 11, price(p.current_price), { right: true, color: dir(p.change_pct), sub: pct(p.change_pct), subColor: dir(p.change_pct) })}
+                  {cell('qty', 7, String(p.quantity), { right: true })}
+                  {cell('pl', 11, signedMoney(p.day_pl), { right: true, bold: true, color: dir(p.day_pl) })}
+                  {isWide && cell('stop', 9, p.naked ? 'sin stop' : pct(p.dist_to_stop_pct, 1), { right: true, color: p.naked ? C.down : C.label })}
+                  {isWide && cell('bar', 16, bar?.text ?? '-', { right: true, color: bar?.color === 'error' ? C.down : bar?.color === 'success' ? C.up : C.label })}
+                </Box>
+              )
+            })}
+          </Box>,
+        )}
+
+        {card(
+          'watchlist',
+          'WATCHLIST',
+          s.watchlist.length,
+          <Box flexDirection="column">
+            {s.watchlist.length === 0 && <Text color={C.label}>Watchlist vacia.</Text>}
+            {sortWatchlist(s.watchlist).map((w, i) => (
+              <Box key={`w-${w.ticker}-${i}`} justifyContent="space-between">
+                <Box gap={1}>
+                  <Box width={8}>
+                    <Text bold color={C.text}>
+                      {w.ticker}
+                    </Text>
+                  </Box>
+                  <Box width={9} justifyContent="flex-end">
+                    <Text color={dir(w.change_pct)}>{price(w.current_price)}</Text>
+                  </Box>
+                  {chip('dist', `${pct(w.dist_from_entry_pct, 1)} ent.`, C.gold)}
+                  {isWide && w.rationale && <Text color={C.label} wrap="truncate">{w.rationale}</Text>}
+                </Box>
+                <Box gap={1}>
+                  {w.conf != null && <Text color={C.up}>{w.conf}%</Text>}
+                  {w.alarm_state === 'FIRED'
+                    ? chip('st', 'DISPARO', '#000000', C.gold)
+                    : w.alarm_state === 'APPROACHING'
+                      ? chip('st', 'CERCA', C.gold)
+                      : chip('st', 'espera', C.label)}
+                </Box>
               </Box>
-              {cell('t', 8, w.ticker, { bold: true })}
-              {cell('c', 10, price(w.current_price), { right: true })}
-              {cell('d', 9, pct(w.change_pct), { right: true, color: tone(w.change_pct) })}
-              {cell('e', 12, `${pct(w.dist_from_entry_pct, 1)} ent.`, { right: true, dim: true })}
-              {cell('f', 9, w.conf != null ? `conf ${w.conf}` : '', { right: true, dim: true })}
-              {isWide && w.rationale && cell('r', 30, w.rationale, { dim: true })}
-            </Box>
-          ))}
-        </Box>
+            ))}
+          </Box>,
+        )}
 
-        <Box flexDirection="column">
-          {heading('SENALES', s.recent_alerts?.length ?? 0)}
-          {(s.recent_alerts ?? []).length === 0 && <Text dimColor>Sin alertas recientes.</Text>}
-          {[...(s.recent_alerts ?? [])].reverse().map((a, i) => (
-            <Box key={`a-${i}`}>
-              {cell('w', 10, ago(a.sent_at, now), { dim: true })}
-              {cell('k', 14, a.category, { color: a.category === 'VELOCITY' ? 'warning' : 'suggestion', bold: true })}
-              {cell('t', 8, a.ticker, { bold: true })}
-              {cell('p', 10, a.price.toFixed(2), { right: true })}
-              {a.move_pct != null && cell('m', 9, pct(a.move_pct), { right: true, color: tone(a.move_pct) })}
-            </Box>
-          ))}
-        </Box>
+        {card(
+          'signals',
+          'SENALES',
+          s.recent_alerts?.length ?? 0,
+          <Box flexDirection="column">
+            {(s.recent_alerts ?? []).length === 0 && <Text color={C.label}>Sin alertas recientes.</Text>}
+            {[...(s.recent_alerts ?? [])].reverse().map((a, i) => (
+              <Box key={`a-${i}`} gap={1}>
+                <Box width={9}>
+                  <Text color={C.label}>{ago(a.sent_at, now)}</Text>
+                </Box>
+                {chip('k', a.category, a.category === 'VELOCITY' ? C.amber : C.gold)}
+                <Box width={7}>
+                  <Text bold color={C.text}>
+                    {a.ticker}
+                  </Text>
+                </Box>
+                <Text color={C.text}>{a.price.toFixed(2)}</Text>
+                {a.move_pct != null && <Text color={dir(a.move_pct)}>{pct(a.move_pct)}</Text>}
+              </Box>
+            ))}
+          </Box>,
+        )}
 
-        <Text dimColor wrap="truncate">
-          {source} | se refresca cada 30 s
+        <Text color={C.label} wrap="truncate">
+          {source} | refresca cada 30 s
         </Text>
       </Box>
     )

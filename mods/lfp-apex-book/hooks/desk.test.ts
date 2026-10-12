@@ -25,7 +25,7 @@ for (const surface of ['terminal', 'desktop'] as const) {
 
     const ui = await $.ui.mount({ plugin: 'lfp-apex-book', surface, component: 'Pane', requestId: 'apex-book', props: {} as never })
     const text = JSON.stringify(await ui.drawn())
-    for (const piece of ['APEX BOOK', 'NET LIQ', '$125,431', '-$842', 'SIN STOP', 'POSICIONES', 'META', 'C 635 11-20', 'WATCHLIST', 'DISPARO', 'CERCA', 'SENALES', 'VELOCITY']) {
+    for (const piece of ['APEX BOOK', 'Net Liq', '$125,431', '-$842', 'SIN STOP', 'POSICIONES', 'META', 'C 635 11-20', 'WATCHLIST', 'DISPARO', 'CERCA', 'SENALES', 'VELOCITY']) {
       expect(text).toContain(piece)
     }
   })
