@@ -108,6 +108,9 @@ let messages: Message[] = []
 let checkedAt: number | undefined
 let problem: string | undefined
 let notionServer: string | undefined
+let recheckAfterTurn = false
+
+const MAIL_SKILLS = ['agent-bridge', 'inbox-triage']
 
 const unreadOf = () => messages.filter(m => m.isUnread)
 
@@ -187,6 +190,27 @@ export const register: Register = on => {
     $.clock.every(POLL_MS, () => check($))
 
     return next(e)
+  })
+
+  // Using the mail skills raises the mailbox; once the turn ends it reads again (messages now READ).
+  on('tool.call', { tool: 'Skill' }, async ($, e, next) => {
+    const name = e.skill.split(':').pop() ?? e.skill
+    if (inbox && MAIL_SKILLS.includes(name)) {
+      recheckAfterTurn = true
+      await $.ui.open({ id: PANE, title: 'Inbox' }).catch(() => undefined)
+    }
+
+    return next(e)
+  })
+
+  on('turn.complete', async ($, e, next) => {
+    const result = await next(e)
+    if (recheckAfterTurn) {
+      recheckAfterTurn = false
+      await check($)
+    }
+
+    return result
   })
 
   on('command.run', { command: 'inbox' }, async ($, e) => {

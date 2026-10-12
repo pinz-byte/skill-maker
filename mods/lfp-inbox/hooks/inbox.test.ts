@@ -23,12 +23,16 @@ const world = (on: On, opts: { cwd: string; notion?: boolean }) => {
     statuses.push(e.text)
     return { value: undefined }
   })
-  on('ui.open', () => ({ value: { isPlaced: true as const } }))
+  const opened: string[] = []
+  on('ui.open', (_, e) => {
+    opened.push(e.id)
+    return { value: { isPlaced: true as const } }
+  })
   on('prompt.submit', (_, e) => {
     sent.push(e.text)
     return { text: e.text }
   })
-  return { clock, statuses, sent, fetched }
+  return { clock, statuses, sent, fetched, opened }
 }
 
 test('a builder sees its own inbox count on the status line', async ($, on) => {
@@ -69,4 +73,18 @@ test('without a Notion connector it says so', async ($, on) => {
   const w = world(on, { cwd: '/Users/lfp/Projects/SKILL MAKER', notion: false })
   await $.session.start({ source: 'startup', cwd: '/Users/lfp/Projects/SKILL MAKER' } as never)
   expect(w.statuses.at(-1)).toBe('Inbox SKILL MAKER: sin Notion')
+})
+
+test('you-have-got-mail raises the mailbox and re-reads it when the turn ends', async ($, on) => {
+  const w = world(on, { cwd: '/Users/lfp/Projects/SKILL MAKER' })
+  const opened = w.opened
+  on('tool.call', { tool: 'Skill' }, () => ({ result: 'ok', text: 'ok' }) as never)
+  on('turn.complete', () => ({ text: '' }) as never)
+  await $.session.start({ source: 'startup', cwd: '/Users/lfp/Projects/SKILL MAKER' } as never)
+  const reads = w.fetched.length
+
+  await $.tool.call({ tool: 'Skill', skill: 'lfp-core:agent-bridge' } as never)
+  expect(opened).toEqual(['inbox'])
+  await $.turn.complete({ answer: 'listo' } as never)
+  expect(w.fetched.length).toBe(reads + 1)
 })

@@ -5,6 +5,7 @@ import type { Pending, Position, Snapshot, WatchItem } from '../types'
 const PANE = 'apex-book'
 const REFRESH_MS = 30_000
 const STALE_MS = 10 * 60_000
+const APEX_SKILLS = ['council', 'council-run', 'council-call', 'council-debate', 'council-global', 'apex-health', 'apex-ultra-council', 'apex-builder-gate']
 
 // Read-only view of the APEX loop's snapshot. Session-scoped: refilled on load.
 let snap: Snapshot | undefined
@@ -132,6 +133,17 @@ export const register: Register = on => {
     await $.command.register({ name: 'apex', description: 'APEX book: positions, watchlist and market signals' })
     await refresh($)
     $.clock.every(REFRESH_MS, () => refresh($))
+
+    return next(e)
+  })
+
+  // Using an APEX skill (council, council-run, apex-health, ...) raises the desk with a fresh read.
+  on('tool.call', { tool: 'Skill' }, async ($, e, next) => {
+    const name = e.skill.split(':').pop() ?? e.skill
+    if (APEX_SKILLS.includes(name)) {
+      await refresh($)
+      if (snap) await $.ui.open({ id: PANE, title: 'APEX Book' }).catch(() => undefined)
+    }
 
     return next(e)
   })

@@ -155,7 +155,11 @@ export const register: Register = on => {
   // Claude calling a thinker skill in the chat shows on its card too.
   on('tool.call', { tool: 'Skill' }, async ($, e, next) => {
     const seat = SEATS.find(s => e.skill === s.skill || e.skill.endsWith(`:${s.skill}`))
-    if (seat) setRun($, seat.key, { status: 'chat', startedAt: await $.clock.now() })
+    if (seat) {
+      setRun($, seat.key, { status: 'chat', startedAt: await $.clock.now() })
+      // Using the skill raises its panel: no /roundtable needed.
+      await $.ui.open({ id: PANE, title: 'Roundtable' }).catch(() => undefined)
+    }
 
     return next(e)
   })

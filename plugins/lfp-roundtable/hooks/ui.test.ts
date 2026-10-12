@@ -31,3 +31,21 @@ test('pressing a seat runs it, and "Llevar al chat" hands the answer to the chat
   expect(sent[0]).toContain('[Mesa de thinkers - Creative]')
   expect(sent[0]).toContain('Opcion A, opcion B.')
 })
+
+test('using a thinker skill in the chat raises the table with that seat working', async ($, on) => {
+  mock.clock(on)
+  const opened: string[] = []
+  on('ui.open', (_, e) => {
+    opened.push(e.id)
+    return { value: { isPlaced: true as const } }
+  })
+  on('tool.call', { tool: 'Skill' }, () => ({ result: 'ok', text: 'ok' }) as never)
+
+  await $.tool.call({ tool: 'Skill', skill: 'lfp-thinkers:logic-thinker' } as never)
+  expect(opened).toEqual(['roundtable'])
+  const ui = await $.ui.mount({ plugin: 'lfp-roundtable', surface: 'desktop', component: 'Pane', requestId: 'roundtable', props: {} as never })
+  expect(JSON.stringify(await ui.drawn())).toContain('trabajando en el chat')
+
+  await $.tool.call({ tool: 'Skill', skill: 'lfp-core:git-ops' } as never)
+  expect(opened).toEqual(['roundtable'])
+})

@@ -11,8 +11,12 @@ const world = (on: On, files: Record<string, string>) => {
     e.path in files ? { value: { kind: 'file' as const, size: 1, mtimeMs: 1, isLink: false } } : { deny: 'ENOENT' },
   )
   on('fs.read', (_, e) => (e.path in files ? { value: files[e.path]! } : { deny: 'ENOENT' }))
-  on('ui.open', () => ({ value: { isPlaced: true as const } }))
-  return clock
+  const opened: string[] = []
+  on('ui.open', (_, e) => {
+    opened.push(e.id)
+    return { value: { isPlaced: true as const } }
+  })
+  return { clock, opened }
 }
 
 const run = ($: { command: { run: (input: never) => Promise<{ text?: string }> } }) =>
@@ -34,4 +38,14 @@ for (const surface of ['terminal', 'desktop'] as const) {
 test('outside apex-ultra it says where to run, and keeps quiet', async ($, on) => {
   world(on, {})
   expect((await run($)).text).toContain('No encuentro snapshot.json')
+})
+
+test('using an APEX skill raises the desk; other skills do not', async ($, on) => {
+  const { opened } = world(on, { '/Users/usuario/Documents/Claude/Projects/apex-ultra/snapshot.json': JSON.stringify(SNAPSHOT) })
+  on('tool.call', { tool: 'Skill' }, () => ({ result: 'ok', text: 'ok' }) as never)
+
+  await ($ as never as { tool: { call: (i: never) => Promise<unknown> } }).tool.call({ tool: 'Skill', skill: 'lfp-apex:council' } as never)
+  expect(opened).toEqual(['apex-book'])
+  await ($ as never as { tool: { call: (i: never) => Promise<unknown> } }).tool.call({ tool: 'Skill', skill: 'lfp-core:git-ops' } as never)
+  expect(opened).toEqual(['apex-book'])
 })
