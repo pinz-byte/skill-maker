@@ -78,6 +78,13 @@ GROUPS = {
     ),
 }
 
+# Mods: Claude Code plugins of function hooks (hooks/hooks.json "modules"), not skills.
+# Each source dir is a complete plugin, copied verbatim into plugins/<name>.
+# Claude Code only (terminal / desktop Code tab); Cowork does not run function hooks.
+MODS = {
+    "lfp-roundtable": "mods/lfp-roundtable",
+}
+
 ROOT = Path(__file__).resolve().parent
 
 
@@ -165,6 +172,24 @@ def main():
             + "\n  ".join(violations)
         )
 
+    # Fail-loud guard for mods: a complete plugin whose manifest name matches its key,
+    # no "claude" in the name, ASCII-only sources (same silent-rejection rules as skills).
+    for mod, src in MODS.items():
+        mdir = ROOT / src
+        manifest = mdir / ".claude-plugin" / "plugin.json"
+        if not manifest.exists() or not (mdir / "hooks" / "hooks.json").exists():
+            violations.append(f"mod {mod}: {src} needs .claude-plugin/plugin.json and hooks/hooks.json")
+            continue
+        if json.loads(manifest.read_text()).get("name") != mod:
+            violations.append(f"mod {mod}: plugin.json name must be '{mod}'")
+        if "claude" in mod.lower() or mod in GROUPS:
+            violations.append(f"mod {mod}: name contains 'claude' or clashes with a GROUP")
+        for f in mdir.rglob("*"):
+            if f.is_file() and re.search(r"[^\x00-\x7F]", f.read_text(errors="replace")):
+                violations.append(f"mod {mod}: non-ASCII in {f.relative_to(mdir)}")
+    if violations:
+        raise SystemExit("ERROR: mod(s) would not ship cleanly:\n  " + "\n  ".join(violations))
+
     # All fail-loud checks must finish before mutating canonical or generated files.
     # This preserves the last known-good marketplace when a new catalog definition
     # is invalid.
@@ -209,6 +234,19 @@ def main():
             "description": desc,
         })
 
+    for mod, src in MODS.items():
+        # The engine writes .claude-plugin/types/ and tsconfig.json per machine; never ship
+        # them. The mod's own types/ (its PluginState contract) does ship.
+        shutil.copytree(
+            ROOT / src, plugins_dir / mod,
+            ignore=lambda d, names: [n for n in names if n == "tsconfig.json"
+                                     or (n == "types" and Path(d).name == ".claude-plugin")])
+        marketplace["plugins"].append({
+            "name": mod,
+            "source": f"./plugins/{mod}",
+            "description": json.loads((ROOT / src / ".claude-plugin" / "plugin.json").read_text())["description"],
+        })
+
     mp_dir = ROOT / ".claude-plugin"
     mp_dir.mkdir(exist_ok=True)
     (mp_dir / "marketplace.json").write_text(json.dumps(marketplace, indent=2) + "\n")
@@ -217,6 +255,8 @@ def main():
           f"{len(all_skills)} skills:")
     for plugin, (_, skills) in GROUPS.items():
         print(f"  {plugin}: {len(skills)} skills")
+    for mod in MODS:
+        print(f"  {mod}: mod (Claude Code hooks)")
 
 
 _BLOCK_ON_CHECK = True

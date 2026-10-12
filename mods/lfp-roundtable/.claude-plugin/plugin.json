@@ -1,0 +1,8 @@
+{
+  "name": "lfp-roundtable",
+  "description": "Pane that convenes an lfp-thinkers seat (critical, creative, logic, loop-breaker, ceo-planner, toolbox) on a topic",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "LFP"
+  }
+}

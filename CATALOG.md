@@ -1,6 +1,6 @@
 # SKILL CATALOG
 
-Generated 2026-09-07 by skill-intent-audit.py from 86 SKILL.md files.
+Generated 2026-10-12 by skill-intent-audit.py from 86 SKILL.md files.
 DO NOT HAND-EDIT. Regenerate: python3 skill-intent-audit.py catalog
 
 Indexed by INTENT -- what you want, not what the skill is called.
