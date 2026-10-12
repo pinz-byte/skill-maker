@@ -84,6 +84,7 @@ GROUPS = {
 MODS = {
     "lfp-roundtable": "mods/lfp-roundtable",
     "lfp-apex-book": "mods/lfp-apex-book",
+    "lfp-compass": "mods/lfp-compass",
 }
 
 ROOT = Path(__file__).resolve().parent

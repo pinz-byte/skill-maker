@@ -1,0 +1,7 @@
+{
+  "name": "lfp-compass",
+  "description": "Session compass: status line with the real machine, project, branch and context fill; at 70% context a band offers the continuity seed (CLAUDE.md auto-seed rule, enforced by the harness).",
+  "author": {
+    "name": "LFP"
+  }
+}

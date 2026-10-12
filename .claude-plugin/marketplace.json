@@ -59,6 +59,11 @@
       "name": "lfp-apex-book",
       "source": "./plugins/lfp-apex-book",
       "description": "APEX book pane: positions, watchlist and market signals from the loop's snapshot.json, plus a status line. Read-only; run where apex-ultra lives (M1)."
+    },
+    {
+      "name": "lfp-compass",
+      "source": "./plugins/lfp-compass",
+      "description": "Session compass: status line with the real machine, project, branch and context fill; at 70% context a band offers the continuity seed (CLAUDE.md auto-seed rule, enforced by the harness)."
     }
   ]
 }
