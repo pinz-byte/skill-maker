@@ -1,0 +1,8 @@
+{
+  "name": "lfp-apex-book",
+  "description": "APEX book pane: positions, watchlist and market signals from the loop's snapshot.json, plus a status line. Read-only; run where apex-ultra lives (M1).",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "LFP"
+  }
+}

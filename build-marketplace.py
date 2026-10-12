@@ -83,6 +83,7 @@ GROUPS = {
 # Claude Code only (terminal / desktop Code tab); Cowork does not run function hooks.
 MODS = {
     "lfp-roundtable": "mods/lfp-roundtable",
+    "lfp-apex-book": "mods/lfp-apex-book",
 }
 
 ROOT = Path(__file__).resolve().parent
