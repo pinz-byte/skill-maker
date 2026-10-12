@@ -10,10 +10,10 @@ let expanded: string[] = []
 const CLIP = 700
 
 export const SEATS: Seat[] = [
-  { key: 'critical', label: 'Critical', skill: 'critical-thinker', role: 'Ataca la idea', color: 'error', hotkey: '1' },
-  { key: 'logic', label: 'Logic', skill: 'logic-thinker', role: 'Expone la cadena de razonamiento', color: 'suggestion', hotkey: '2' },
-  { key: 'creative', label: 'Creative', skill: 'creative-thinker', role: 'Genera opciones', color: 'success', hotkey: '3' },
-  { key: 'loop', label: 'Loop-breaker', skill: 'loop-breaker', role: 'Saca de un ciclo atascado', color: 'warning', hotkey: '4' },
+  { key: 'critical', label: 'Critical', skill: 'critical-thinker', role: 'Ataca la idea', color: '#ff453a', hotkey: '1' },
+  { key: 'logic', label: 'Logic', skill: 'logic-thinker', role: 'Expone la cadena de razonamiento', color: '#0a84ff', hotkey: '2' },
+  { key: 'creative', label: 'Creative', skill: 'creative-thinker', role: 'Genera opciones', color: '#30d158', hotkey: '3' },
+  { key: 'loop', label: 'Loop-breaker', skill: 'loop-breaker', role: 'Saca de un ciclo atascado', color: '#ff9f0a', hotkey: '4' },
 ]
 
 const ALL = ['todos', 'all', 'mesa']
@@ -59,6 +59,16 @@ export const statusLabel = (run: Run | undefined, now: number) => {
 
   return 'fallo'
 }
+
+// The answer is drawn as plain text on the dark card (Markdown follows the app theme
+// and turns unreadable there): drop emphasis marks, keep lines and bullets.
+export const plain = (md: string) =>
+  md
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/(\*\*|__)(.+?)\1/g, '$2')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/^\s*[*+]\s+/gm, '- ')
+    .trim()
 
 export const clip = (text: string) => {
   if (text.length <= CLIP) return { text, isClipped: false }
@@ -149,18 +159,8 @@ export const register: Register = on => {
 
     return next(e)
   })
-
-  on('turn.complete', async ($, e, next) => {
-    const now = await $.clock.now()
-    for (const [key, run] of Object.entries(runs)) {
-      if (run.status === 'chat') setRun($, key, { ...run, status: 'chat-done', endedAt: now })
-    }
-
-    return next(e)
-  })
-
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
-    const { Box, Button, Markdown, Text } = $.ui.resolve(e)
+    const { Box, Button, Text } = $.ui.resolve(e)
     const now = await $.clock.now()
     const open = expanded
     const isBusy = Object.values(runs).some(run => run.status === 'working')
@@ -169,38 +169,62 @@ export const register: Register = on => {
       $.ui.invalidate('ui.render')
     }
 
+    // Same fixed dark palette as the APEX desk, so both panes read as one console.
+    const C = { bg: '#000000', card: '#1c1c1e', edge: '#2c2c2e', label: '#8e8e93', text: '#ffffff', up: '#30d158', down: '#ff453a' }
+    const pill = (key: string, text: string, color: string, bg: string) => (
+      <Text key={key} color={color} backgroundColor={bg} bold>
+        {` ${text} `}
+      </Text>
+    )
+    const statusPill = (seat: Seat, run: Run | undefined) => {
+      const text = statusLabel(run, now)
+      if (!run) return pill('st', text, C.label, C.edge)
+      if (run.status === 'working' || run.status === 'chat') return pill('st', text, '#000000', seat.color)
+      if (run.status === 'error') return pill('st', text, C.text, C.down)
+      return pill('st', text, C.up, C.edge)
+    }
+
     return (
-      <Box flexDirection="column" gap={1}>
+      <Box flexDirection="column" gap={1} paddingX={1} paddingY={1} backgroundColor={C.bg}>
         <Box justifyContent="space-between">
-          <Text bold>MESA DE THINKERS</Text>
-          <Text dimColor>leen: este chat</Text>
+          <Text bold color={C.text}>
+            MESA DE THINKERS
+          </Text>
+          <Text color={C.label}>leen: este chat</Text>
         </Box>
+
         {SEATS.map(seat => {
           const run = runs[seat.key]
           const isWorking = run?.status === 'working' || run?.status === 'chat'
-          const shown = run?.text ? (open.includes(seat.key) ? { text: run.text, isClipped: false } : clip(run.text)) : undefined
+          const body = run?.text ? plain(run.text) : undefined
+          const shown = body ? (open.includes(seat.key) ? { text: body, isClipped: false } : clip(body)) : undefined
 
           return (
             <Box
               key={seat.key}
               flexDirection="column"
+              gap={1}
+              backgroundColor={C.card}
               borderStyle="round"
-              borderColor={isWorking ? seat.color : 'subtle'}
+              borderColor={isWorking ? seat.color : C.edge}
               paddingX={1}
             >
               <Box justifyContent="space-between">
-                <Text bold color={seat.color}>
-                  {seat.label.toUpperCase()}
-                </Text>
-                <Text color={isWorking ? seat.color : undefined} dimColor={!isWorking}>
-                  {statusLabel(run, now)}
-                </Text>
+                <Box gap={1}>
+                  {pill('badge', seat.label[0]!, '#000000', seat.color)}
+                  <Text bold color={seat.color}>
+                    {seat.label.toUpperCase()}
+                  </Text>
+                  <Text color={C.label}>{seat.role}</Text>
+                </Box>
+                {statusPill(seat, run)}
               </Box>
-              <Text dimColor>
-                {seat.role}
-                {run?.focus ? `  |  foco: ${run.focus}` : ''}
-              </Text>
-              {shown && <Markdown key={`${seat.key}-text`} text={shown.text} />}
+              {run?.focus && <Text color={C.label}>foco: {run.focus}</Text>}
+              {shown && (
+                <Box key={`${seat.key}-text`}>
+                  <Text color={run?.status === 'error' ? C.down : C.text}>{shown.text}</Text>
+                </Box>
+              )}
               {!isWorking && (
                 <Box gap={1}>
                   {run?.status === 'done' ? (
@@ -219,25 +243,19 @@ export const register: Register = on => {
                       />
                       <Button key={`${seat.key}-again`} label="Otra vez" hotkey={seat.hotkey} onPress={() => conveneLater($, [seat])} />
                       {(shown?.isClipped || open.includes(seat.key)) && (
-                        <Button
-                          key={`${seat.key}-more`}
-                          label={open.includes(seat.key) ? 'Ver menos' : 'Ver todo'}
-                          dimColor
-                          onPress={() => toggle(seat.key)}
-                        />
+                        <Button key={`${seat.key}-more`} label={open.includes(seat.key) ? 'Ver menos' : 'Ver todo'} dimColor onPress={() => toggle(seat.key)} />
                       )}
                     </>
                   ) : (
-                    <Button key={`${seat.key}-call`} label="Llamar" hotkey={seat.hotkey} onPress={() => conveneLater($, [seat])} />
+                    <Button key={`${seat.key}-call`} label={`Llamar a ${seat.label}`} hotkey={seat.hotkey} onPress={() => conveneLater($, [seat])} />
                   )}
                 </Box>
               )}
             </Box>
           )
         })}
-        {!isBusy && (
-          <Button key="all" label="Mesa completa: llamar a los 4" variant="primary" hotkey="0" onPress={() => conveneLater($, SEATS)} />
-        )}
+
+        {!isBusy && <Button key="all" label="Mesa completa: llamar a los 4" variant="primary" hotkey="0" onPress={() => conveneLater($, SEATS)} />}
       </Box>
     )
   })

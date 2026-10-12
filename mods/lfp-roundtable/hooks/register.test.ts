@@ -1,6 +1,6 @@
 import { expect, test } from 'claude-code/testing'
 
-import { SEATS, clip, parse, seatPrompt, statusLabel, stripFrontmatter } from './register'
+import { SEATS, clip, parse, plain, seatPrompt, statusLabel, stripFrontmatter } from './register'
 
 test('parse picks one seat, or the whole table, and keeps the focus', () => {
   expect(parse('Logic el plan de deploy')).toEqual({ seats: [SEATS[1]!], focus: 'el plan de deploy' })
@@ -29,4 +29,10 @@ test('the seat prompt carries the skill body and the focus', () => {
   const prompt = seatPrompt(SEATS[0]!, body, 'el recordatorio')
   expect(prompt).toContain('# Critical\nAtaca.')
   expect(prompt).toContain('el recordatorio')
+})
+
+test('answers drop markdown marks but keep lines and bullets', () => {
+  expect(plain('## Veredicto\n**La tesis es falsa.** Usa `SCHWAB_REFRESH_EXPIRES_AT`.\n* uno\n* dos')).toBe(
+    'Veredicto\nLa tesis es falsa. Usa SCHWAB_REFRESH_EXPIRES_AT.\n- uno\n- dos',
+  )
 })
