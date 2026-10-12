@@ -1,0 +1,8 @@
+{
+  "name": "lfp-inbox",
+  "description": "Mesh inbox in the console: the session's project inbox (agent-bridge, Notion) as a status line count, a toast on new mail, and an /inbox pane of unread messages to process or open.",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "LFP"
+  }
+}

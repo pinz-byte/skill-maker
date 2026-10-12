@@ -64,6 +64,11 @@
       "name": "lfp-compass",
       "source": "./plugins/lfp-compass",
       "description": "Session compass: status line with the real machine, project, branch and context fill; at 70% context a band offers the continuity seed (CLAUDE.md auto-seed rule, enforced by the harness)."
+    },
+    {
+      "name": "lfp-inbox",
+      "source": "./plugins/lfp-inbox",
+      "description": "Mesh inbox in the console: the session's project inbox (agent-bridge, Notion) as a status line count, a toast on new mail, and an /inbox pane of unread messages to process or open."
     }
   ]
 }

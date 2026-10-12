@@ -69,7 +69,7 @@ export const parseInbox = (text: string): Message[] =>
         date: (field(block, 'DATE') ?? '').match(/\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2})?/)?.[0],
         re: (() => { const re = field(block, 'RE'); return re && clean(re) })(),
         isUnread: /UNREAD/i.test(status),
-        expectsResponse: /^(yes|si|sí)/i.test(field(block, 'EXPECTS RESPONSE') ?? ''),
+        expectsResponse: /^(yes|si|s\u00ed)/i.test(field(block, 'EXPECTS RESPONSE') ?? ''),
         excerpt: excerpt.length > EXCERPT ? `${excerpt.slice(0, EXCERPT).trimEnd()}...` : excerpt,
       }
     })
