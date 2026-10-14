@@ -22,13 +22,18 @@ Skills ship as part of a GROUPED plugin (`lfp-core`, `lfp-thinkers`, `lfp-copy`,
 
 1. **M2 local CLI** -- `./publish.sh` (runs `claude plugin marketplace update lfp-skills` +
    `claude plugin update <p>@lfp-skills` at BOTH `--scope user` and `--scope project`).
-2. **Cowork ACCOUNT plugin store** (per account, what every Cowork/cloud session reads) --
-   Claude desktop app: Customize -> Plugins -> Browse -> `Personal` -> the `···` beside the
-   marketplace `skill-maker` -> refresh. THEN each plugin's `Update`. The per-plugin Update
-   button reports "On latest version" while serving a stale build until that `···` refresh runs.
-   Since 2026-10-14 every plugin.json carries a history-derived `version`, so the marketplace's
-   "Sync automatically" toggle in the desktop app can replace this manual refresh: turn it on
-   once; the `···` refresh stays as the fallback when a sync fails.
+2. **Cowork ACCOUNT plugin store** (per account, what every Cowork/cloud session reads; proven
+   again 2026-10-14: web, desktop and a cloud session all served the same snapshot) --
+   Claude desktop app (2.37337.1): Customize -> Plugins -> Yours -> open ONE installed plugin
+   (e.g. Lfp core) -> `Update`. That pulls the WHOLE marketplace snapshot for the account, not
+   just that plugin: afterwards every lfp-* reads "On latest version" and the skill counts move
+   (2026-10-14: Lfp core 46 -> 49, Lfp product 9 -> 8). Verify in a FRESH Cowork session.
+   BROKEN as of 2026-10-14 (app 2.37337.1): the marketplace-level "Check for updates" (the `...`
+   menu) fails every time with "Couldn't check for updates. Try again.", and "Add marketplace"
+   only answers "already added". Do not fight that button; use a plugin's Update. The WEB UI
+   (claude.ai Customize -> Plugins) has no update control at all. "Sync automatically" is
+   documented for Cowork but was not found in this UI. Every plugin.json now carries a
+   history-derived `version` and the CLI pins by it ("updated from <sha> to 1.62.0").
 3. **Cowork ACCOUNT skills store** -- standalone uploads. Nothing new goes here, ever. Its
    existing contents are duplication debt being retired.
 
