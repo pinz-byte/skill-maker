@@ -92,6 +92,22 @@ MODS = {
 ROOT = Path(__file__).resolve().parent
 
 
+def plugin_version(paths) -> str:
+    """1.N.0 where N = commits in HEAD that touch `paths` (a plugin's skill sources,
+    or a mod's dir, plus this builder for GROUPS moves). The number changes exactly
+    when that plugin's content changed, so every publish is a "version bump" that
+    Cowork's marketplace auto-sync recognises; the CLI keeps pinning by commit and
+    ignores it. Outside git history (a bare copy) it falls back to 1.0.0."""
+    try:
+        out = subprocess.run(
+            ["git", "rev-list", "--count", "HEAD", "--", *[str(x) for x in paths]],
+            cwd=ROOT, capture_output=True, text=True, check=True,
+        ).stdout.strip()
+        return f"1.{int(out)}.0"
+    except Exception:
+        return "1.0.0"
+
+
 def strip_non_ascii(s: str) -> str:
     return re.sub(r"[^\x00-\x7F\n\r\t ]", "", s)
 
@@ -212,9 +228,12 @@ def main():
     for plugin, (desc, skills) in GROUPS.items():
         pdir = plugins_dir / plugin
         (pdir / ".claude-plugin").mkdir(parents=True, exist_ok=True)
-        # plugin.json — omit "version" so each git commit = new version (auto-update)
+        # plugin.json -- "version" is derived from history (see plugin_version), never
+        # hand-bumped: the CLI pins by commit, Cowork's auto-sync wants a semver bump.
+        version = plugin_version([*skills, "build-marketplace.py"])
         (pdir / ".claude-plugin" / "plugin.json").write_text(json.dumps({
             "name": plugin,
+            "version": version,
             "description": desc,
             "author": {"name": "LFP"},
         }, indent=2) + "\n")
@@ -235,6 +254,7 @@ def main():
         marketplace["plugins"].append({
             "name": plugin,
             "source": f"./plugins/{plugin}",
+            "version": version,
             "description": desc,
         })
 
@@ -245,10 +265,14 @@ def main():
             ROOT / src, plugins_dir / mod,
             ignore=lambda d, names: [n for n in names if n == "tsconfig.json"
                                      or (n == "types" and Path(d).name == ".claude-plugin")])
+        manifest = json.loads((ROOT / src / ".claude-plugin" / "plugin.json").read_text())
+        manifest["version"] = plugin_version([src])
+        (plugins_dir / mod / ".claude-plugin" / "plugin.json").write_text(json.dumps(manifest, indent=2) + "\n")
         marketplace["plugins"].append({
             "name": mod,
             "source": f"./plugins/{mod}",
-            "description": json.loads((ROOT / src / ".claude-plugin" / "plugin.json").read_text())["description"],
+            "version": manifest["version"],
+            "description": manifest["description"],
         })
 
     mp_dir = ROOT / ".claude-plugin"

@@ -29,8 +29,10 @@ live distribution channel.
 - Treat `plugins/` as generated output; never repair drift there by hand.
 - Treat `team-toolkit/` as an independent generated marketplace, not a second
   canonical copy.
-- Marketplace versions are git commits; plugin manifests intentionally omit a
-  manual semantic version.
+- Marketplace versions are git commits for the CLI. Plugin manifests carry a
+  semantic version that `build-marketplace.py` DERIVES from history (`1.N.0`,
+  N = commits touching that plugin's sources); it is never hand-edited. It exists
+  so Cowork's marketplace auto-sync sees a version bump on every real change.
 
 ## Change classification
 
@@ -39,5 +41,6 @@ live distribution channel.
 - Changed message contract or routing semantics: breaking change requiring
   explicit migration notes.
 
-The live version identifier is the git commit hash surfaced by
-`claude plugin list`, not a version number embedded in `SKILL.md`.
+The live version identifier on the CLI is the git commit hash surfaced by
+`claude plugin list`; the generated `version` in plugin.json is for Cowork's
+store. Neither is embedded in `SKILL.md`.

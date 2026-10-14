@@ -26,6 +26,9 @@ Skills ship as part of a GROUPED plugin (`lfp-core`, `lfp-thinkers`, `lfp-copy`,
    Claude desktop app: Customize -> Plugins -> Browse -> `Personal` -> the `···` beside the
    marketplace `skill-maker` -> refresh. THEN each plugin's `Update`. The per-plugin Update
    button reports "On latest version" while serving a stale build until that `···` refresh runs.
+   Since 2026-10-14 every plugin.json carries a history-derived `version`, so the marketplace's
+   "Sync automatically" toggle in the desktop app can replace this manual refresh: turn it on
+   once; the `···` refresh stays as the fallback when a sync fails.
 3. **Cowork ACCOUNT skills store** -- standalone uploads. Nothing new goes here, ever. Its
    existing contents are duplication debt being retired.
 

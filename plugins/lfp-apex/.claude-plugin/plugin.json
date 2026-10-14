@@ -1,5 +1,6 @@
 {
   "name": "lfp-apex",
+  "version": "1.29.0",
   "description": "APEX live-money trading council and runtime health -- scope to trading projects only.",
   "author": {
     "name": "LFP"
