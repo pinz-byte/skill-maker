@@ -1,18 +1,20 @@
 # Continuity Seed -- SKILL MAKER
-> Generated: 2026-08-12 17:45 (America/Lima)
-> Session: repaired the skill publish chain end to end. Found THREE independent stores, not one;
-> patched publish.sh's unreachable refresh block; brought the Cowork account store current after
-> 7 days frozen. Root cause of the whole day: a fix can be committed, pushed and locally installed
-> and STILL be stale on every Cowork surface.
+> Generated: 2026-10-14 17:50 (America/Lima)
+> Session: shipped `five-steps` (Musk's algorithm as a skill), rewrote the `lfp-roundtable` mod
+> to land ONE verdict message in the chat, rescued two orphan skills from M2 (`cost-gate`,
+> `infra-audit`), consolidated M2 to ONE publisher folder, refreshed M1/M2/M3 CLIs to `dd9be27`.
+> Found the Cowork ACCOUNT store stuck at the `d3010d3` snapshot (46 lfp-core skills vs 49 on
+> main) with the desktop app failing "Couldn't check for updates". PR #2 open with the fix.
 
 ## Mount Check (READ AND ACT ON THIS FIRST)
 Run: ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$'
 REQUIRED below is "SKILL MAKER". If missing, STOP and ask the user to add it in the Cowork picker.
-Do NOT proceed on partial mounts.
+Do NOT proceed on partial mounts. (A cloud session whose working dir IS the repo clone satisfies it.)
 
 ## Mount Manifest
 REQUIRED:
-- SKILL MAKER -- the skill/marketplace source of truth; everything this session touched lives here
+- SKILL MAKER -- the skill/marketplace source of truth. On M2 this is ~/Projects/SKILL MAKER
+  (the Cowork-mounted folder; ~/Documents/Claude/Projects/skill-maker was retired 2026-10-14).
   -- landmarks: build-marketplace.py, publish.sh, .claude-plugin/marketplace.json, CATALOG.md
 OPTIONAL:
 - (none this session)
@@ -20,116 +22,114 @@ NOT mounted this session but needed next time:
 - (none identified)
 
 ## Resume Instructions
-Mount "SKILL MAKER". There is UNCOMMITTED work: pm/SKILL.md and plugins/lfp-core/skills/pm/SKILL.md
-carry the Assignee-OR-Domain filter fix. Start at Next Step 1 (verify /pm in a fresh Cowork session),
-then Next Step 2 (ship the uncommitted fix through the FULL 3-store ritual documented below).
-Do not re-diagnose the publish chain -- it is fully mapped in Gotchas.
+Mount "SKILL MAKER". main is at dd9be27. PR #2 (branch claude/busy-allen-tqhm01) is OPEN and
+mergeable: history-derived plugin versions + the cost-gate catalog fix + this seed. Start at
+Next Step 1 (merge PR #2, publish from M2), then Next Step 2 (the account-store refresh).
+Do not re-diagnose the clones on M2 -- it is fully mapped in Decisions and Gotchas.
 
 ## Project Context
-- **Repo:** https://github.com/pinz-byte/skill-maker.git
-- **Branch:** main (in sync with origin as of 055cafe)
+- **Repo:** https://github.com/pinz-byte/skill-maker.git (private; HTTPS on M1/M2, SSH on M3)
+- **Branch:** main at dd9be27; PR #2 head on claude/busy-allen-tqhm01
 - **Primary folder (picker name):** SKILL MAKER
-- **Key files:** pm/SKILL.md, publish.sh, build-marketplace.py, .claude-plugin/marketplace.json
+- **Key files:** build-marketplace.py, publish.sh, skill-intent-audit.py, five-steps/SKILL.md,
+  mods/lfp-roundtable/hooks/register.tsx, .claude/rules/deploy-target.md
 
 ## Current State
 
 ### Completed This Session
-- Verified 60c52b1 (/pm repointed from archived TASKMASTER Ledger to live Focus Queue) was ALREADY
-  landed, pushed, and byte-identical in source + plugin copy. A VMC Intelligence session
-  "discovered" the same finding ~6h later because it ran a pre-fix copy.
-- Found and QUANTIFIED a second, separate defect the repoint did not fix: /pm filtered
-  Assignee-only. Live Focus Queue = 136 rows, 99 with NULL Assignee; 35 of 55 live rows (64%)
-  invisible to every per-project /pm run. Casualty: the High-priority row asserting
-  "VMC Intelligence -- abandoned 3 weeks, decide revive/sunset/handoff" (Assignee NULL).
-- Mapped THREE independent stores (see Gotchas). Previously believed to be one.
-- Patched publish.sh: the plugin-refresh block sat after an `exit 0` that fired whenever the tree
-  was already committed, making it unreachable after any manual commit. Now if/else. Also added
-  dual-scope update (--scope user AND --scope project) and an explicit account-store warning.
-- Ran ./publish.sh -> 055cafe. M2 local pins moved 2c32b71 (2026-08-05) -> 055cafe. The dual-scope
-  addition immediately caught /Users/lfp/Dev/AVT pinned at 4da9464 (2026-07-15) -- 4 weeks stale.
-- Brought the Cowork ACCOUNT store current: refreshed marketplace `skill-maker`, then Updated
-  lfp-core / lfp-copy / lfp-thinkers / lfp-apex. lfp-core confirmed 34 -> 37 skills.
-- Patched /pm's filter to `Assignee = <project> OR Domain = <project>` with the reasoning inline
-  so it does not get "simplified" back. Source + plugin copy identical, description 764/1024 chars.
+- `five-steps` skill (lfp-thinkers, REASON lot): Musk's five-step algorithm strictly in order,
+  reverse-order detector, one-table verdict. Shipped as a SKILL, not a hook/mod: mods and
+  function hooks run in Claude Code only; the algorithm is judgment, not an invariant.
+- `lfp-roundtable` mod rewritten: pane deleted; `/roundtable [seat|todos] <foco>` forks the
+  seats in parallel and lands ONE digest in the chat via $.prompt.submit; focus is REQUIRED;
+  no table state. 8 tests pass (claude plugin test). Fixed: seats stuck "trabajando en el
+  chat" forever, focus dropped by "Otra vez" / "Mesa completa", one-by-one carry-over.
+- M2 consolidated: three clones found; `~/Projects/SKILL MAKER` (Cowork-mounted) is the ONLY
+  publisher; 22 dirty entries there were REAL unpublished work (cost-gate, infra-audit,
+  dependency-audit regroup to lfp-core, 3 SKILL.md edits, APEX_BOOK_MOD_BRIEF) -- rescued and
+  published as 401ab2e; CLAUDE.md invariant updated in dd9be27. Documents clone renamed in
+  place to `_retired_skill-maker_2026-10-14` (iCloud-evicted; never hash it).
+- CLIs: M1 (8 plugins), M2 (all), M3 (7 plugins) at dd9be27. Zombie `.plugin` files on M1
+  deleted (they broke the build's dead-channel guard).
+- VERIFIED LIVE via Claude in Chrome on claude.ai: `/five` shows five-steps (Lfp thinkers).
+  The account store has it. `/cost` does NOT show cost-gate: store snapshot is `d3010d3`.
+- PR #2 (open): (a) plugin.json/marketplace.json carry `version: 1.N.0`, N = commits touching
+  that plugin's sources (+ builder); deterministic across rebuilds; validator warnings gone.
+  (b) cost-gate had `intent: gate` (not a lot) and was silently absent from CATALOG.md;
+  fixed to `audit`; skill-intent-audit.py now FAILS the build on an unknown lot.
 
 ### In Progress
-- UNCOMMITTED: pm/SKILL.md and plugins/lfp-core/skills/pm/SKILL.md (Assignee-OR-Domain fix).
-  Needs ./publish.sh, then the marketplace + plugin refresh in the desktop app.
+- PR #2 awaiting merge: https://github.com/pinz-byte/skill-maker/pull/2
+- Account store refresh: desktop app marketplace "Check for updates" fails with the toast
+  "Couldn't check for updates. Try again." Payload verified clean (marketplace.json identical
+  to the snapshot that ingested fine; 89 frontmatters strict-YAML valid; validate passes).
 
 ### Blocked / Deferred
-- UNEXPLAINED: publish.sh run 9f4933e at 2026-08-12 10:00:51 committed and pushed (so it did NOT
-  hit the early exit) and reached the refresh block -- yet pins stayed at 2c32b71 from 08-05.
-  `claude plugin update` failures are swallowed by `|| echo`. Mechanism unknown. The answer is in
-  that run's terminal scrollback if it still exists.
-- M1 and M3 local CLI stores never verified this session.
-- Cleanup of duplicated skills deferred until /pm is confirmed working (see Decisions).
+- Desktop app: the marketplace-level refresh control was not found in the current UI
+  (Yours/Discover tabs; plugin page shows only Update + "..." with Remove/Edit/Duplicate).
+  Docs name "Check for updates" and "Sync automatically" on the marketplace (Cowork guide)
+  but not where they sit. The WEB UI (claude.ai Customize > Plugins) has NO refresh control
+  at all (verified by Claude in Chrome). App build 2.31226.0 (2026-10-08) fixed "marketplace
+  refreshes sometimes failing" -- update the app first.
+- `lfp-pm` (pm-live) is NOT installed in the account store (listed under skill-maker source as
+  not installed). The GROUPS comment says it was created to replace the stale `pm`; the
+  replacement never happened. Install it from Discover or decide it is not wanted.
+- "Lfp design (Local uploads)" in Yours is a hand-uploaded duplicate of marketplace lfp-design:
+  duplication debt; remove once the marketplace copy is confirmed loading.
+- M3's repo clone sits inside iCloud Documents (mirrored on M2 as "Documents - LFP-M3");
+  .git in iCloud is a corruption hazard. M3 is a consumer; it needs no clone.
+- Three Carta natal OS worktrees pin old lfp-core/lfp-thinkers at project scope; delete those
+  project-scope pins so user scope (daily job) serves them.
+- M3 fetches the marketplace via SSH while the invariant says HTTPS; works today, rotate-risk.
 
 ## Decisions Made
-- Decision: filter on `Assignee OR Domain`, not Domain alone -- Reason: verified against live data
-  that OR does not over-pull. VMC's ETL row (Assignee=VMC, Domain=Subastop) lands correctly either
-  way, and Subastop's 5 orphan rows stay out of VMC's brief.
-- Decision: do NOT Uninstall/reinstall plugins to force a refresh -- Reason: the Directory served
-  the same stale 34-skill build, so reinstall would have re-delivered the old copy.
-- Decision: the account plugin store is per-ACCOUNT, not per-machine -- Reason: proven live. This
-  cloud sandbox is none of the user's Macs and synced the identical v0002 artifacts. M1/M3 pick up
-  the account update on app restart; only the local CLI store is per-machine.
-- Decision: defer the duplicate-skill cleanup until /pm is verified -- Reason: doing both at once
-  makes a regression unattributable.
-- Decision: patch the Assignee filter without further asking -- Reason: offered three times with no
-  answer; one line, git-tracked, reversible.
+- Decision: Musk's algorithm ships as a skill, not a hook/mod -- Reason: coverage (mods/hooks
+  are Claude Code only) and shape (judgment, not a checkable invariant); roundtable mod already
+  consumes thinker skills as seats.
+- Decision: roundtable pane deleted, one digest to chat -- Reason: the pane was the primitive
+  that killed the value; each /roundtable call is one task, nothing to close.
+- Decision: ONE publisher folder on M2 = the Cowork-mounted one -- Reason: authoring and
+  publishing in different folders is how two skills sat unpublished for weeks.
+- Decision: account plugin store is per-ACCOUNT -- Reason: proven again today: web, desktop and
+  this cloud session all read the same d3010d3 snapshot. One refresh, any machine.
+- Decision: plugin manifests carry a history-derived version -- Reason: Cowork's sync model
+  keys on a "version bump" (support article 13837433); the CLI pins by commit and ignores it.
 
 ## Gotchas Discovered
-- Gotcha: there are THREE independent stores, not one.
-  (1) M2 local CLI store -- `claude plugin`, per machine, refreshed by publish.sh.
-  (2) Cowork ACCOUNT plugin store -- per account, ONLY updatable from the Claude desktop app.
-  (3) Cowork ACCOUNT skills store -- ~75 standalone skills uploaded separately, oldest from March.
-  -- Fix: all three must be updated. git push touches only (1), and only via publish.sh.
-- Gotcha: the desktop `Update` button reports "On latest version" while serving a stale build.
-  -- Fix: the MARKETPLACE snapshot must be refreshed first. Customize -> Plugins -> Browse ->
-  Personal tab -> the `···` next to the marketplace name `skill-maker` -> refresh. THEN the
-  per-plugin Update button goes live. This is the single non-obvious step of the whole chain.
-- Gotcha: the account marketplace is named `skill-maker`; the CLI marketplace is named
-  `lfp-skills`. Two registrations, same repo, independent refresh state.
-- Gotcha: the Claude desktop app is NOT a grantable computer-use target. computer_resolve_access
-  returns an empty apps list for "Claude" while resolving Chrome/Terminal/Slack fine. Nobody can
-  automate these clicks from inside a Claude session -- do not plan around it.
-- Gotcha: device_bash blocks every `claude` subcommand except `claude -p`. `claude plugin list`
-  cannot be run through it; ask the user for a real Terminal.
-- Gotcha: a session's synced plugin copy freezes at session start. Mid-session updates never
-  appear. Verification ALWAYS requires a fresh session.
-- Gotcha: 32 skills are duplicated between the account skills store and the lfp-* plugins, plus 4
-  more shipped as single-skill plugins from 5/14. agent-bridge, git-ops and reentry exist in
-  TRIPLICATE (standalone skill + own plugin + inside lfp-core), months apart, loading together.
-- Gotcha: `lfp-design` is built into the marketplace but installed nowhere -- not local, not
-  account. Same failure class as lfp-copy on 08-05.
-- Gotcha (process, and the worst one): this session's assistant REPORTED the Assignee patch as
-  applied one turn before actually making the tool call. It was caught only because the seed's
-  `git status` came back clean. -- Fix: never report an edit as landed without a git status or
-  grep confirming it. "Claimed" and "landed" are different states.
+- Gotcha: `*.plugin` zombies are gitignored, survive fast-forwards invisibly, and the builder's
+  dead-channel guard halts publish.sh BEFORE commit -- Fix: `find . -maxdepth 1 -name '*.plugin' -delete`.
+- Gotcha: `git status` on an iCloud-evicted clone hangs for minutes (321 dataless files) --
+  Fix: never hash it; `git ls-files --others --exclude-standard` lists untracked without reads;
+  rename in place, do not move out of iCloud.
+- Gotcha: "HEAD is an ancestor of main" proves commits, NOT uncommitted edits to tracked files
+  (a Sep-17 projectmd-optimizer pass lived only in the retired clone) -- Fix: diff before retiring.
+- Gotcha: `metadata.intent` outside LOTS silently drops the skill from CATALOG.md while the build
+  says PASS -- Fix: in PR #2 the check fails loud.
+- Gotcha: the desktop app's "v5 / updated N hours ago" is the store's OWN counter; it does not
+  read plugin.json versions (none existed). lfp-core 46 skills = d3010d3; main has 49.
+- Gotcha: $.prompt.submit from a mod lands as "The lfp-roundtable plugin sent a message";
+  if Claude reads but does not integrate the digest, set `asUser: true` (one line).
+- Gotcha: zsh aborts a pasted line on an unmatched glob (`no matches found`); a polluted
+  clipboard prepends junk to `claude` -- paste lines starting at the command.
 
 ## Uncommitted Changes
-     M plugins/lfp-core/skills/pm/SKILL.md
-     M pm/SKILL.md
- (both: Assignee-only filter -> Assignee OR Domain, with rationale inline)
+- None. Everything is on main (dd9be27) or on PR #2's branch.
 
 ## Next Steps (Ordered)
-1. Open a FRESH Cowork session and run /pm. Confirm it briefs from the Focus Queue, not the
-   TASKMASTER Ledger. If it still names the Ledger, the account update did not take.
-2. Ship the uncommitted Assignee fix through the full ritual: ./publish.sh on M2, then in the
-   desktop app refresh marketplace `skill-maker` via `···`, then Update each of the 4 lfp-* plugins.
-3. Verify M1 and M3 local CLI stores: `claude plugin marketplace update lfp-skills` +
-   `claude plugin update <p>@lfp-skills --scope user`. Check their launchd refresh jobs are alive
-   (M2 previously had a TCC-broken duplicate).
-4. Clean up duplicates: delete standalone account skills `pm` and `critical-thinker` FIRST, verify
-   in a new session that the plugin copies still resolve, then the remaining 30 plus the 4
-   single-skill plugins from 5/14.
-5. Diagnose why publish.sh at 10:00 (9f4933e) reached the refresh block without moving the pins.
-   Remove the `|| echo` that swallows `claude plugin update` failures.
+1. Merge PR #2. On M2, `~/Projects/SKILL MAKER`: `git pull && ./publish.sh` (commits one
+   lfp-core version bump). M1/M3: the consumer refresh line or the daily job.
+2. Account store: update the desktop app to >= 2.31226.0, then retry Update on Lfp core (now
+   that manifests carry versions). If still failing: `+ Add` > "Add marketplace" with
+   `pinz-byte/skill-maker` (idempotent if already added) and look for "Check for updates" /
+   "Sync automatically" there. Last resort: Remove + re-add one small plugin (lfp-labs) as canary.
+3. Install `lfp-pm` in the account store or decide it is not wanted; remove "Lfp design (Local
+   uploads)" once marketplace lfp-design loads in a fresh session.
+4. First real `/five-steps` pass: the publish chain itself (deploy-target.md's three-store ritual).
+5. Verify `/roundtable todos <foco>` in a fresh Claude Code session on M1; flip `asUser` if needed.
+6. On M3: retire the iCloud clone; consumer refresh only.
 
 ## Key Code / Config
-- Focus Queue (the live task spine, replaces the archived TASKMASTER Ledger):
-  db `cd49d2c6-f9d6-40af-bacb-d9662e3323d6`
-  data source `collection://b5c3c737-1219-4888-a081-bbfde500e180`
-  title property `Item` (not `Task`); Status = Open | In Progress | Waiting | Done | Deferred
-- Archived, never read or write: TASKMASTER Dispatch Ledger `7793b007-e557-4085-9c97-38e51274e29f`
-- Desktop refresh path: Customize -> Plugins -> Browse -> Personal -> `···` beside `skill-maker`
+- Consumer refresh (any machine): `claude plugin marketplace update lfp-skills && claude plugin list 2>&1 | grep -oE '[A-Za-z0-9_-]+@lfp-skills' | sort -u | while read -r p; do claude plugin update "$p"; done`
+- Builder version rule: `plugin_version(paths)` = `1.<git rev-list --count HEAD -- paths>.0`.
+- Mods are Claude Code only (hooks); Cowork never runs them: lfp-roundtable, lfp-inbox,
+  lfp-compass, lfp-apex-book stay uninstalled in the desktop app on purpose.
