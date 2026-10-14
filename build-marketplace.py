@@ -111,7 +111,15 @@ def plugin_version(paths, prior: str | None = None) -> str:
     try:
         if _git("rev-parse", "--is-shallow-repository") == "true":
             return prior or "1.0.0"
-        return f"1.{int(_git('rev-list', '--count', 'HEAD', '--', *[str(x) for x in paths]))}.0"
+        p = [str(x) for x in paths]
+        committed = int(_git("rev-list", "--count", "HEAD", "--", *p))
+        # publish.sh builds BEFORE it commits. Counting only HEAD would stamp the version
+        # of the PREVIOUS state, so a skill edit would reach consumers one publish late:
+        # the CLI pins by this version once it exists ("updated from dd9be27 to 1.60.0").
+        # Count the pending change now; after the commit the count absorbs it and the
+        # number stays put, so a rebuild on a clean tree is a no-op.
+        pending = 1 if _git("status", "--porcelain", "--", *p) else 0
+        return f"1.{committed + pending}.0"
     except Exception:
         return prior or "1.0.0"
 

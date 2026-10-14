@@ -31,8 +31,10 @@ live distribution channel.
   canonical copy.
 - Marketplace versions are git commits for the CLI. Plugin manifests carry a
   semantic version that `build-marketplace.py` DERIVES from history (`1.N.0`,
-  N = commits touching that plugin's sources); it is never hand-edited. It exists
-  so Cowork's marketplace auto-sync sees a version bump on every real change.
+  N = commits touching that plugin's sources, plus one while a change to them is
+  still uncommitted, so the bump lands in the SAME publish as the content); it is
+  never hand-edited. The CLI pins by this version once it exists, and Cowork's
+  marketplace auto-sync keys on a version bump.
   Only a FULL clone can compute N; a shallow clone (cloud sessions, depth 50)
   keeps the last published numbers untouched. Versions advance only when M2 publishes.
 
