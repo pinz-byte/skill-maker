@@ -13,7 +13,7 @@ description: >-
   approved-spend ledger so the next audit is a diff. NOT factory-gate or apex-builder-gate
   (stage readiness on one production line): this gates money, in every project.
 metadata:
-  intent: gate
+  intent: audit
 ---
 
 # Cost Gate -- Blocking Harness for Infrastructure Spend

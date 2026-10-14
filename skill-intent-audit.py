@@ -225,6 +225,12 @@ def cmd_catalog(skills, root="."):
 
 def cmd_check(skills):
     fails, warns = [], []
+    # A declared intent outside LOTS is not a new lot: cmd_catalog iterates LOTS, so the
+    # skill silently vanishes from CATALOG.md (cost-gate, "intent: gate", 2026-10-14).
+    for s in skills:
+        if s["declared"] and s["declared"] not in LOT_NAMES:
+            fails.append(f"{s['dir']}: declared intent '{s['declared']}' is not a lot "
+                         f"(valid: {', '.join(l[0] for l in LOTS)})")
     by = collections.defaultdict(list)
     for s in skills:
         by[s["lot"]].append(s)
