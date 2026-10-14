@@ -53,7 +53,9 @@ continuity loop automatically -- the user should not have to type "reentry" or "
   The builder now **fails loud** if any on-disk skill is ungrouped -- this is the
   guard against the 2026-06-04 gap where 6 built skills silently never propagated.
   Adding a new skill = drop its dir + add it to a GROUP, or the build halts.
-- Publish from M2 only: `./publish.sh` (rebuild + commit + push, one command).
+- Publish from M2 only, from ~/Projects/SKILL MAKER (the Cowork-mounted folder);
+  ~/Documents/Claude/Projects/skill-maker retired 2026-10-14:
+  `./publish.sh` (rebuild + commit + push, one command).
   M1's working copy and its `com.lfp.skillmaker.publish` launchd job are
   decommissioned (2026-06-10) -- two publishers = split-brain.
 - Marketplace is GitHub-sourced (`pinz-byte/skill-maker`), so `claude` updates
