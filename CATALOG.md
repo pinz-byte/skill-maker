@@ -1,6 +1,6 @@
 # SKILL CATALOG
 
-Generated 2026-10-12 by skill-intent-audit.py from 86 SKILL.md files.
+Generated 2026-10-14 by skill-intent-audit.py from 87 SKILL.md files.
 DO NOT HAND-EDIT. Regenerate: python3 skill-intent-audit.py catalog
 
 Indexed by INTENT -- what you want, not what the skill is called.
@@ -109,6 +109,7 @@ A trailing ? means the lot was auto-inferred, not yet declared in frontmatter.
 - `ceo-planner`           Founder-mode plan review
 - `creative-thinker`      Creative thinking mode that treats problems as opportunities and solves for...
 - `critical-thinker`      - Activates a blunt, unfiltered critical thinking companion that never...
+- `five-steps`            - Runs Elon Musk's five-step algorithm, strictly in order, on a requirement...
 - `ib`                    The Intention Builder (IB)  POPs' structured project framework
 - `logic-thinker`         The reasoning seat of the oversight roundtable
 - `loop-breaker`          - A creative loop-breaking mode for problems that keep recurring no matter...
