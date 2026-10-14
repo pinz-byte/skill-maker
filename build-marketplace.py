@@ -92,20 +92,28 @@ MODS = {
 ROOT = Path(__file__).resolve().parent
 
 
-def plugin_version(paths) -> str:
+def _git(*args) -> str:
+    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True,
+                          check=True).stdout.strip()
+
+
+def plugin_version(paths, prior: str | None = None) -> str:
     """1.N.0 where N = commits in HEAD that touch `paths` (a plugin's skill sources,
     or a mod's dir, plus this builder for GROUPS moves). The number changes exactly
     when that plugin's content changed, so every publish is a "version bump" that
     Cowork's marketplace auto-sync recognises; the CLI keeps pinning by commit and
-    ignores it. Outside git history (a bare copy) it falls back to 1.0.0."""
+    ignores it.
+
+    N is only meaningful on a FULL clone. A shallow clone (cloud sessions clone at
+    depth 50) undercounts (1.37.0 vs 1.60.0 for lfp-core on 2026-10-14), so there the
+    builder keeps `prior`, the version last published, and never moves it: only the
+    publisher (M2, full history) advances versions. No history at all -> 1.0.0."""
     try:
-        out = subprocess.run(
-            ["git", "rev-list", "--count", "HEAD", "--", *[str(x) for x in paths]],
-            cwd=ROOT, capture_output=True, text=True, check=True,
-        ).stdout.strip()
-        return f"1.{int(out)}.0"
+        if _git("rev-parse", "--is-shallow-repository") == "true":
+            return prior or "1.0.0"
+        return f"1.{int(_git('rev-list', '--count', 'HEAD', '--', *[str(x) for x in paths]))}.0"
     except Exception:
-        return "1.0.0"
+        return prior or "1.0.0"
 
 
 def strip_non_ascii(s: str) -> str:
@@ -215,6 +223,13 @@ def main():
     # is invalid.
     subprocess.run([sys.executable, str(ROOT / "gen-inbox-registry.py")], check=True)
 
+    prior_versions = {}
+    for pj in plugins_dir.glob("*/.claude-plugin/plugin.json") if plugins_dir.exists() else []:
+        try:
+            prior_versions[pj.parent.parent.name] = json.loads(pj.read_text()).get("version")
+        except (OSError, ValueError):
+            pass
+
     if plugins_dir.exists():
         shutil.rmtree(plugins_dir)  # regenerate clean only after validation passes
 
@@ -230,7 +245,7 @@ def main():
         (pdir / ".claude-plugin").mkdir(parents=True, exist_ok=True)
         # plugin.json -- "version" is derived from history (see plugin_version), never
         # hand-bumped: the CLI pins by commit, Cowork's auto-sync wants a semver bump.
-        version = plugin_version([*skills, "build-marketplace.py"])
+        version = plugin_version([*skills, "build-marketplace.py"], prior_versions.get(plugin))
         (pdir / ".claude-plugin" / "plugin.json").write_text(json.dumps({
             "name": plugin,
             "version": version,
@@ -266,7 +281,7 @@ def main():
             ignore=lambda d, names: [n for n in names if n == "tsconfig.json"
                                      or (n == "types" and Path(d).name == ".claude-plugin")])
         manifest = json.loads((ROOT / src / ".claude-plugin" / "plugin.json").read_text())
-        manifest["version"] = plugin_version([src])
+        manifest["version"] = plugin_version([src], prior_versions.get(mod))
         (plugins_dir / mod / ".claude-plugin" / "plugin.json").write_text(json.dumps(manifest, indent=2) + "\n")
         marketplace["plugins"].append({
             "name": mod,

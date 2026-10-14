@@ -33,6 +33,8 @@ live distribution channel.
   semantic version that `build-marketplace.py` DERIVES from history (`1.N.0`,
   N = commits touching that plugin's sources); it is never hand-edited. It exists
   so Cowork's marketplace auto-sync sees a version bump on every real change.
+  Only a FULL clone can compute N; a shallow clone (cloud sessions, depth 50)
+  keeps the last published numbers untouched. Versions advance only when M2 publishes.
 
 ## Change classification
 
