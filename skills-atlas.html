@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKILL MAKER Atlas — 85 Skills para Kiro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        header { border-bottom: 2px solid #7c3aed; padding-bottom: 20px; margin-bottom: 30px; }
+        h1 { color: #7c3aed; margin-bottom: 5px; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
+        .stat { background: #12122a; padding: 15px; border-radius: 8px; border-left: 3px solid #7c3aed; }
+        .stat-value { font-size: 28px; font-weight: bold; color: #7c3aed; }
+        .stat-label { font-size: 12px; color: #999; text-transform: uppercase; }
+        
+        .filters { background: #12122a; padding: 20px; border-radius: 8px; margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
+        .filter-group { display: flex; gap: 8px; align-items: center; }
+        .filter-group label { font-size: 13px; color: #999; }
+        select { background: #1a1a2e; border: 1px solid #3a3a5a; color: #e0e0e0; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+        input[type="search"] { background: #1a1a2e; border: 1px solid #3a3a5a; color: #e0e0e0; padding: 8px 12px; border-radius: 4px; flex: 1; min-width: 200px; }
+        
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+        .skill-card { background: #12122a; border: 1px solid #1e1e3a; border-radius: 8px; padding: 20px; transition: all 0.3s ease; }
+        .skill-card:hover { border-color: #7c3aed; box-shadow: 0 0 20px rgba(124, 58, 237, 0.1); }
+        
+        .skill-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; }
+        .skill-name { font-size: 16px; font-weight: bold; color: #7c3aed; }
+        .skill-plugin { font-size: 11px; background: #1a1a2e; padding: 4px 8px; border-radius: 4px; color: #999; }
+        
+        .skill-desc { font-size: 13px; color: #b0b0b0; margin-bottom: 12px; line-height: 1.4; }
+        .skill-meta { display: flex; gap: 10px; flex-wrap: wrap; font-size: 12px; }
+        .meta-tag { background: #1a1a2e; padding: 4px 8px; border-radius: 4px; color: #999; }
+        .meta-tag.intent { background: #2a1a3a; color: #a78bfa; }
+        .meta-tag.status { background: #1a3a2a; color: #6ee7b7; }
+        
+        .intent-section { margin-bottom: 40px; }
+        .intent-title { font-size: 20px; font-weight: bold; color: #7c3aed; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #3a3a5a; }
+        
+        .migration-phases { background: #12122a; border: 1px solid #1e1e3a; border-radius: 8px; padding: 20px; margin-top: 40px; }
+        .phase { margin-bottom: 20px; }
+        .phase-title { color: #7c3aed; font-weight: bold; margin-bottom: 8px; }
+        .phase-skills { display: flex; flex-wrap: wrap; gap: 8px; }
+        .phase-skill { background: #1a1a2e; padding: 6px 12px; border-radius: 4px; font-size: 12px; }
+        
+        footer { border-top: 1px solid #3a3a5a; margin-top: 40px; padding-top: 20px; color: #666; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SKILL MAKER Atlas para Kiro</h1>
+            <p>Catálogo completo de 85 skills | Migración a plataforma Amazon</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">85</div>
+                    <div class="stat-label">Skills Totales</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">9</div>
+                    <div class="stat-label">Plugins</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Intents</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Portable</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label>🔍 Buscar:</label>
+                <input type="search" id="searchBox" placeholder="nombre, descripción...">
+            </div>
+            <div class="filter-group">
+                <label>🏢 Plugin:</label>
+                <select id="pluginFilter">
+                    <option value="">Todos</option>
+                    <option value="lfp-core">lfp-core (46)</option>
+                    <option value="lfp-thinkers">lfp-thinkers (9)</option>
+                    <option value="lfp-product">lfp-product (9)</option>
+                    <option value="lfp-apex">lfp-apex (8)</option>
+                    <option value="lfp-copy">lfp-copy (5)</option>
+                    <option value="lfp-symbios">lfp-symbios (4)</option>
+                    <option value="lfp-labs">lfp-labs (2)</option>
+                    <option value="lfp-pm">lfp-pm (1)</option>
+                    <option value="lfp-design">lfp-design (1)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>📋 Intent:</label>
+                <select id="intentFilter">
+                    <option value="">Todos</option>
+                    <option value="ORIENT">ORIENT</option>
+                    <option value="MANAGE">MANAGE</option>
+                    <option value="DECIDE">DECIDE</option>
+                    <option value="OBSERVE">OBSERVE</option>
+                    <option value="DIAGNOSE">DIAGNOSE</option>
+                    <option value="AUDIT">AUDIT</option>
+                    <option value="BUILD">BUILD</option>
+                    <option value="RELAY">RELAY</option>
+                    <option value="WRITE">WRITE</option>
+                    <option value="REASON">REASON</option>
+                    <option value="HYGIENE">HYGIENE</option>
+                    <option value="DELEGATE">DELEGATE</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="skillsContainer" class="skills-grid"></div>
+
+        <div class="migration-phases">
+            <h2 style="color: #7c3aed; margin-bottom: 20px;">📈 Plan de Migración a Kiro (4 Fases)</h2>
+            <div class="phase">
+                <div class="phase-title">Fase 1 — Foundation (20 skills, 2-4 semanas)</div>
+                <div class="phase-skills" id="phase1"></div>
+            </div>
+            <div class="phase">
+                <div class="phase-title">Fase 2 — Audit & QA (12 skills, 3-5 semanas)</div>
+                <div class="phase-skills" id="phase2"></div>
+            </div>
+            <div class="phase">
+                <div class="phase-title">Fase 3 — Business Logic (20 skills, 4-6 semanas)</div>
+                <div class="phase-skills" id="phase3"></div>
+            </div>
+            <div class="phase">
+                <div class="phase-title">Fase 4 — Integration (33 skills, 6-8 semanas)</div>
+                <div class="phase-skills" id="phase4"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Generated: 2026-08-21 | Source: ~/.claude/plugins/marketplaces/lfp-skills | Distribution: GitHub (pinz-byte/skill-maker)</p>
+        </footer>
+    </div>
+
+    <script>
+        const skillsData = {
+            "lfp-core": ["agent-bridge", "inbox-triage", "git-ops", "machine-bridge", "project-migrate", "self-audit", "reentry", "continuity-seed", "session-bootstrap", "soul-builder", "arise", "time-boundary", "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit", "gcp-iam-resolver", "gcloud-auth-doctor", "herald-config-doctor", "projectmd-auditor", "projectmd-optimizer", "offload", "auditor-general", "audit-codex-build", "codex-audit-handoff", "builder-identity-check", "qa-mirror", "qa-sequence", "pwa-verify", "carmatch-intel", "disk-doctor", "notebooklm-bridge", "space-steward", "inpositive-language", "project-handover", "skillmaker-publish", "verify-loop", "builder-handoff", "projectmd-gen", "project-init", "cc-session-analyzer", "work-retrospective", "forensic-auditor", "data-analyst", "live-builder-bridge", "coworker-enroll"],
+            "lfp-thinkers": ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker", "ceo-planner", "toolbox", "masterkey", "ib", "ultrathink"],
+            "lfp-product": ["brief-bridge", "dashboard-section", "ds-enforcer", "factory-gate", "carmatch-deploy", "phased-deploy", "source-scout", "pre-deliver", "dependency-audit"],
+            "lfp-apex": ["apex-builder-gate", "apex-ultra-council", "council-call", "council-debate", "council-global", "apex-health", "council", "council-run"],
+            "lfp-copy": ["patel-tone-converter", "copy-masterkey", "vmc-listing-copy", "copy-deck", "voice-bench-gate"],
+            "lfp-symbios": ["wake", "investigator", "data-capsule", "cowork-friday-handoff"],
+            "lfp-labs": ["amorata-voice-system", "apu-series-generator"],
+            "lfp-pm": ["pm-live"],
+            "lfp-design": ["astrodiary-ds-enforcer"]
+        };
+
+        const phaseData = {
+            1: ["pm-live", "critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker", "ceo-planner", "toolbox", "masterkey", "ib", "ultrathink", "agent-bridge", "inbox-triage", "git-ops", "machine-bridge", "project-migrate", "self-audit", "reentry", "continuity-seed", "session-bootstrap", "soul-builder"],
+            2: ["arise", "time-boundary", "session-rules", "meta-no-bare-names", "skill-miner", "workspace-plugin-audit", "gcp-iam-resolver", "gcloud-auth-doctor", "herald-config-doctor", "projectmd-auditor", "projectmd-optimizer", "offload"],
+            3: ["auditor-general", "audit-codex-build", "codex-audit-handoff", "builder-identity-check", "qa-mirror", "qa-sequence", "pwa-verify", "carmatch-intel", "disk-doctor", "notebooklm-bridge", "space-steward", "inpositive-language", "project-handover", "skillmaker-publish", "verify-loop", "builder-handoff", "projectmd-gen", "project-init", "cc-session-analyzer", "work-retrospective"],
+            4: ["forensic-auditor", "data-analyst", "live-builder-bridge", "coworker-enroll", "apex-builder-gate", "apex-ultra-council", "council-call", "council-debate", "council-global", "apex-health", "council", "council-run", "patel-tone-converter", "copy-masterkey", "vmc-listing-copy", "copy-deck", "voice-bench-gate", "astrodiary-ds-enforcer", "brief-bridge", "dashboard-section", "ds-enforcer", "factory-gate", "carmatch-deploy", "phased-deploy", "source-scout", "pre-deliver", "dependency-audit", "wake", "investigator", "data-capsule", "cowork-friday-handoff", "amorata-voice-system", "apu-series-generator"]
+        };
+
+        // Populate phases
+        Object.keys(phaseData).forEach(phase => {
+            const el = document.getElementById(`phase${phase}`);
+            phaseData[phase].forEach(skill => {
+                el.innerHTML += `<div class="phase-skill">${skill}</div>`;
+            });
+        });
+
+        // Render all skills
+        function renderSkills(filter = {}) {
+            const container = document.getElementById('skillsContainer');
+            container.innerHTML = '';
+            
+            Object.keys(skillsData).forEach(plugin => {
+                if (filter.plugin && filter.plugin !== plugin) return;
+                
+                skillsData[plugin].forEach(skillName => {
+                    if (filter.search && !skillName.toLowerCase().includes(filter.search.toLowerCase())) return;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'skill-card';
+                    card.innerHTML = `
+                        <div class="skill-header">
+                            <div class="skill-name">${skillName}</div>
+                            <div class="skill-plugin">${plugin}</div>
+                        </div>
+                        <div class="skill-meta">
+                            <div class="meta-tag intent">Migratable</div>
+                            <div class="meta-tag status">Active</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+        }
+
+        // Event listeners
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            renderSkills({ search: e.target.value, plugin: document.getElementById('pluginFilter').value });
+        });
+        
+        document.getElementById('pluginFilter').addEventListener('change', (e) => {
+            renderSkills({ search: document.getElementById('searchBox').value, plugin: e.target.value });
+        });
+
+        // Initial render
+        renderSkills();
+    </script>
+</body>
+</html>

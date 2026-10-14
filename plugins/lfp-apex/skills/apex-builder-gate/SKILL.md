@@ -20,26 +20,26 @@ metadata:
 
 A mandatory pre-execution audit that runs before any APEX builder session touches
 code. It exists because fresh builder sessions have no memory of failures already
-paid for  and the same 10 patterns keep recurring. This gate closes that loop.
+paid for -- and the same 10 patterns keep recurring. This gate closes that loop.
 
 **Non-negotiable: run this before Phase A of any APEX brief.**
 
-## Step 0  Identify Scope
+## Step 0 -- Identify Scope
 
 Before auditing, establish what this session will touch:
 
-1. Read the active builder brief (e.g., `APEX_50`, `APEX_27`)  specifically its
+1. Read the active builder brief (e.g., `APEX_50`, `APEX_27`) -- specifically its
    "Files to modify" or "Phase A" section
-2. List the files explicitly  these are the targets for the grep checks below
+2. List the files explicitly -- these are the targets for the grep checks below
 3. If no brief exists for this work: STOP. Write the brief first. No brief = no
    execution.
 
 State the file list before proceeding: "Audit scope: [file1, file2, file3]"
 
-## Step 1  Load Failure Memory
+## Step 1 -- Load Failure Memory
 
 Read these memory files. Each encodes a real failure that cost debugging time.
-They are the foundation of this audit  do not skip.
+They are the foundation of this audit -- do not skip.
 
 ```bash
 MEMORY_DIR=~/Library/Application\ Support/Claude/local-agent-mode-sessions/*/spaces/*/memory
@@ -48,99 +48,99 @@ ls $MEMORY_DIR/feedback_*.md 2>/dev/null
 
 If memory files exist, read each one. The patterns are:
 
-**Pattern 1  pg.connect() discipline**
+**Pattern 1 -- pg.connect() discipline**
 Every `PostgresStore` or `ApexMemory` instantiation must call `pg.connect()` before
 the first query. No exceptions. Sessions that skip this fail silently on the first
 database call.
 
-**Pattern 2  save_signal_plan() is INSERT only**
+**Pattern 2 -- save_signal_plan() is INSERT only**
 `save_signal_plan()` creates new records. It is never called on an existing plan.
 Updates to existing plans require a direct SQL UPDATE with the plan ID.
 
-**Pattern 3  Quote is a dataclass, not a dict**
-`qdata.last`, `qdata.bid`, `qdata.ask`  not `qdata.get("last")`. The `.get()`
+**Pattern 3 -- Quote is a dataclass, not a dict**
+`qdata.last`, `qdata.bid`, `qdata.ask` -- not `qdata.get("last")`. The `.get()`
 pattern raises AttributeError silently in some paths and returns None in others.
 Always use direct attribute access with `float()`.
 
-**Pattern 4  os.environ is frozen at startup**
+**Pattern 4 -- os.environ is frozen at startup**
 Flask routes and request handlers that read rotating credentials (tokens, expiry
 timestamps) must read the live `.env` file at request time. `os.environ` captures
 the value at process start and will be stale after any OAuth renewal.
 
-**Pattern 5  Schwab open orders: cancelable=True, not status=WORKING**
+**Pattern 5 -- Schwab open orders: cancelable=True, not status=WORKING**
 Resting stop orders sit in `AWAITING_STOP_CONDITION`. Filtering by
 `status=WORKING` misses them. Always use `cancelable=True` for open order queries.
 
-**Pattern 6  Option position inference is forbidden**
+**Pattern 6 -- Option position inference is forbidden**
 Option state (held, closed, expired) must be queried from Schwab live. Never infer
 option position facts from the substrate alone. The substrate can be stale.
 
-**Pattern 7  No jail entry on option close**
+**Pattern 7 -- No jail entry on option close**
 `_mark_local_closed()` must be called with `write_jail=False` for option positions.
 Options are not subject to the 5-day trading jail. Writing a jail entry for an
 option close blocks future trades incorrectly.
 
-**Pattern 8  LaunchAgent: verify after load**
+**Pattern 8 -- LaunchAgent: verify after load**
 `launchctl load` or `launchctl bootstrap` is not sufficient proof of deployment.
 Always follow with `launchctl list <label>` and confirm the process ID is present.
 "Load command issued" is not "service running".
 
-**Pattern 9  Data integrity: no inference-based output**
+**Pattern 9 -- Data integrity: no inference-based output**
 Dashboard cells and substrate records must be populated from direct queries, not
-constructed from inference. If a value is unknown, the output is "PENDING"  not
+constructed from inference. If a value is unknown, the output is "PENDING" -- not
 a calculated estimate.
 
-**Pattern 10  exec_server.py is Trust Tier 2: hands off**
+**Pattern 10 -- exec_server.py is Trust Tier 2: hands off**
 `exec_server.py` (port 7701) is locked. No APEX brief in Tier 1 scope touches it.
 If the work requires exec_server changes, stop and escalate to POPs.
 
-## Step 2  Run Grep Audit
+## Step 2 -- Run Grep Audit
 
 For each file in scope, run these checks. Copy the commands, substitute file names.
 
 ```bash
-# Pattern 1  pg.connect()
+# Pattern 1 -- pg.connect()
 grep -n "PostgresStore\|ApexMemory\|pg = " <files>
 # For every hit: is pg.connect() called before the first query?
 
-# Pattern 2  save_signal_plan() misuse
+# Pattern 2 -- save_signal_plan() misuse
 grep -n "save_signal_plan" <files>
 # Any call on an existing plan ID? -> FAIL
 
-# Pattern 3  Quote dict access
+# Pattern 3 -- Quote dict access
 grep -n "qdata\.get\|\.get(\"mark\"\|\.get(\"last\"\|\.get(\"bid\"\|\.get(\"ask\"" <files>
 # Any hit -> FAIL
 
-# Pattern 4  os.environ for rotating credentials
+# Pattern 4 -- os.environ for rotating credentials
 grep -n "os\.environ.*TOKEN\|os\.environ.*EXPIR" <files>
 # Any hit in Flask route or request handler -> FAIL
 
-# Pattern 5  Schwab order filter
+# Pattern 5 -- Schwab order filter
 grep -n "status=.WORKING\|\"status\": \"WORKING\"" <files>
 # Any hit -> FAIL
 
-# Pattern 6  Option inference
+# Pattern 6 -- Option inference
 grep -n "OPTION\|assetType\|asset_type" <files>
 # Any logic constructing option state without a live Schwab query -> FAIL
 
-# Pattern 7  Jail on option close
+# Pattern 7 -- Jail on option close
 grep -n "write_jail\|_mark_local_closed" <files>
 # Called without write_jail=False for options -> FAIL
 
-# Pattern 8  LaunchAgent verification
+# Pattern 8 -- LaunchAgent verification
 grep -n "launchctl load\|launchctl bootstrap" <files>
 # No following launchctl list verification -> FAIL
 
-# Pattern 9  Inference-based output
+# Pattern 9 -- Inference-based output
 grep -n "PENDING\|source_of_truth" <files>
 # Any output cell populated by calculation instead of query -> FAIL
 
-# Pattern 10  exec_server boundary
+# Pattern 10 -- exec_server boundary
 grep -rn "exec_server\|port 7701\|localhost:7701" <files>
 # Any hit in Tier 1 scope -> FAIL
 ```
 
-## Step 3  Produce Audit Table
+## Step 3 -- Produce Audit Table
 
 Output this table. Every row must have a result before proceeding.
 
@@ -157,7 +157,7 @@ Output this table. Every row must have a result before proceeding.
 | 9. Data integrity | ... | PASS / FAIL / N/A | ... |
 | 10. exec_server boundary | ... | PASS / FAIL / N/A | ... |
 
-## Step 4  Fix All FAILs
+## Step 4 -- Fix All FAILs
 
 For every FAIL row: fix the existing violation before writing any new code.
 Do not layer new features on top of known bugs.
@@ -165,18 +165,18 @@ Do not layer new features on top of known bugs.
 If a fix requires scope expansion beyond the current brief: stop and escalate to
 POPs. Do not improvise solutions that touch untested paths.
 
-## Step 5  Run Brief Pre-Flight
+## Step 5 -- Run Brief Pre-Flight
 
 After the gate is clean, run the specific pre-flight checklist from the active
 brief (the brief's own "PRE-FLIGHT" or "PRECONDITIONS" section). The gate checks
 cross-cutting patterns; the brief checks brief-specific preconditions. Both must
 pass.
 
-## Step 6  Declare All-Clear
+## Step 6 -- Declare All-Clear
 
 State explicitly before starting execution:
 
-"Gate complete. [N] FAILs found and fixed. [M] N/A. All clear  proceeding to
+"Gate complete. [N] FAILs found and fixed. [M] N/A. All clear -- proceeding to
 [Brief ID] Phase A."
 
 If any FAIL could not be fixed within scope: state what blocked you and wait for
@@ -208,3 +208,10 @@ If a post-session retrospective or user report identifies a new failure pattern:
 4. Rebuild and redeploy the skill
 
 The gate grows with the project. New failures become permanent checks.
+
+## Precedence with cost-gate
+
+`cost-gate` owns money and runs FIRST whenever the pending work creates, resizes or bills a
+resource. This gate owns stage readiness and runs after it. If this gate has already blocked,
+cost-gate reports its findings into that block rather than emitting a second one -- the user
+should ever only have to clear one block at a time.

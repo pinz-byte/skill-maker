@@ -47,7 +47,8 @@ GROUPS = {
          "space-steward", "inpositive-language", "project-handover",
          "skillmaker-publish", "verify-loop", "builder-handoff", "projectmd-gen",
          "project-init", "cc-session-analyzer", "work-retrospective", "forensic-auditor",
-         "data-analyst", "live-builder-bridge", "coworker-enroll"],
+         "data-analyst", "live-builder-bridge", "coworker-enroll",
+         "dependency-audit", "infra-audit", "cost-gate"],
     ),
     "lfp-apex": (
         "APEX live-money trading council and runtime health -- scope to trading projects only.",
@@ -66,7 +67,7 @@ GROUPS = {
     "lfp-product": (
         "Subastop / VMC / CarMatch product line -- build, deploy, design-system and pre-ship gates. Scope to product projects only.",
         ["brief-bridge", "dashboard-section", "ds-enforcer", "factory-gate", "carmatch-deploy",
-         "phased-deploy", "source-scout", "pre-deliver", "dependency-audit"],
+         "phased-deploy", "source-scout", "pre-deliver"],
     ),
     "lfp-symbios": (
         "Symbios personal-OS layer -- session consciousness, capture and weekly continuity. Scope to Symbios and personal projects.",
