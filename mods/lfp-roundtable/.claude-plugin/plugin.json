@@ -1,7 +1,6 @@
 {
   "name": "lfp-roundtable",
-  "description": "Pane that convenes an lfp-thinkers seat (critical, creative, logic, loop-breaker, ceo-planner, toolbox) on a topic",
-  "types": "./types/index.d.ts",
+  "description": "Mesa de thinkers: convenes lfp-thinkers seats (critical, logic, creative, loop-breaker) on ONE focus and lands their verdicts in the chat as a single message",
   "author": {
     "name": "LFP"
   }
