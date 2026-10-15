@@ -1,9 +1,10 @@
 # Continuity Seed -- SKILL MAKER
-> Generated: 2026-10-14 18:45 (America/Lima)
+> Generated: 2026-10-14 19:10 (America/Lima)
 > Session: shipped `five-steps` (Musk's algorithm as a skill), rewrote the `lfp-roundtable` mod
 > to land ONE verdict message in the chat, rescued two orphan skills from M2 (`cost-gate`,
 > `infra-audit`), consolidated M2 to ONE publisher folder, gave plugins history-derived
-> versions, and brought ALL THREE stores current (CLI on M1/M2/M3 + the Cowork account store).
+> versions, brought ALL THREE stores current (CLI on M1/M2/M3 + the Cowork account store),
+> installed `lfp-pm` in the account store and turned OFF the 37 standalone duplicates.
 
 ## Mount Check (READ AND ACT ON THIS FIRST)
 Run: ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$'
@@ -21,10 +22,12 @@ NOT mounted this session but needed next time:
 - (none identified)
 
 ## Resume Instructions
-Mount "SKILL MAKER". main is at 38d4cd6 or later; PRs #1, #2 and #3 are MERGED. Nothing is in
-flight. All three stores were verified current on 2026-10-14 ~18:40 Lima: CLI pins on M1/M2/M3
+Mount "SKILL MAKER". main is at 9e9435a or later; PRs #1 to #4 are MERGED. Nothing is in
+flight. All three stores were verified current on 2026-10-14 ~19:00 Lima: CLI pins on M1/M2/M3
 at lfp-core 1.62.0 / lfp-thinkers 1.42.0; account store shows Lfp core 49 skills, Lfp product 8,
-and a fresh session lists `cost-gate` under `/cost`. Start at Next Steps; nothing to re-diagnose.
+Lfp pm installed; a fresh session lists `cost-gate` under `/cost` and `pm-live` (Lfp pm) under
+`/pm`. The account SKILLS store (standalone uploads) is neutralized: 37 entries Disabled, not
+deleted. Start at Next Steps; nothing to re-diagnose.
 
 ## Project Context
 - **Repo:** https://github.com/pinz-byte/skill-maker.git (private; HTTPS on M1/M2, SSH on M3)
@@ -55,6 +58,14 @@ and a fresh session lists `cost-gate` under `/cost`. Start at Next Steps; nothin
   `audit`; the audit script now FAILS the build on an unknown lot.
 - Stores: M1 (8 plugins), M2 (all), M3 (7) at the versioned pins. Account store refreshed via
   Update on Lfp core (46 -> 49), which pulled the whole snapshot (Lfp product 9 -> 8).
+- `lfp-pm` installed in the account store from the web Discover (Add; 1.40.0, 1 skill). The
+  desktop app showed it "Disabled" and inert; the web Add worked. Done by the Claude in Chrome
+  panel from paste-ready prompts (this cloud session has no browser tools).
+- Third store (account SKILLS store, standalone uploads) neutralized: `pm`, `pm-live`,
+  `astrodiary-ds-enforcer`, "Lfp design (Local uploads)" and 34 more standalone skills turned
+  OFF (37 Disabled). The `/` menu now resolves each name to its marketplace plugin only
+  (`/pm` -> pm-live from Lfp pm; `/council` -> 7 entries, all Lfp apex). NOT deleted: the
+  Chrome agent refuses permanent deletions and deletion is the human's call.
 
 ### In Progress
 - (none)
@@ -64,10 +75,9 @@ and a fresh session lists `cost-gate` under `/cost`. Start at Next Steps; nothin
   check for updates. Try again."); "Add marketplace" answers "already added"; web UI has no
   update control. Workaround that works: Update on any installed plugin pulls the whole
   snapshot. Documented in deploy-target.md. Report to Anthropic if it persists.
-- `lfp-pm` (pm-live) is NOT installed in the account store; the GROUPS comment says it was
-  created to replace the stale `pm`. Install from Discover (source skill-maker) or drop it.
-- "Lfp design (Local uploads)" in Yours duplicates marketplace lfp-design: remove once the
-  marketplace copy is confirmed loading in a fresh session.
+- 37 standalone skills sit Disabled in the account skills store (duplication debt). Permanent
+  deletion is the user's decision; when taken, do it in bulk from Customize -> Plugins/Skills
+  -> Disabled. Until then they cost nothing and shadow nothing.
 - M3's repo clone sits inside iCloud Documents (mirrored on M2 as "Documents - LFP-M3"); M3 is a
   consumer and needs no clone. Retire it when on M3.
 - Three Carta natal OS worktrees pin lfp-core/lfp-thinkers at project scope; one got updated by
@@ -106,17 +116,23 @@ and a fresh session lists `cost-gate` under `/cost`. Start at Next Steps; nothin
   Claude reads but does not integrate the digest, set `asUser: true`.
 - Gotcha: zsh aborts a pasted line on an unmatched glob; a polluted clipboard prepends junk to
   `claude`; a `~/.git` makes any subfolder answer "Already on main" with no remote.
+- Gotcha: the claude.ai `/` menu omits the plugin label when a name resolves to ONE entry
+  (`cost-gate` looked "standalone"; it exists only as lfp-core:cost-gate). A missing label is
+  uniqueness, not a stray upload. Check GROUPS in build-marketplace.py before believing a
+  "duplicate" flag (the Chrome agent also flagged `human-reactor`; it ships in lfp-copy).
+- Gotcha: desktop app rows that read "Disabled" for lfp-pm / inbox / compass / apex-book are
+  inert (click does nothing); install from the WEB Discover instead. Hooks-only mods stay
+  uninstalled there on purpose.
 
 ## Uncommitted Changes
 - None.
 
 ## Next Steps (Ordered)
-1. `lfp-pm`: install in the account store from Discover, or decide it is not wanted.
-2. Remove "Lfp design (Local uploads)" after confirming marketplace lfp-design loads fresh.
-3. First real `/five-steps` pass: the publish chain itself (deploy-target.md's three stores).
-4. Verify `/roundtable todos <foco>` in a fresh Claude Code session on M1; flip `asUser` if needed.
-5. On M3: retire the iCloud clone; consumer refresh only. On M2: decide about `~/.git`.
-6. Delete the Carta natal OS project-scope plugin pins.
+1. First real `/five-steps` pass: the publish chain itself (deploy-target.md's three stores).
+2. Verify `/roundtable todos <foco>` in a fresh Claude Code session on M1; flip `asUser` if needed.
+3. Decide on permanently deleting the 37 Disabled standalone skills (bulk, user's call).
+4. On M3: retire the iCloud clone; consumer refresh only. On M2: decide about `~/.git`.
+5. Delete the Carta natal OS project-scope plugin pins.
 
 ## Key Code / Config
 - Consumer refresh (any machine): `claude plugin marketplace update lfp-skills && claude plugin list 2>&1 | grep -oE '[A-Za-z0-9_-]+@lfp-skills' | sort -u | while read -r p; do claude plugin update "$p"; done`
