@@ -11,7 +11,6 @@ SKILL MAKER/
 |-- install-refresh.sh                # per-machine installed-plugin updater
 |-- .claude-plugin/marketplace.json   # generated marketplace manifest
 |-- plugins/<plugin>/                 # generated LFP plugin payloads
-|-- team-skills/                      # team-only canonical sources
 |-- build-team-toolkit.py             # generates curated Subastop catalog
 |-- team-toolkit/                     # ignored, independent generated repo
 |-- docs/                             # on-demand operational references

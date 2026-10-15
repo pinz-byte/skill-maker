@@ -57,8 +57,10 @@ AI team's Claude Code / Cowork installs
 - **Marketplace name:** `subastop-ai` (three plugins: `subastop-thinkers`,
   `subastop-core`, `subastop-design`).
 - **Build script:** `build-team-toolkit.py` in SKILL MAKER -- generates
-  `team-toolkit/` from `TEAM_GROUPS`. Team-only skill sources (currently just
-  `ds-enforcer`) live in `team-skills/`, not repo root.
+  `team-toolkit/` from `TEAM_GROUPS`. Team-only skill sources: none at present (the
+  `ds-enforcer` copy once kept in `team-skills/` was superseded by the root one on 2026-08-12
+  and removed 2026-10-14; `skill_src()` still falls back to `team-skills/<name>/` if one is
+  ever needed).
 - **No database, no hosting, no third-party API integration** -- this is a static
   git-based content pipeline. Lowest-complexity handover in the ecosystem by design.
 
@@ -210,9 +212,9 @@ Slack `U03F81ZG5R6`).
   from `GROUPS` in `build-marketplace.py`, which defines the full marketplace).
 - **M1/M2/M3** -- LFP's three working machines; M2 is the sole publisher for both
   marketplaces.
-- **Team-skills sources** -- skill source files that ship ONLY to the team
-  marketplace, living in `team-skills/` (not repo root, to avoid `build-marketplace.py`
-  picking them up for the personal marketplace).
+- **Team-skills sources** -- a `team-skills/<name>/` fallback in `skill_src()` for skill
+  sources that would ship ONLY to the team marketplace (root dirs must be grouped or
+  `build-marketplace.py` fails loud). Empty since 2026-10-14; nothing uses it today.
 
 ---
 

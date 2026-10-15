@@ -1,10 +1,11 @@
 # Continuity Seed -- SKILL MAKER
-> Generated: 2026-10-14 19:10 (America/Lima)
+> Generated: 2026-10-14 21:13 (America/Lima)
 > Session: shipped `five-steps` (Musk's algorithm as a skill), rewrote the `lfp-roundtable` mod
 > to land ONE verdict message in the chat, rescued two orphan skills from M2 (`cost-gate`,
 > `infra-audit`), consolidated M2 to ONE publisher folder, gave plugins history-derived
 > versions, brought ALL THREE stores current (CLI on M1/M2/M3 + the Cowork account store),
-> installed `lfp-pm` in the account store and turned OFF the 37 standalone duplicates.
+> installed `lfp-pm` in the account store, turned OFF the 37 standalone duplicates, ran the
+> first `/five-steps` pass on the publish chain and deleted everything it found ownerless.
 
 ## Mount Check (READ AND ACT ON THIS FIRST)
 Run: ls -1 /sessions/*/mnt/ 2>/dev/null | grep -vE '^(outputs|uploads)$'
@@ -22,9 +23,10 @@ NOT mounted this session but needed next time:
 - (none identified)
 
 ## Resume Instructions
-Mount "SKILL MAKER". main is at 9e9435a or later; PRs #1 to #4 are MERGED. Nothing is in
-flight. All three stores were verified current on 2026-10-14 ~19:00 Lima: CLI pins on M1/M2/M3
-at lfp-core 1.62.0 / lfp-thinkers 1.42.0; account store shows Lfp core 49 skills, Lfp product 8,
+Mount "SKILL MAKER". main is at 8a7b6d0 or later; PRs #1 to #7 are MERGED (if #7 is still
+open, merge it from M2 with the usual fast-forward block). Nothing else is in flight. All three
+stores were verified current on 2026-10-14 ~21:10 Lima: CLI pins on M2 at lfp-core 1.63.0 /
+lfp-thinkers 1.43.0 (M1/M3 follow via launchd 08:00); account store shows Lfp core 49 skills, Lfp product 8,
 Lfp pm installed; a fresh session lists `cost-gate` under `/cost` and `pm-live` (Lfp pm) under
 `/pm`. The account SKILLS store (standalone uploads) is neutralized: 37 entries Disabled, not
 deleted. Start at Next Steps; nothing to re-diagnose.
@@ -66,6 +68,16 @@ deleted. Start at Next Steps; nothing to re-diagnose.
   OFF (37 Disabled). The `/` menu now resolves each name to its marketplace plugin only
   (`/pm` -> pm-live from Lfp pm; `/council` -> 7 entries, all Lfp apex). NOT deleted: the
   Chrome agent refuses permanent deletions and deletion is the human's call.
+- First `/five-steps` pass on the publish chain (22 parts, one table). Verdict: the live chain
+  is correct and short; the debris around it had no owner. PR #6 deleted 23 files (-3663
+  lines): CATALOG.html + generator, plugin-packaging.md (dead zip channel, loaded every
+  session), pre-commit.sh (never installed), 16 one-shot migration scripts from 2026-08,
+  three committed backups; dropped publish.sh's `--scope project` loop (resolves against CWD,
+  never reached the AVT / Carta natal pins); CATALOG.md no longer @-imported into CLAUDE.md.
+  Kept: dedupe-check.py (workspace-plugin-audit runs it). PR #7: Kiro mirror deleted (see
+  Decisions), catalog header without a date, seed.
+- All three stores current again after PR #6: M2 CLI pins at lfp-core 1.63.0 / lfp-thinkers
+  1.43.0 (nine groups +1 because the builder changed); M1/M3 via launchd 08:00.
 
 ### In Progress
 - (none)
@@ -97,6 +109,15 @@ deleted. Start at Next Steps; nothing to re-diagnose.
   cloud session read the same snapshot. One refresh, any machine.
 - Decision: history-derived plugin versions, never hand-bumped -- Reason: Cowork sync keys on a
   version bump; the CLI, once a version exists, pins by it, so it must bump with the content.
+- Decision: Kiro channel = `install-kiro-skills.sh` ONLY (clones the repo, copies canonical
+  `<skill>/` dirs); the hand-copied `team-skills/.kiro/` mirror is deleted -- Reason: Kiro is
+  alive (user, 2026-10-14) and the mirror had already drifted (dependency-audit 7 weeks
+  behind). Same failure class the marketplace was built to kill.
+- Decision: team toolkit channel stays (build-team-toolkit.py, generated from canonical) --
+  Reason: user wants consumers for it; it costs nothing until someone runs
+  `marketplace add subascorp/ai-toolkit`. Onboarding people is the missing part, not code.
+- Decision: builder path stays in every group's version paths -- Reason: builder changes alter
+  output. Known cost: any builder tweak bumps all nine groups (nine harmless re-downloads).
 
 ## Gotchas Discovered
 - Gotcha: `*.plugin` zombies are gitignored, survive fast-forwards, and the dead-channel guard
@@ -123,16 +144,25 @@ deleted. Start at Next Steps; nothing to re-diagnose.
 - Gotcha: desktop app rows that read "Disabled" for lfp-pm / inbox / compass / apex-book are
   inert (click does nothing); install from the WEB Discover instead. Hooks-only mods stay
   uninstalled there on purpose.
+- Gotcha: `claude plugin update --scope project` reads the `enabledPlugins` entry in the
+  folder's `.claude/settings.local.json` and reports the cached version; `uninstall --scope
+  project` finds no installation and suggests `--scope user` -- NEVER run that, it removes the
+  plugin from the machine. The entry is inert; delete the line by hand if wanted.
+- Gotcha: a dated "Generated <date>" header in a generated file makes two machines (or two
+  timezones) commit a content-free rebuild -- Fix: no date in CATALOG.md's header (PR #7).
 
 ## Uncommitted Changes
 - None.
 
 ## Next Steps (Ordered)
-1. First real `/five-steps` pass: the publish chain itself (deploy-target.md's three stores).
-2. Verify `/roundtable todos <foco>` in a fresh Claude Code session on M1; flip `asUser` if needed.
-3. Decide on permanently deleting the 37 Disabled standalone skills (bulk, user's call).
+1. Verify `/roundtable todos <foco>` in a fresh Claude Code session on M1; flip `asUser` if needed.
+2. Decide on permanently deleting the 37 Disabled standalone skills (bulk, user's call).
+3. Toolkit consumers: onboard the first team member (`claude plugin marketplace add
+   subascorp/ai-toolkit`); until then the channel is idle by design.
 4. On M3: retire the iCloud clone; consumer refresh only. On M2: decide about `~/.git`.
-5. Delete the Carta natal OS project-scope plugin pins.
+5. Delete the Carta natal OS project-scope plugin pins (from THEIR folders, not from here).
+6. Debt, not urgent: `CORE_SKILLS` in install-kiro-skills.sh and `TEAM_GROUPS` in
+   build-team-toolkit.py are two hand-curated "team-safe" lists that can drift apart.
 
 ## Key Code / Config
 - Consumer refresh (any machine): `claude plugin marketplace update lfp-skills && claude plugin list 2>&1 | grep -oE '[A-Za-z0-9_-]+@lfp-skills' | sort -u | while read -r p; do claude plugin update "$p"; done`
