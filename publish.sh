@@ -25,8 +25,7 @@ if command -v claude >/dev/null 2>&1; then
   while read -r plugin; do
     [ -n "$plugin" ] || continue
     echo "Updating installed $plugin..."
-    claude plugin update "$plugin" --scope user  || echo "  (user-scope update failed for $plugin)"
-    claude plugin update "$plugin" --scope project || true
+    claude plugin update "$plugin" --scope user || echo "  (user-scope update failed for $plugin)"
   done < <(claude plugin list 2>&1 | grep -oE '[A-Za-z0-9_-]+@lfp-skills' | sort -u || true)
 fi
 echo ""

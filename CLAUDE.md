@@ -1,7 +1,6 @@
 # SKILL MAKER — Project Context
 
 @DISPATCH_INBOX.md
-@CATALOG.md
 
 Skill authoring lab for the LFP ecosystem. Produces a plugin marketplace that
 extends Claude agents across Cowork (M1/M2/M3) and Claude.ai Chat.
@@ -83,3 +82,4 @@ continuity loop automatically -- the user should not have to type "reentry" or "
 - Build steps, manual zip, git commands: `docs/build-pattern.md`
 - M2/M3 sync + per-workspace install detail: `docs/distribution.md`
 - File tree + version-bump rules: `docs/file-structure.md`
+- Skill index by intent (generated, never hand-edited): `CATALOG.md`

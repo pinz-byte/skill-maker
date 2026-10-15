@@ -1,6 +1,6 @@
 {
   "name": "lfp-design",
-  "version": "1.41.0",
+  "version": "1.42.0",
   "description": "Personal-project design-system enforcement (non-Subastop) -- e-ink brand tokens and component drift checks.",
   "author": {
     "name": "LFP"

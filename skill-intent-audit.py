@@ -87,12 +87,12 @@ PLUGIN_PRIOR = {"lfp-thinkers": "reason", "lfp-copy": "write", "lfp-apex": "deci
 PLUGIN_EXCEPT = {"apex-builder-gate": "audit"}
 
 # Skills whose descriptions are too long to carry a clause without breaching the
-# 1024 ceiling (see partition-lots-round2.py, MIN_HEADROOM). This is DEBT, listed
+# 1024 ceiling (see MIN_HEADROOM). This is DEBT, listed
 # explicitly so the gate stays strict for everything else: an earlier version
 # tolerated "at most one naked skill per lot", which meant a single regression
 # never failed the build -- verified by stripping toolbox's clause and watching
 # check still return PASS. Remove a name from this set the moment it is trimmed.
-TRIM_DEBT = set()   # emptied 2026-08-12 by partition-lots-round5.py -- all five cleared.
+TRIM_DEBT = set()   # emptied 2026-08-12 -- all five cleared.
                     # The gate warns if a name here is no longer naked, so it cannot rot.
 
 

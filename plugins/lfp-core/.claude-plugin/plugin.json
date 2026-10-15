@@ -1,6 +1,6 @@
 {
   "name": "lfp-core",
-  "version": "1.62.0",
+  "version": "1.63.0",
   "description": "Core ops/build/meta/comms/QA skills for every working project.",
   "author": {
     "name": "LFP"
