@@ -61,8 +61,8 @@ GROUPS = {
          "voice-bench-gate", "human-reactor"],
     ),
     "lfp-design": (
-        "Personal-project design-system enforcement (non-Subastop) -- e-ink brand tokens and component drift checks.",
-        ["astrodiary-ds-enforcer"],
+        "Design craft and personal-project design-system enforcement -- Apple-inspired corners, purposeful motion, scrollytelling, and AstroDiary e-ink brand checks.",
+        ["astrodiary-ds-enforcer", "apple-design-craft"],
     ),
     "lfp-product": (
         "Subastop / VMC / CarMatch product line -- build, deploy, design-system and pre-ship gates. Scope to product projects only.",
