@@ -38,7 +38,7 @@
     {
       "name": "lfp-design",
       "source": "./plugins/lfp-design",
-      "version": "1.43.0",
+      "version": "1.44.0",
       "description": "Design craft and personal-project design-system enforcement -- Apple-inspired corners, purposeful motion, scrollytelling, and AstroDiary e-ink brand checks."
     },
     {

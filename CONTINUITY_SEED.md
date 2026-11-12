@@ -1,4 +1,25 @@
 # Continuity Seed -- SKILL MAKER
+> Latest checkpoint: 2026-11-12 (America/Lima), native Codex on LFP-M2.
+
+## Resume first -- Apple design skill
+- `apple-design-craft/SKILL.md` now covers source-backed HIG/WWDC design,
+  hierarchy, typography, materials, interaction, disclosure, and visual review.
+- New `apple-design-craft/references/apple-evidence.md` links primary sources and
+  distinguishes official guidance from implementation choices in the supplied post.
+- User correction: the four human needs DO have primary backing in WWDC17
+  Essential Design Principles. Preserve that attribution; do not dismiss it.
+- Validated: quick_validate, publish preflight, full marketplace build,
+  diff whitespace, ASCII, and exact canonical/generated file parity. No runtime
+  design exercise or fresh consumer session was tested.
+- Generated lfp-design version is 1.44.0. User authorized publishing to the repo
+  on 2026-11-12; the next action is the native publish preflight and runner.
+  At resume, verify git HEAD against origin before treating publication as done.
+- Required next-session folder: **SKILL MAKER** (same manifest below). Native
+  workspace access satisfies the folder requirement here.
+- GÉNESIS: existing SKILL MAKER registry row found by name and repo. Repo/Builders
+  populated; no matching GENESIS task found for its Assignee in Focus Queue.
+
+## Previous checkpoint -- distribution history
 > Generated: 2026-10-14 21:13 (America/Lima)
 > Session: shipped `five-steps` (Musk's algorithm as a skill), rewrote the `lfp-roundtable` mod
 > to land ONE verdict message in the chat, rescued two orphan skills from M2 (`cost-gate`,
