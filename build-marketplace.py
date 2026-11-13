@@ -30,9 +30,10 @@ GROUPS = {
         ["pm-live"],
     ),
     "lfp-thinkers": (
-        "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox -- plus the Master Key creative process, the Intention Builder framework, extended-reasoning escalation and the five-step algorithm (question, delete, simplify, accelerate, automate -- in that order).",
+        "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox -- plus astrological reasoning for AD / Amorata, the Master Key creative process, the Intention Builder framework, extended-reasoning escalation and the five-step algorithm (question, delete, simplify, accelerate, automate -- in that order).",
         ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker",
-         "ceo-planner", "toolbox", "masterkey", "ib", "ultrathink", "five-steps"],
+         "ceo-planner", "toolbox", "masterkey", "ib", "ultrathink", "five-steps",
+         "astrological-thinker"],
     ),
     "lfp-core": (
         "Core ops/build/meta/comms/QA skills for every working project.",

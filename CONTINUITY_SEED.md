@@ -1,6 +1,26 @@
 # Continuity Seed -- SKILL MAKER
 > Latest checkpoint: 2026-11-12 (America/Lima), native Codex on LFP-M2.
 
+## Latest work -- Astrological Thinker
+- Created `astrological-thinker/SKILL.md` and its AD / Amorata source reference;
+  assigned to `lfp-thinkers` in GROUPS and rebuilt the marketplace/catalog.
+- User explicitly wants the thinker based on prior AD / Astro Daily and Amorata
+  work. Read the local Carta natal OS canon, machine 3.1, editorial corpus contract
+  and Wiki continuity map. Preserve engine facts/selection/deterministic Technique
+  versus human interpretation, natal versus shared climate, and solar as data.
+- Validation passed: quick_validate, publish preflight, full marketplace build.
+  User authorized repository publication on 2026-11-12 via M2's publish workflow.
+  At resume, compare HEAD with origin/main to verify publication state. Account
+  plugin-store refresh is separate from the repository and local CLI update.
+- Behavioral validation requested by the user: 10 synthetic cases compared with
+  a no-skill baseline; blind judge scored the initial 8 at 24/24 with skill versus
+  23.5/24 without. Both passed 2 additional domain cases. Useful as an assisted
+  thinker; no broad performance gain or live engine accuracy was established.
+  Full evidence: `docs/evaluations/astrological-thinker-2026-11-12/REPORT.md`.
+- Required folder remains **SKILL MAKER**, available natively here. The thinker
+  includes a portable source summary; the Carta natal OS folder is optional for
+  checking newer product contracts, not a required runtime dependency.
+
 ## Resume first -- Apple design skill
 - `apple-design-craft/SKILL.md` now covers source-backed HIG/WWDC design,
   hierarchy, typography, materials, interaction, disclosure, and visual review.

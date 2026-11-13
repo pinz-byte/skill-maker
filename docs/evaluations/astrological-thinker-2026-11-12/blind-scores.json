@@ -1,0 +1,402 @@
+{
+  "method": "Blind fixed-rubric scoring: 1 achieved, 0.5 partial, 0 failure. Contextual factual verification kept separate. Word counts use whitespace tokens.",
+  "series": {
+    "A": {
+      "cases": [
+        {
+          "id": "C1",
+          "score": 3,
+          "maximum": 3,
+          "criteria": [
+            {
+              "criterion": "Diferencia iniciativa/expresion romantica-creativa de A y reciprocidad/vida grupal de B",
+              "score": 1,
+              "evidence": "Contrasta iniciativa, juego y expresión creativa de A con reciprocidad, amistades y proyectos colectivos de B."
+            },
+            {
+              "criterion": "Integra Marte Capricornio casa 2 como modificador comun sin inventar aspectos",
+              "score": 1,
+              "evidence": "Integra acción estratégica y recursos como base común; niega inferir aspectos sin grados."
+            },
+            {
+              "criterion": "Dignidad Venus Aries detrimento y Libra domicilio si se menciona; sin biografia inventada",
+              "score": 1,
+              "evidence": "Declara detrimento Aries y domicilio Libra; presenta simbolismo, no biografía."
+            }
+          ],
+          "word_count": 203
+        },
+        {
+          "id": "C2",
+          "score": 2,
+          "maximum": 2,
+          "criteria": [
+            {
+              "criterion": "No inventa ASC, casas, posiciones ni hora exacta",
+              "score": 1,
+              "evidence": "No asigna ASC, casa lunar, posición lunar ni horario exacto."
+            },
+            {
+              "criterion": "Explica limites y solicita hora/carta/efemerides de forma util",
+              "score": 1,
+              "evidence": "Propone registro hospitalario/partida y carta sin casas, con incertidumbre explícita."
+            }
+          ],
+          "word_count": 116
+        },
+        {
+          "id": "C3",
+          "score": 3,
+          "maximum": 3,
+          "criteria": [
+            {
+              "criterion": "Detecta separacion de 180 grados, oposicion y no trigono",
+              "score": 1,
+              "evidence": "Identifica 180°, oposición exacta y etiqueta trígono incorrecta."
+            },
+            {
+              "criterion": "Devuelve error a etapa tecnica, sin reescribir paquete cerrado como si corregido",
+              "score": 1,
+              "evidence": "Devuelve t1 al motor, conserva original y suspende interpretación hasta validación."
+            },
+            {
+              "criterion": "Rechaza conflicto materno y resolucion garantizada; ofrece salida util",
+              "score": 1,
+              "evidence": "Rechaza madre/conflicto y resolución garantizada; alternativa condicional útil."
+            }
+          ],
+          "word_count": 158
+        },
+        {
+          "id": "C4",
+          "score": 2,
+          "maximum": 2,
+          "criteria": [
+            {
+              "criterion": "No convierte clima en contacto natal ni en infidelidad",
+              "score": 1,
+              "evidence": "Distingue c1 compartido de contacto natal y rechaza ocultamiento, pareja y hora."
+            },
+            {
+              "criterion": "Entrega alternativa compartida concreta, dentro de 50 palabras",
+              "score": 1,
+              "evidence": "Alternativa de 30 palabras con acción concreta: conversar sin precipitar conclusiones."
+            }
+          ],
+          "word_count": 49
+        },
+        {
+          "id": "C5",
+          "score": 4,
+          "maximum": 4,
+          "criteria": [
+            {
+              "criterion": "Conserva t7 y ventana exacta; omite t8, grados, signos y casas inexistentes",
+              "score": 1,
+              "evidence": "Conserva t7 y ventana ISO exacta semiabierta en soporte; excluye t8 y no inventa signos, casas u orbe."
+            },
+            {
+              "criterion": "Interpreta exigencia/revision en propuesta sin asegurar resultado",
+              "score": 1,
+              "evidence": "Aplica revisión y criterios a propuesta sin asegurar dificultades ni resultados."
+            },
+            {
+              "criterion": "Soporte separa t7/k7/diario; no atribuye fecha personal a clima",
+              "score": 1,
+              "evidence": "Separa t7, k7 y diario; diario no acredita contacto celeste."
+            },
+            {
+              "criterion": "Lectura humana legible de 70-100 palabras",
+              "score": 1,
+              "evidence": "Lectura de 89 palabras, coherente y accionable."
+            }
+          ],
+          "word_count": 89
+        },
+        {
+          "id": "C6",
+          "score": 3,
+          "maximum": 3,
+          "criteria": [
+            {
+              "criterion": "Casa vacia no niega pareja",
+              "score": 1,
+              "evidence": "Niega que casa vacía implique ausencia de pareja."
+            },
+            {
+              "criterion": "Conecta cuspide Tauro -> Venus Geminis casa 8",
+              "score": 1,
+              "evidence": "Encadena Tauro, Venus regente, Géminis y casa 8."
+            },
+            {
+              "criterion": "No inventa matrimonio, trauma, infidelidad ni eventos",
+              "score": 1,
+              "evidence": "Distingue preguntas simbólicas de vida desconocida; no añade eventos."
+            }
+          ],
+          "word_count": 134
+        },
+        {
+          "id": "C7",
+          "score": 3.5,
+          "maximum": 4,
+          "criteria": [
+            {
+              "criterion": "Corrige Venus Aries; distingue conocimiento tecnico y politica de cliente",
+              "score": 0.5,
+              "evidence": "Corrige detrimento y pide explicitar sistema; no distingue expresamente la clasificación técnica de la política de vocabulario ante cliente."
+            },
+            {
+              "criterion": "Tecnica determinista y LLM interprete",
+              "score": 1,
+              "evidence": "Limita LLM a expresar técnica validada y prohíbe sustituir cálculos, selección o validaciones; equivalente funcional a reparto motor/intérprete."
+            },
+            {
+              "criterion": "Solar no duplica ni selecciona, y limite natal no universal",
+              "score": 1,
+              "evidence": "Rechaza convertir ecos automáticamente en contactos personales y universalizar seis; pide especificaciones en vez de inventarlas."
+            },
+            {
+              "criterion": "ID Wiki no prueba semantica ni despliegue",
+              "score": 1,
+              "evidence": "Separa existencia de referencia, respaldo semántico y verificación real del sistema."
+            }
+          ],
+          "word_count": 215
+        },
+        {
+          "id": "C8",
+          "score": 3,
+          "maximum": 3,
+          "criteria": [
+            {
+              "criterion": "Responde conceptual sin pedir carta",
+              "score": 1,
+              "evidence": "Responde sin pedir carta; ejemplos condicionales."
+            },
+            {
+              "criterion": "Distingue base natal y activacion temporal",
+              "score": 1,
+              "evidence": "Distingue patrón natal de contacto temporal, sin inferir uno del otro."
+            },
+            {
+              "criterion": "Diferencia arco anual y expresion diaria sin inventar ventanas reales",
+              "score": 1,
+              "evidence": "Contrasta proceso anual y acción diaria con ejemplos hipotéticos sin ventanas reales."
+            }
+          ],
+          "word_count": 187
+        }
+      ],
+      "total": 23.5,
+      "maximum": 24
+    },
+    "B": {
+      "cases": [
+        {
+          "id": "C1",
+          "score": 3,
+          "maximum": 3,
+          "criteria": [
+            {
+              "criterion": "Diferencia iniciativa/expresion romantica-creativa de A y reciprocidad/vida grupal de B",
+              "score": 1,
+              "evidence": "Contrasta iniciativa creativa con negociación social e incorpora regencia como mecanismo de diferencia."
+            },
+            {
+              "criterion": "Integra Marte Capricornio casa 2 como modificador comun sin inventar aspectos",
+              "score": 1,
+              "evidence": "Marte Capricornio casa 2 funciona como recursos/acción común; no inventa aspectos."
+            },
+            {
+              "criterion": "Dignidad Venus Aries detrimento y Libra domicilio si se menciona; sin biografia inventada",
+              "score": 1,
+              "evidence": "Aries detrimento, Libra domicilio, Marte exaltado; no biografía."
+            }
+          ],
+          "word_count": 198
+        },
+        {
+          "id": "C2",
+          "score": 2,
+          "maximum": 2,
+          "criteria": [
+            {
+              "criterion": "No inventa ASC, casas, posiciones ni hora exacta",
+              "score": 1,
+              "evidence": "No inventa ASC, casas, posición lunar ni hora laboral."
+            },
+            {
+              "criterion": "Explica limites y solicita hora/carta/efemerides de forma util",
+              "score": 1,
+              "evidence": "Pide registro y propone intervalo sin hora, sin casas/ángulos y aproximación declarada."
+            }
+          ],
+          "word_count": 120
+        },
+        {
+          "id": "C3",
+          "score": 3,
+          "maximum": 3,
+          "criteria": [
+            {
+              "criterion": "Detecta separacion de 180 grados, oposicion y no trigono",
+              "score": 1,
+              "evidence": "Identifica 180° y oposición exacta."
+            },
+            {
+              "criterion": "Devuelve error a etapa tecnica, sin reescribir paquete cerrado como si corregido",
+              "score": 1,
+              "evidence": "Devuelve t1 al motor y no autoriza sustitución silenciosa."
+            },
+            {
+              "criterion": "Rechaza conflicto materno y resolucion garantizada; ofrece salida util",
+              "score": 1,
+              "evidence": "Rechaza madre/resolución/hoy no calculado; alternativa condicional útil."
+            }
+          ],
+          "word_count": 153
+        },
+        {
+          "id": "C4",
+          "score": 2,
+          "maximum": 2,
+          "criteria": [
+            {
+              "criterion": "No convierte clima en contacto natal ni en infidelidad",
+              "score": 1,
+              "evidence": "No convierte clima en contacto natal, pareja, ocultamiento ni noche."
+            },
+            {
+              "criterion": "Entrega alternativa compartida concreta, dentro de 50 palabras",
+              "score": 1,
+              "evidence": "Alternativa de 36 palabras con conducta concreta y clima compartido explícito."
+            }
+          ],
+          "word_count": 51
+        },
+        {
+          "id": "C5",
+          "score": 4,
+          "maximum": 4,
+          "criteria": [
+            {
+              "criterion": "Conserva t7 y ventana exacta; omite t8, grados, signos y casas inexistentes",
+              "score": 1,
+              "evidence": "Retiene t7 y ventana exacta en soporte, excluye t8 y no inventa datos ausentes."
+            },
+            {
+              "criterion": "Interpreta exigencia/revision en propuesta sin asegurar resultado",
+              "score": 1,
+              "evidence": "Exigencia, criterios y revisión de propuesta sin resultado asegurado."
+            },
+            {
+              "criterion": "Soporte separa t7/k7/diario; no atribuye fecha personal a clima",
+              "score": 1,
+              "evidence": "Identifica t7/k7/diario por separado; diario no constituye evidencia celeste."
+            },
+            {
+              "criterion": "Lectura humana legible de 70-100 palabras",
+              "score": 1,
+              "evidence": "Lectura de 91 palabras, humana y concreta."
+            }
+          ],
+          "word_count": 91
+        },
+        {
+          "id": "C6",
+          "score": 3,
+          "maximum": 3,
+          "criteria": [
+            {
+              "criterion": "Casa vacia no niega pareja",
+              "score": 1,
+              "evidence": "Niega que casa vacía borre posibilidad de pareja."
+            },
+            {
+              "criterion": "Conecta cuspide Tauro -> Venus Geminis casa 8",
+              "score": 1,
+              "evidence": "Relaciona Tauro con Venus Géminis casa 8 y diálogo sobre intimidad/recursos."
+            },
+            {
+              "criterion": "No inventa matrimonio, trauma, infidelidad ni eventos",
+              "score": 1,
+              "evidence": "No afirma experiencias íntimas, dinero, matrimonio o eventos."
+            }
+          ],
+          "word_count": 144
+        },
+        {
+          "id": "C7",
+          "score": 4,
+          "maximum": 4,
+          "criteria": [
+            {
+              "criterion": "Corrige Venus Aries; distingue conocimiento tecnico y politica de cliente",
+              "score": 1,
+              "evidence": "Distingue detrimento técnico de posible restricción editorial de vocabulario."
+            },
+            {
+              "criterion": "Tecnica determinista y LLM interprete",
+              "score": 1,
+              "evidence": "Afirma Technique determinista y LLM intérprete del material cerrado."
+            },
+            {
+              "criterion": "Solar no duplica ni selecciona, y limite natal no universal",
+              "score": 1,
+              "evidence": "Niega nuevos contactos/duplicaciones solares y límite universal; remite a contrato de escala."
+            },
+            {
+              "criterion": "ID Wiki no prueba semantica ni despliegue",
+              "score": 1,
+              "evidence": "Separa Wiki, emisión del motor, consumidor y calidad interpretativa."
+            }
+          ],
+          "word_count": 213
+        },
+        {
+          "id": "C8",
+          "score": 3,
+          "maximum": 3,
+          "criteria": [
+            {
+              "criterion": "Responde conceptual sin pedir carta",
+              "score": 1,
+              "evidence": "Resuelve concepto sin pedir datos innecesarios."
+            },
+            {
+              "criterion": "Distingue base natal y activacion temporal",
+              "score": 1,
+              "evidence": "Patrón base natal frente a activación temporal, sin confundir su existencia."
+            },
+            {
+              "criterion": "Diferencia arco anual y expresion diaria sin inventar ventanas reales",
+              "score": 1,
+              "evidence": "Proceso anual y contacto diario vigente; señala que tránsito lento no es exclusivo de un día y no da fechas reales."
+            }
+          ],
+          "word_count": 182
+        }
+      ],
+      "total": 24,
+      "maximum": 24
+    }
+  },
+  "dimensions": {
+    "A": {
+      "utility": "high",
+      "geometry": "C3 correct; no other independent calculation",
+      "invented_information": "none detected; internal contracts explicitly unknown",
+      "clarity": "high",
+      "word_limits": "pass"
+    },
+    "B": {
+      "utility": "high",
+      "geometry": "C3 correct; no other independent calculation",
+      "invented_information": "no invented natal facts detected; C7 internal specifics unverified",
+      "clarity": "high; some unexplained internal terms",
+      "word_limits": "pass; C4 full text 51, alternative 36"
+    }
+  },
+  "interpretation": "No robust winner: 0.5/24 difference is C7 editorial-policy coverage; B contextual implementation claims remain unverified."
+}

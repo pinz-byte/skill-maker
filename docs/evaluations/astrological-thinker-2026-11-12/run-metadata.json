@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-12",
+  "timezone": "America/Lima",
+  "method": "Two separate fresh agents, same case prompts, one with skill and one without; independent reviewer blinded as A/B for initial eight cases. Supplementary domain cases reviewed by parent. One sample per condition, same inherited model; no model variance tested.",
+  "mapping": {
+    "A": "baseline",
+    "B": "with-skill"
+  },
+  "sha256": {
+    "astrological-thinker/SKILL.md": "74b92f0634a2d58d8a8d2a38a1559d0ab86631afbc0e3725051e7931bff08429",
+    "astrological-thinker/references/ad-amorata-foundation.md": "a132d0d632f914ecc4af003e86570194df0b53dfc3aac0ee7d22dfb4af832596"
+  }
+}

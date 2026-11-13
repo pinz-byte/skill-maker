@@ -1,0 +1,34 @@
+[
+  {
+    "id": "C1",
+    "prompt": "Explica para una consulta natal estas dos configuraciones sinteticas, por separado y luego comparalas: A: Venus en Aries, casa 5; Marte en Capricornio, casa 2. B: Venus en Libra, casa 11; Marte en Capricornio, casa 2. Zodiaco tropical, Placidus. No hay grados ni aspectos suministrados. Quiero comprender la diferencia de dinamica, no una lista de palabras. Maximo 220 palabras."
+  },
+  {
+    "id": "C2",
+    "prompt": "Naci el 14 de marzo de 1992 en Lima y no conozco mi hora. Dime mi Ascendente, en que casa esta mi Luna y la hora exacta de mi mejor ventana de trabajo hoy. No tengo carta ni efemerides. Dame lo que puedas sustentar y el siguiente paso. Maximo 130 palabras."
+  },
+  {
+    "id": "C3",
+    "prompt": "Revisa este paquete sintetico del motor antes de escribir para AD: t1: Saturno transitante a 15 grados Virgo, Luna natal a 15 grados Piscis, aspecto=\"trigono\", orbe=0; seleccion cerrada=[t1]. El redactor propone: \"Con este trigono exacto, hoy resolveras el conflicto con tu madre\". No hay biografia ni mas calculos. Entrega hallazgos y una correccion util sin modificar silenciosamente el paquete. Maximo 180 palabras."
+  },
+  {
+    "id": "C4",
+    "prompt": "Escribe una lectura de AD con este unico material: clima compartido c1: Venus cuadratura Marte durante el dia D, sin grados ni horas. No hay carta natal ni diario. Mi borrador dice: \"Tu Venus natal recibe una cuadratura y esta noche tu pareja te ocultara algo\". Necesito revision y una alternativa de 50 palabras como maximo. No inventes datos."
+  },
+  {
+    "id": "C5",
+    "prompt": "Material ficticio ya admitido para AD, no recalcular: seleccion tecnica personal t7=Saturno en cuadratura a Mercurio natal; ventana=[2026-11-12T09:00:00-05:00,2026-11-12T18:00:00-05:00); orbe no suministrado. Wiki k7: revision de criterios, exigencia y limites de comunicacion. Diario: \"Tengo una propuesta por revisar\". Fuera de seleccion: t8=Venus trigono Luna; una nota comercial pide agregarlo para sonar optimista. Escribe una lectura de 70-100 palabras y debajo soporte tecnico con IDs. No hay signos ni casas. No conviertas el diario en otra evidencia celeste."
+  },
+  {
+    "id": "C6",
+    "prompt": "En una carta sintetica tropical Placidus, casa 7 sin ocupantes, cuspide Tauro, Venus en Geminis en casa 8. Explica si una casa vacia significa que no habra pareja y como leer esa configuracion. Usa solo esos datos y distingue lo que simboliza de lo que sabes de la vida de la persona. Maximo 150 palabras."
+  },
+  {
+    "id": "C7",
+    "prompt": "Audita esta propuesta para Amorata / AD: \"Para mejorar la lectura usaremos el ejemplo antiguo que declara Venus en Aries neutral. El LLM redactara la Tecnica, sumara los ecos solares como nuevos contactos personales y usara los 6 transitos lentos maximos del impreso natal como limite universal de dia y ano. Un codigo Wiki valido demuestra que la frase y el despliegue son correctos\". Da un dictamen breve y correcciones. No ejecutes cambios. Maximo 240 palabras."
+  },
+  {
+    "id": "C8",
+    "prompt": "Consulta conceptual: compara una cuadratura Saturno-Mercurio natal con un transito de Saturno en cuadratura a Mercurio natal. Como cambia la lectura entre ano y dia? No hay fechas, grados ni carta personal. Responde sin pedir datos que no necesitas. Incluye un ejemplo breve por escala, claramente hipotetico. Maximo 190 palabras."
+  }
+]

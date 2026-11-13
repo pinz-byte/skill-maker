@@ -1,0 +1,10 @@
+{
+  "C3": {
+    "Saturn_Virgo_15_longitude": 165,
+    "Moon_Pisces_15_longitude": 345,
+    "angular_separation": 180,
+    "correct_aspect": "opposition",
+    "provided_label": "trine",
+    "label_valid": false
+  }
+}
