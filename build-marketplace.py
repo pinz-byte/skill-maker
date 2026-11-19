@@ -49,7 +49,7 @@ GROUPS = {
          "skillmaker-publish", "verify-loop", "builder-handoff", "projectmd-gen",
          "project-init", "cc-session-analyzer", "work-retrospective", "forensic-auditor",
          "data-analyst", "live-builder-bridge", "coworker-enroll",
-         "dependency-audit", "infra-audit", "cost-gate"],
+         "dependency-audit", "infra-audit", "cost-gate", "dot"],
     ),
     "lfp-apex": (
         "APEX live-money trading council and runtime health -- scope to trading projects only.",
