@@ -20,7 +20,7 @@
     {
       "name": "lfp-core",
       "source": "./plugins/lfp-core",
-      "version": "1.68.0",
+      "version": "1.69.0",
       "description": "Core ops/build/meta/comms/QA skills for every working project."
     },
     {

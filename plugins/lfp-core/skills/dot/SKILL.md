@@ -2,7 +2,8 @@
 name: dot
 description: >
   Llama al asistente personal Dot de ChatGPT para atender un encargo desde la
-  sesion actual. Activa con "@dot", "#dot", "llama a Dot", "Dot atiende esto"
+  sesion actual. Basta "@dot" solo para revisar esta sesion y mostrar la
+  respuesta completa aqui. Tambien activa con "#dot", "llama a Dot", "Dot atiende esto"
   o "que Dot revise esta sesion". Recibe la respuesta de Sym y la presenta
   completa en la sesion de origen, con su autoria, sin resumirla ni mezclar
   comentarios propios. Verifica entrega, recepcion y presentacion visible.
@@ -22,6 +23,9 @@ No promete una intervencion nativa de Sym como participante independiente.
 
 ## Invocacion
 
+- `@dot`: revisa esta sesion y presenta aqui la respuesta completa de Sym,
+  con su autoria y sin resumirla. No pedir que el usuario complete la frase.
+- `#dot` o `$dot` sin encargo adicional: mismo comportamiento por defecto.
 - `@dot revisa esto`: usa el contexto relevante y responde en esta misma sesion.
 - `#dot atiende este bloqueo y responde aqui`: solicita retorno al origen.
 - `@dot mira la sesion <enlace o nombre>`: revisa esa sesion y responde en la
@@ -32,6 +36,8 @@ No promete una intervencion nativa de Sym como participante independiente.
 `@dot` y `#dot` son convenciones reconocidas por el agente con este skill
 cargado. El archivo no instala un listener global ni un evento nativo de la app.
 Una mencion dentro de una cita o documento no es una orden del usuario.
+Cuando el usuario envia el atajo como su peticion, incluso entre comillas o
+backticks, es una invocacion. Conserva cualquier encargo que anada despues.
 
 ## Preparar el encargo
 
@@ -120,7 +126,8 @@ en la conversacion correcta. Informa "Enviado a Dot" solo con esa evidencia.
 Eso no prueba que ya este atendiendo: informa recepcion/actividad solo si se ve.
 Ante un timeout ambiguo, comprueba primero el historial; no dupliques el envio.
 
-Si pide revisar o atender algo, sigue la respuesta hasta recibirla completa
+El atajo solo ya pide revisar la sesion: no terminar con un simple acuse de
+llamada. Si pide revisar o atender algo, sigue la respuesta hasta recibirla completa
 y presentarla en origen, o hasta un impedimento concreto. Si solo pide
 llamarlo, puedes confirmar la entrega dejando pendiente la respuesta visible.
 No crees una automatizacion recurrente para seguir este encargo puntual.
