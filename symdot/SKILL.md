@@ -1,8 +1,8 @@
 ---
-name: dot
+name: symdot
 description: >
   Llama al asistente personal Dot de ChatGPT para atender un encargo desde la
-  sesion actual. Basta "@symdot" solo para revisar esta sesion y mostrar la
+  sesion actual. Basta "$symdot" solo para revisar esta sesion y mostrar la
   respuesta completa aqui. Tambien activa con "#symdot", "llama a Dot", "Dot atiende esto"
   o "que Dot revise esta sesion". Recibe la respuesta de Sym y la presenta
   completa en la sesion de origen, con su autoria, sin resumirla ni mezclar
@@ -13,7 +13,7 @@ metadata:
   intent: relay
 ---
 
-# Dot - llamar al asistente personal
+# Symdot - llamar al asistente personal
 
 Conecta un encargo de esta sesion con el Dot del usuario en ChatGPT. El agente
 que recibe la invocacion prepara y envia el encargo, recibe la respuesta de
@@ -23,16 +23,20 @@ No promete una intervencion nativa de Sym como participante independiente.
 
 ## Invocacion
 
-- `@symdot`: revisa esta sesion y presenta aqui la respuesta completa de Sym,
+- `$symdot`: revisa esta sesion y presenta aqui la respuesta completa de Sym,
   con su autoria y sin resumirla. No pedir que el usuario complete la frase.
-- `#symdot` sin encargo adicional: mismo comportamiento por defecto.
-- `@dot` y `#dot` siguen como alias compatibles; el atajo recomendado es `@symdot`.
+- `@symdot` o `#symdot` sin encargo adicional: mismo comportamiento por defecto.
+- `@dot` y `#dot` siguen como alias compatibles; el comando del skill es `$symdot`.
 - `@symdot revisa esto`: usa el contexto relevante y responde en esta misma sesion.
 - `#symdot atiende este bloqueo y responde aqui`: solicita retorno al origen.
 - `@symdot mira la sesion <enlace o nombre>`: revisa esa sesion y responde en la
   sesion donde se hizo la invocacion.
-- En Codex, `$dot` sigue siendo la invocacion explicita del skill `dot`. En otros clientes,
-  usa el comando que exponga el plugin instalado.
+- En Codex, escribe `$symdot` y selecciona el skill `symdot` en el menu de skills.
+- En Claude, selecciona `symdot` en el menu de skills/comandos del plugin
+  `lfp-core` (Claude Code: `/lfp-core:symdot`). `$symdot` en la peticion
+  tambien identifica este skill cuando esta cargado.
+- El skill antes se llamaba `dot`: `$dot` ya no es su comando de menu.
+  `@` abre referencias a chats en Codex; no es el menu de skills.
 
 `@symdot` y `#symdot` son convenciones reconocidas por el agente con este skill
 cargado. El archivo no instala un listener global ni un evento nativo de la app.

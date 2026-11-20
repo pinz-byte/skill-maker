@@ -49,7 +49,7 @@ GROUPS = {
          "skillmaker-publish", "verify-loop", "builder-handoff", "projectmd-gen",
          "project-init", "cc-session-analyzer", "work-retrospective", "forensic-auditor",
          "data-analyst", "live-builder-bridge", "coworker-enroll",
-         "dependency-audit", "infra-audit", "cost-gate", "dot"],
+         "dependency-audit", "infra-audit", "cost-gate", "symdot"],
     ),
     "lfp-apex": (
         "APEX live-money trading council and runtime health -- scope to trading projects only.",
@@ -113,6 +113,9 @@ def plugin_version(paths, prior: str | None = None) -> str:
         if _git("rev-parse", "--is-shallow-repository") == "true":
             return prior or "1.0.0"
         p = [str(x) for x in paths]
+        # Preserve the dot history after its rename so lfp-core never downgrades.
+        if "symdot" in p:
+            p.append("dot")
         committed = int(_git("rev-list", "--count", "HEAD", "--", *p))
         # publish.sh builds BEFORE it commits. Counting only HEAD would stamp the version
         # of the PREVIOUS state, so a skill edit would reach consumers one publish late:
