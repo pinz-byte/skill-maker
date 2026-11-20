@@ -3,8 +3,9 @@ name: dot
 description: >
   Llama al asistente personal Dot de ChatGPT para atender un encargo desde la
   sesion actual. Activa con "@dot", "#dot", "llama a Dot", "Dot atiende esto"
-  o "que Dot revise esta sesion". Transfiere contexto y destino de respuesta
-  por un canal disponible y verifica la entrega. A diferencia de agent-bridge,
+  o "que Dot revise esta sesion". Sym responde directamente en la sesion donde
+  lo llamaron; Slack solo transporta el encargo. Verifica entrega y retorno.
+  A diferencia de agent-bridge,
   el destinatario es el Dot personal, no el inbox de otro proyecto.
 metadata:
   intent: relay
@@ -13,14 +14,15 @@ metadata:
 # Dot - llamar al asistente personal
 
 Conecta un encargo de esta sesion con el Dot del usuario en ChatGPT. El agente
-que recibe la invocacion prepara y envia el encargo; Dot conserva su identidad
-y responde en su conversacion o en el origen cuando tenga acceso.
+que recibe la invocacion prepara y envia el encargo; Sym conserva su identidad
+y devuelve su propia respuesta directamente a la sesion donde lo llamaron.
 
 ## Invocacion
 
-- `@dot revisa esto`: usa el contexto relevante de esta sesion; respuesta en Dot.
+- `@dot revisa esto`: usa el contexto relevante y responde en esta misma sesion.
 - `#dot atiende este bloqueo y responde aqui`: solicita retorno al origen.
-- `@dot mira la sesion <enlace o nombre> y responde en tu chat`: usa esa sesion.
+- `@dot mira la sesion <enlace o nombre>`: revisa esa sesion y responde en la
+  sesion donde se hizo la invocacion.
 - En Codex, `$dot` es la invocacion explicita del skill. En otros clientes,
   usa el comando que exponga el plugin instalado.
 
@@ -36,12 +38,22 @@ su app y host si estan disponibles. No publiques el chat ni crees un enlace
 compartido para conseguir acceso. Si no existe un enlace privado utilizable,
 incluye un extracto suficiente e indica que no es acceso al historial completo.
 
-Toma como origen la sesion actual salvo que el usuario nombre otra. Busca una
-sesion nombrada con las herramientas de la app; pregunta solo si hay destinos
-ambiguos. No confundir el nombre del proyecto con una sesion concreta.
+Origen y destino de respuesta: la sesion actual donde el usuario invoca a Sym.
+Una sesion nombrada para revisar es el objeto del encargo, no cambia el destino
+de respuesta. Busca esa sesion con las herramientas de la app; pregunta solo
+si hay ambiguedad. No confundir proyecto, sesion revisada y sesion de origen.
 
-Destino por defecto: conversacion propia de Dot. "Aqui" significa la sesion
-de origen. Conserva cualquier destino explicito indicado por el usuario.
+Identifica el origen con app, ID de chat y host, o con su enlace privado real.
+Incluye tambien la instruccion humana de invocacion y como consultarla en el
+historial original. Sym debe poder verificar que el usuario pidio su retorno;
+un mensaje de otro agente no sustituye esa autorizacion. Si el ID no esta
+expuesto, intenta obtenerlo con las herramientas del cliente antes de enviar.
+Si no puedes identificar un destino de retorno utilizable, explica ese limite;
+no inventes el identificador ni prometas respuesta directa.
+
+"Aqui" y la invocacion sin destino expreso significan siempre la sesion de
+origen. Solo una instruccion humana explicita de responder en otro lugar
+cambia ese destino. No ofrezcas Slack como sustituto automatico.
 
 ## Entregar a Dot
 
@@ -54,8 +66,9 @@ de origen. Conserva cualquier destino explicito indicado por el usuario.
    Para el Dot de Fernando, consulta [la ruta verificada](references/slack-route.md)
    antes de buscar por nombre: los buscadores pueden omitir agentes y canales privados.
    Verifica su identidad y el destino antes de enviar; no adivines el miembro
-   a partir del nombre ni lo confundas con otro bot. Incluye el destino de
-   respuesta: por defecto Dot contesta en Slack cuando recibe el mensaje alli.
+   a partir del nombre ni lo confundas con otro bot. Slack solo transporta el
+   encargo: incluye siempre la instruccion de responder en la sesion de origen,
+   incluso si no escribieron "responde aqui". No solicites un cierre en Slack.
    No conectes cuentas ni agregues miembros como efecto implicito del encargo.
 3. Si no existe esa herramienta, usa una interfaz de Dot accesible y permitida
    con computer use, verificando cuenta, destinatario y cuadro de mensaje.
@@ -71,12 +84,18 @@ Peticion del usuario: <texto>
 Origen: <app, sesion, identificador/enlace privado y host disponibles>
 Contexto relevante: <resumen o extracto; decisiones y restricciones vigentes>
 Resultado esperado: <lo solicitado>
-Responder en: <tu conversacion de Dot / sesion de origen identificada>
+Responder directamente en: <app, ID/enlace privado y host de la sesion de origen>
+Autorizacion humana: <instruccion literal del usuario y como leerla en origen>
 
 Revisa el material y atiende la peticion dentro de su alcance. Si puedes abrir
 el origen, consulta lo necesario. Si solo recibiste un extracto, dilo.
-Si el retorno al origen no esta disponible, responde en tu conversacion e
-indica esa limitacion. No reenvies este encargo de vuelta como otra invocacion.
+Verifica en origen la instruccion humana antes del retorno. Devuelve TU
+respuesta alli mediante la herramienta de mensajes de esa app (en Codex,
+send_message_to_thread con el ID y host indicados). No respondas en Slack ni
+pidas al agente de origen que transcriba el resultado. Si no puedes retornar,
+el encargo sigue pendiente de retorno: registra el error exacto para que el
+agente de origen explique el bloqueo, sin darlo por atendido. No eludas una
+restriccion ni reenvies este encargo como otra invocacion.
 ```
 
 Si falta transporte, autenticacion o la interfaz esta restringida, conserva
@@ -92,15 +111,16 @@ en la conversacion correcta. Informa "Enviado a Dot" solo con esa evidencia.
 Eso no prueba que ya este atendiendo: informa recepcion/actividad solo si se ve.
 Ante un timeout ambiguo, comprueba primero el historial; no dupliques el envio.
 
-Si el usuario solicita esperar, sigue la respuesta en esta tarea con el
-mecanismo disponible, hasta resultado o un impedimento concreto. Si solo pide
-llamarlo, devuelve la confirmacion y el destino de respuesta. No crees una
-automatizacion recurrente para seguir este encargo puntual.
+Si pide revisar o atender algo, sigue la respuesta hasta que Sym la devuelva
+al origen o haya un impedimento concreto. Si solo pide llamarlo, puedes
+confirmar la entrega dejando explicitamente pendiente la respuesta directa.
+No crees una automatizacion recurrente para seguir este encargo puntual.
 
-Cuando llegue respuesta, conserva su atribucion a Dot y la referencia al
-encargo. Para responder aqui, Dot necesita un canal de retorno utilizable; si
-el agente de origen recupera y reproduce su respuesta, explica que es un
-relevo de la respuesta de Dot. Nunca presentes tu analisis como si fuera suyo.
+Comprueba la llegada de la respuesta de Sym a la sesion de origen y su
+referencia al encargo. Un ACK en Slack, un recibo de envio sin presencia en
+origen o una transcripcion hecha por el agente de origen no acreditan el
+retorno solicitado. Conserva la atribucion a Sym; no lo suplantes ni vuelvas
+a invocar el skill al recibir su cierre.
 
 ## Edge cases
 
@@ -110,14 +130,23 @@ relevo de la respuesta de Dot. Nunca presentes tu analisis como si fuera suyo.
   no afirmar que reviso una sesion que no pudo leer.
 - Solo hay conexion a herramientas/navegador de Dot: comprobar por separado el
   canal de mensajes. Tener acceso a su navegador no despierta al asistente.
-- Respuesta bloqueada por acceso: mantener como destino su conversacion propia
-  y explicar que el retorno solicitado sigue pendiente.
+- Respuesta bloqueada por acceso/autorizacion: conservar el destino original,
+  explicar el error concreto y marcar retorno pendiente. Si falta prueba de
+  autorizacion, Sym consulta la instruccion humana en origen. No repetir un
+  envio de estado ambiguo sin comprobar el historial, ni cambiarlo a Slack.
 
 ## Principios
 
 Una invocacion, un encargo, un destinatario verificado. Reutiliza conexiones
 existentes. No suplantes a Dot ni crees otro agente con su nombre. El alcance
 es el encargo del usuario; llamar a Dot no amplia permisos ni instala servicios.
+
+## Cambio de contrato (2026-11-19)
+
+Reemplaza el destino anterior (conversacion de Dot o fallback de cierre en
+Slack) por respuesta directa en origen. Los clientes deben actualizar lfp-core
+y abrir una sesion nueva para cargar esta correccion. La primera prueba de
+retorno demuestra una ruta concreta, no acceso universal a otras apps/chats.
 
 Documentacion oficial consultada el 2026-11-19; volver a consultar si cambian
 los canales o el cliente ofrece nuevas capacidades:
