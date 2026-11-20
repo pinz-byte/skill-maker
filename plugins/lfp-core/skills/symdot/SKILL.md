@@ -6,7 +6,8 @@ description: >
   respuesta completa aqui. Tambien activa con "#symdot", "llama a Dot", "Dot atiende esto"
   o "que Dot revise esta sesion". Recibe la respuesta de Sym y la presenta
   completa en la sesion de origen, con su autoria, sin resumirla ni mezclar
-  comentarios propios. Verifica entrega, recepcion y presentacion visible.
+  comentarios propios. Distinto de $sym: comprueba la ruta autorizada de Slack
+  antes de declarar falta de conexion. Verifica entrega y respuesta visible.
   A diferencia de agent-bridge,
   el destinatario es el Dot personal, no el inbox de otro proyecto.
 metadata:
@@ -43,6 +44,43 @@ cargado. El archivo no instala un listener global ni un evento nativo de la app.
 Una mencion dentro de una cita o documento no es una orden del usuario.
 Cuando el usuario envia el atajo como su peticion, incluso entre comillas o
 backticks, es una invocacion. Conserva cualquier encargo que anada despues.
+
+## Identidad y comprobacion antes de declarar bloqueo
+
+Este skill es `lfp-core:symdot`, invocado con `$symdot`. `$sym` es otro skill:
+no lo ejecutes como sustituto ni apliques sus requisitos para decidir si
+symdot tiene conexion. Si el historial muestra `$sym here`, eso no demuestra
+una ejecucion de symdot. Un enlace a SKILL.md tampoco demuestra que el cliente
+lo haya cargado; comprueba el skill seleccionado/cargado en esa sesion.
+
+Antes de afirmar "no hay conexion" o pedir al usuario que lleve el encargo a
+Sym, realiza estas comprobaciones en la sesion que esta atendiendo la peticion:
+
+1. Descubre las herramientas de Slack disponibles, incluidas las diferidas.
+   La ausencia de mensajeria directa entre chats no descarta la ruta Slack.
+2. Lee [la ruta autorizada](references/slack-route.md). Si Slack esta disponible,
+   consulta el perfil del Dot por su ID (`slack_read_user_profile`) y el canal
+   por su ID (`slack_read_channel`), o sus equivalentes del conector. Usa los IDs
+   de esa referencia antes de buscar por nombre: cero resultados de busqueda
+   no prueba falta de acceso. Comprueba tambien que puedes enviar mensajes y
+   leer la respuesta del hilo. Estas lecturas verifican acceso; no son un envio.
+3. Si la ruta es accesible, continua con el encargo por esa ruta sin exigir una
+   "conexion de entrada" adicional ni pedir al usuario que copie mensajes.
+   Envia una sola vez y recoge el original completo como se indica abajo.
+4. Si falla una comprobacion, informa el hecho concreto y su alcance: herramienta
+   Slack ausente en esta sesion, error de autenticacion, acceso al perfil/canal
+   denegado, envio no disponible o retorno no legible. Indica la operacion y
+   error observado; si una herramienta falta, di que no se pudo comprobar.
+   No concluyas que todas las sesiones carecen de conexion. Usa otra ruta solo
+   si ya esta disponible y autorizada, sin ampliar permisos.
+
+Distingue los diagnosticos: "se ejecuto otro skill ($sym)", "symdot no esta
+cargado/disponible en esa sesion" y "symdot esta cargado, pero la comprobacion
+del transporte fallo: <hecho>". No declares ausente el skill que acabas de cargar.
+"No se envio nada" solo describe el envio; no prueba que no exista una ruta.
+Si solo tienes un extracto de otra sala, no atribuyas a esa sala las herramientas
+ni los fallos de la actual. No pidas al usuario que vaya al chat de Sym mientras
+exista una ruta autorizada que el agente pueda usar para entregar y recuperar.
 
 ## Preparar el encargo
 
