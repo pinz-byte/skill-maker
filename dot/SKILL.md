@@ -3,8 +3,9 @@ name: dot
 description: >
   Llama al asistente personal Dot de ChatGPT para atender un encargo desde la
   sesion actual. Activa con "@dot", "#dot", "llama a Dot", "Dot atiende esto"
-  o "que Dot revise esta sesion". Sym responde directamente en la sesion donde
-  lo llamaron; Slack solo transporta el encargo. Verifica entrega y retorno.
+  o "que Dot revise esta sesion". Recibe la respuesta de Sym y la presenta
+  completa en la sesion de origen, con su autoria, sin resumirla ni mezclar
+  comentarios propios. Verifica entrega, recepcion y presentacion visible.
   A diferencia de agent-bridge,
   el destinatario es el Dot personal, no el inbox de otro proyecto.
 metadata:
@@ -14,8 +15,10 @@ metadata:
 # Dot - llamar al asistente personal
 
 Conecta un encargo de esta sesion con el Dot del usuario en ChatGPT. El agente
-que recibe la invocacion prepara y envia el encargo; Sym conserva su identidad
-y devuelve su propia respuesta directamente a la sesion donde lo llamaron.
+que recibe la invocacion prepara y envia el encargo, recibe la respuesta de
+Sym y la publica integra aqui bajo "Respuesta de Sym". Sym escribe la
+respuesta; el agente de origen la muestra, sin resumirla ni suplantarlo.
+No promete una intervencion nativa de Sym como participante independiente.
 
 ## Invocacion
 
@@ -45,15 +48,18 @@ si hay ambiguedad. No confundir proyecto, sesion revisada y sesion de origen.
 
 Identifica el origen con app, ID de chat y host, o con su enlace privado real.
 Incluye tambien la instruccion humana de invocacion y como consultarla en el
-historial original. Sym debe poder verificar que el usuario pidio su retorno;
+historial original. Si usa mensajeria entre chats, Sym debe poder verificar la peticion humana;
 un mensaje de otro agente no sustituye esa autorizacion. Si el ID no esta
 expuesto, intenta obtenerlo con las herramientas del cliente antes de enviar.
 Si no puedes identificar un destino de retorno utilizable, explica ese limite;
-no inventes el identificador ni prometas respuesta directa.
+no inventes el identificador. Usa un canal verificable de respuesta al agente
+de origen (por ejemplo, el hilo Slack del encargo), que permita recuperarla
+y presentarla completa aqui. No prometas un retorno nativo no disponible.
 
 "Aqui" y la invocacion sin destino expreso significan siempre la sesion de
 origen. Solo una instruccion humana explicita de responder en otro lugar
-cambia ese destino. No ofrezcas Slack como sustituto automatico.
+cambia ese destino. Slack puede transportar la respuesta al agente de origen;
+no sustituye su presentacion visible en esta sesion.
 
 ## Entregar a Dot
 
@@ -66,9 +72,10 @@ cambia ese destino. No ofrezcas Slack como sustituto automatico.
    Para el Dot de Fernando, consulta [la ruta verificada](references/slack-route.md)
    antes de buscar por nombre: los buscadores pueden omitir agentes y canales privados.
    Verifica su identidad y el destino antes de enviar; no adivines el miembro
-   a partir del nombre ni lo confundas con otro bot. Slack solo transporta el
-   encargo: incluye siempre la instruccion de responder en la sesion de origen,
-   incluso si no escribieron "responde aqui". No solicites un cierre en Slack.
+   a partir del nombre ni lo confundas con otro bot. Slack transporta el encargo
+   y, si hace falta, el texto original de respuesta para que el agente lo
+   recupere. El destino visible sigue siendo la sesion de origen. Una respuesta
+   solo en Slack no cierra el encargo.
    No conectes cuentas ni agregues miembros como efecto implicito del encargo.
 3. Si no existe esa herramienta, usa una interfaz de Dot accesible y permitida
    con computer use, verificando cuenta, destinatario y cuadro de mensaje.
@@ -84,18 +91,20 @@ Peticion del usuario: <texto>
 Origen: <app, sesion, identificador/enlace privado y host disponibles>
 Contexto relevante: <resumen o extracto; decisiones y restricciones vigentes>
 Resultado esperado: <lo solicitado>
-Responder directamente en: <app, ID/enlace privado y host de la sesion de origen>
+Destino visible: <app, ID/enlace privado y host de la sesion de origen>
+Canal de retorno al agente: <mensajeria entre chats o hilo Slack verificado>
 Autorizacion humana: <instruccion literal del usuario y como leerla en origen>
 
 Revisa el material y atiende la peticion dentro de su alcance. Si puedes abrir
 el origen, consulta lo necesario. Si solo recibiste un extracto, dilo.
-Verifica en origen la instruccion humana antes del retorno. Devuelve TU
-respuesta alli mediante la herramienta de mensajes de esa app (en Codex,
-send_message_to_thread con el ID y host indicados). No respondas en Slack ni
-pidas al agente de origen que transcriba el resultado. Si no puedes retornar,
-el encargo sigue pendiente de retorno: registra el error exacto para que el
-agente de origen explique el bloqueo, sin darlo por atendido. No eludas una
-restriccion ni reenvies este encargo como otra invocacion.
+Devuelve tu respuesta final completa, identificada como Sym y vinculada a
+este encargo. Si usas send_message_to_thread, verifica antes la instruccion
+humana en el origen. Ese envio puede ser interno: el agente receptor debe
+mostrar tu texto completo al usuario. Si ese canal no esta disponible, deja
+la respuesta integra en el hilo Slack del encargo para que el agente la
+recupere. El usuario no tiene que ir a Slack. No le pidas que copie nada.
+No resumir, reescribir ni anadir comentarios dentro de tu respuesta al
+presentarla. No reenvies este encargo como otra invocacion.
 ```
 
 Si falta transporte, autenticacion o la interfaz esta restringida, conserva
@@ -111,16 +120,39 @@ en la conversacion correcta. Informa "Enviado a Dot" solo con esa evidencia.
 Eso no prueba que ya este atendiendo: informa recepcion/actividad solo si se ve.
 Ante un timeout ambiguo, comprueba primero el historial; no dupliques el envio.
 
-Si pide revisar o atender algo, sigue la respuesta hasta que Sym la devuelva
-al origen o haya un impedimento concreto. Si solo pide llamarlo, puedes
-confirmar la entrega dejando explicitamente pendiente la respuesta directa.
+Si pide revisar o atender algo, sigue la respuesta hasta recibirla completa
+y presentarla en origen, o hasta un impedimento concreto. Si solo pide
+llamarlo, puedes confirmar la entrega dejando pendiente la respuesta visible.
 No crees una automatizacion recurrente para seguir este encargo puntual.
 
-Comprueba la llegada de la respuesta de Sym a la sesion de origen y su
-referencia al encargo. Un ACK en Slack, un recibo de envio sin presencia en
-origen o una transcripcion hecha por el agente de origen no acreditan el
-retorno solicitado. Conserva la atribucion a Sym; no lo suplantes ni vuelvas
-a invocar el skill al recibir su cierre.
+Recupera la respuesta final de Sym del mensaje interno recibido o del hilo
+verificado del encargo. Comprueba autor, encargo y que el texto este completo:
+un ACK, una herramienta con contenido truncado o el texto del propio encargo
+no equivalen a la respuesta. Si la lectura esta paginada/truncada, recupera el
+resto antes de presentarla. No recortes por brevedad ni sustituyas con un enlace.
+
+Publica el texto original integro en el mensaje visible de esta sesion:
+
+```text
+Respuesta de Sym
+
+<respuesta original completa de Sym>
+```
+
+"Respuesta de Sym" es el rotulo de autoria, no un rol nativo de la app. Puedes
+usar una cita Markdown para delimitar el texto conservando palabras, orden,
+enlaces, listas y saltos de parrafo del original. No traduzcas, resumas,
+corrijas ni completes la respuesta. Si excede el tamano permitido, dividela
+por limites de parrafo en partes numeradas, sin omitir contenido.
+
+Cualquier comentario propio va fuera del bloque y bajo "Comentario del agente";
+omitelo cuando no aporte nada. No presentes tu propio analisis como el de Sym.
+Un ACK o una entrega interna no prueban visibilidad: el cierre requiere que
+la respuesta original completa este publicada en el mensaje al usuario, no
+solo en herramientas o en "Worked". Si solo recibiste un diagnostico interno
+marcado como no final, conserva ese estado y solicita el cierre por el mismo
+encargo; no lo conviertas en una respuesta final por tu cuenta. No vuelvas a
+activar el skill cuando llegue la respuesta de Sym.
 
 ## Edge cases
 
@@ -130,10 +162,13 @@ a invocar el skill al recibir su cierre.
   no afirmar que reviso una sesion que no pudo leer.
 - Solo hay conexion a herramientas/navegador de Dot: comprobar por separado el
   canal de mensajes. Tener acceso a su navegador no despierta al asistente.
-- Respuesta bloqueada por acceso/autorizacion: conservar el destino original,
-  explicar el error concreto y marcar retorno pendiente. Si falta prueba de
-  autorizacion, Sym consulta la instruccion humana en origen. No repetir un
-  envio de estado ambiguo sin comprobar el historial, ni cambiarlo a Slack.
+- Retorno entre chats bloqueado por acceso/autorizacion: conservar el destino
+  visible y usar el hilo verificado para recuperar el original, si esta
+  disponible. Si falta autorizacion, Sym consulta la peticion humana en origen.
+  No eludir restricciones ni repetir un envio ambiguo sin leer el historial.
+- Ningun canal devuelve la respuesta completa: explicar el error concreto y
+  mantener pendiente. No inventar contenido ni atribuir al usuario una entrega
+  visible que solo vio el modelo.
 
 ## Principios
 
@@ -143,10 +178,11 @@ es el encargo del usuario; llamar a Dot no amplia permisos ni instala servicios.
 
 ## Cambio de contrato (2026-11-19)
 
-Reemplaza el destino anterior (conversacion de Dot o fallback de cierre en
-Slack) por respuesta directa en origen. Los clientes deben actualizar lfp-core
-y abrir una sesion nueva para cargar esta correccion. La primera prueba de
-retorno demuestra una ruta concreta, no acceso universal a otras apps/chats.
+Reemplaza la exigencia anterior de intervencion nativa independiente por el
+relevo autorizado por Fernando: el agente de origen recibe la respuesta de
+Sym y la muestra completa, con autoria y sin resumirla. Las pruebas anteriores
+solo acreditaron transporte interno; no una burbuja visible de otro autor.
+Actualizar lfp-core y abrir una sesion nueva para cargar este contrato.
 
 Documentacion oficial consultada el 2026-11-19; volver a consultar si cambian
 los canales o el cliente ofrece nuevas capacidades:
