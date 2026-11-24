@@ -33,7 +33,7 @@ GROUPS = {
         "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox -- plus astrological reasoning for AD / Amorata, the Master Key creative process, the Intention Builder framework, extended-reasoning escalation and the five-step algorithm (question, delete, simplify, accelerate, automate -- in that order).",
         ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker",
          "ceo-planner", "toolbox", "masterkey", "ib", "ultrathink", "five-steps",
-         "astrological-thinker"],
+         "astrological-thinker", "mathematical-thinker"],
     ),
     "lfp-core": (
         "Core ops/build/meta/comms/QA skills for every working project.",
@@ -59,7 +59,7 @@ GROUPS = {
     "lfp-copy": (
         "Tone and copy skills for VMC Subastas commercial content -- outreach sequences, marketplace listings, page copy and source grounding.",
         ["patel-tone-converter", "copy-masterkey", "vmc-listing-copy", "copy-deck",
-         "voice-bench-gate", "human-reactor"],
+         "voice-bench-gate", "human-reactor", "advertising-creative"],
     ),
     "lfp-design": (
         "Design craft and personal-project design-system enforcement -- Apple-inspired corners, purposeful motion, scrollytelling, and AstroDiary e-ink brand checks.",

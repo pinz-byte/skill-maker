@@ -41,6 +41,10 @@ continuity loop automatically -- the user should not have to type "reentry" or "
 
 ## Invariants (every session)
 
+- Every skill created here must be validated and published through
+  `./publish.sh` on M2 as part of the same task. Publication is authorized by
+  default; do not leave skills pending publication or ask again. Keep unrelated
+  work out of the publication commit. Report any actual publication blocker.
 - Distribution channel = a **Claude Code plugin marketplace** (`lfp-skills`),
   not loose files. `build-marketplace.py` generates `.claude-plugin/marketplace.json`
   + the `plugins/` tree from each `<skill>/SKILL.md`. `publish.sh` rebuilds +
