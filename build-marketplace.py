@@ -33,7 +33,11 @@ GROUPS = {
         "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox -- plus astrological reasoning for AD / Amorata, the Master Key creative process, the Intention Builder framework, extended-reasoning escalation and the five-step algorithm (question, delete, simplify, accelerate, automate -- in that order).",
         ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker",
          "ceo-planner", "toolbox", "masterkey", "ib", "ultrathink", "five-steps",
-         "astrological-thinker", "mathematical-thinker"],
+         "astrological-thinker", "mathematical-thinker",
+         "relational-intelligence", "tactical-negotiation", "business-innovation",
+         "disruptive-entrepreneurship", "economic-thinking",
+         "scientific-problem-solving", "purposeful-communication",
+         "self-directed-learning"],
     ),
     "lfp-core": (
         "Core ops/build/meta/comms/QA skills for every working project.",
@@ -57,13 +61,18 @@ GROUPS = {
          "council-global", "apex-health", "council", "council-run"],
     ),
     "lfp-copy": (
-        "Tone and copy skills for VMC Subastas commercial content -- outreach sequences, marketplace listings, page copy and source grounding.",
+        "Commercial copy, advertising concepts and customer-centered sales -- outreach, listings, page copy, campaign ideas, pitches and source grounding.",
         ["patel-tone-converter", "copy-masterkey", "vmc-listing-copy", "copy-deck",
-         "voice-bench-gate", "human-reactor", "advertising-creative"],
+         "voice-bench-gate", "human-reactor", "advertising-creative",
+         "persuasive-selling"],
     ),
     "lfp-design": (
-        "Design craft and personal-project design-system enforcement -- Apple-inspired corners, purposeful motion, scrollytelling, and AstroDiary e-ink brand checks.",
-        ["astrodiary-ds-enforcer", "apple-design-craft"],
+        "Design craft, spatial art prototyping and personal-project design-system enforcement -- artistic concepts, Apple-inspired interfaces and AstroDiary brand checks.",
+        ["astrodiary-ds-enforcer", "apple-design-craft", "ideas-into-art"],
+    ),
+    "lfp-writing": (
+        "Original literary craft -- humorous personal essays, character-driven fiction and novel structure, viewpoint and revision.",
+        ["humorous-personal-essay", "character-driven-fiction", "novel-craft"],
     ),
     "lfp-product": (
         "Subastop / VMC / CarMatch product line -- build, deploy, design-system and pre-ship gates. Scope to product projects only.",
