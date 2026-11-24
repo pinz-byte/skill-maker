@@ -33,7 +33,7 @@ GROUPS = {
         "Oversight roundtable + router: critical, creative, logic, loop-breaker, ceo-planner, toolbox -- plus astrological reasoning for AD / Amorata, the Master Key creative process, the Intention Builder framework, extended-reasoning escalation and the five-step algorithm (question, delete, simplify, accelerate, automate -- in that order).",
         ["critical-thinker", "creative-thinker", "logic-thinker", "loop-breaker",
          "ceo-planner", "toolbox", "masterkey", "ib", "ultrathink", "five-steps",
-         "astrological-thinker", "mathematical-thinker",
+         "astrological-thinker", "mece-thinker", "mathematical-thinker",
          "relational-intelligence", "tactical-negotiation", "business-innovation",
          "disruptive-entrepreneurship", "economic-thinking",
          "scientific-problem-solving", "purposeful-communication",
