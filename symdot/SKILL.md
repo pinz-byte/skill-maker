@@ -90,6 +90,19 @@ su app y host si estan disponibles. No publiques el chat ni crees un enlace
 compartido para conseguir acceso. Si no existe un enlace privado utilizable,
 incluye un extracto suficiente e indica que no es acceso al historial completo.
 
+Nombra la linea de trabajo del encargo (proyecto y frente, por ejemplo
+"Amorata - generacion de cartas"). Si esa linea tiene estado guardado (semilla
+de continuidad del proyecto o ficha de linea), incluye su puntero exacto y su
+fecha, y en "Cambio desde ese estado" escribe solo lo nuevo. Si no existe,
+escribe "sin estado guardado": Sym no debe suponer que lo hay. No repitas en
+el extracto lo que el estado guardado ya contiene.
+
+Redacta el encargo en frases completas, con espacios y unidades. No comprimas
+palabras para ahorrar caracteres ("amorata2b2al100", "skill1.75"): Sym trabaja
+solo con este texto cuando no puede abrir el origen. Conserva commits, IDs y
+nombres en su forma original. Si el contexto no cabe en un mensaje, envia el
+encargo y continua en respuestas del mismo hilo; no abras otro encargo.
+
 Origen y destino de respuesta: la sesion actual donde el usuario invoca a Sym.
 Una sesion nombrada para revisar es el objeto del encargo, no cambia el destino
 de respuesta. Busca esa sesion con las herramientas de la app; pregunta solo
@@ -138,6 +151,9 @@ no sustituye su presentacion visible en esta sesion.
 Encargo para Dot
 Peticion del usuario: <texto>
 Origen: <app, sesion, identificador/enlace privado y host disponibles>
+Linea de trabajo: <proyecto y frente>
+Estado guardado: <puntero exacto y fecha, o "sin estado guardado">
+Cambio desde ese estado: <solo lo nuevo; omitir si no hay estado guardado>
 Contexto relevante: <resumen o extracto; decisiones y restricciones vigentes>
 Resultado esperado: <lo solicitado>
 Destino visible: <app, ID/enlace privado y host de la sesion de origen>
@@ -146,6 +162,8 @@ Autorizacion humana: <instruccion literal del usuario y como leerla en origen>
 
 Revisa el material y atiende la peticion dentro de su alcance. Si puedes abrir
 el origen, consulta lo necesario. Si solo recibiste un extracto, dilo.
+Si el encargo trae un estado guardado, leelo antes de responder y declara su
+fecha; si no pudiste leerlo, dilo.
 Devuelve tu respuesta final completa, identificada como Sym y vinculada a
 este encargo. Si usas send_message_to_thread, verifica antes la instruccion
 humana en el origen. Ese envio puede ser interno: el agente receptor debe
@@ -233,6 +251,14 @@ relevo autorizado por Fernando: el agente de origen recibe la respuesta de
 Sym y la muestra completa, con autoria y sin resumirla. Las pruebas anteriores
 solo acreditaron transporte interno; no una burbuja visible de otro autor.
 Actualizar lfp-core y abrir una sesion nueva para cargar este contrato.
+
+## Cambio de formato (2026-11-25)
+
+El encargo incorpora linea de trabajo, puntero al estado guardado y cambio
+desde ese estado, y prohibe el texto comprimido. Motivo: la auditoria del
+25-nov encontro que Sym recibia casi todos los encargos como extractos sin
+estado previo. Los campos son aditivos: un encargo sin ellos sigue siendo
+valido y la ruta y el contrato de respuesta no cambian.
 
 Documentacion oficial consultada el 2026-11-19; volver a consultar si cambian
 los canales o el cliente ofrece nuevas capacidades:
