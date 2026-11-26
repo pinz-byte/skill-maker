@@ -38,7 +38,7 @@
     {
       "name": "lfp-design",
       "source": "./plugins/lfp-design",
-      "version": "1.50.0",
+      "version": "1.51.0",
       "description": "Design craft, spatial art prototyping and personal-project design-system enforcement -- artistic concepts, Apple-inspired interfaces and AstroDiary brand checks."
     },
     {
