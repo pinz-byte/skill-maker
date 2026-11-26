@@ -1,73 +1,56 @@
 ---
 name: apple-design-craft
 description: >
-  Design, implement, or audit an Apple-inspired page or interface in focused
-  parts: direction, composition and typography, surface finish, purposeful motion,
-  or review. Trigger on "Apple design", "diseno Apple", "Apple-style landing
-  page", "squircle corners", "scroll product animation", or "chunked
-  scrollytelling". Select only the parts needed for the requested artifact.
-  For factory orchestration use factory-gate; for brand compliance use
-  ds-enforcer or astrodiary-ds-enforcer instead.
+  Coordinate a complete Apple-inspired design or build spanning multiple
+  specialist skills, or handle an explicit apple-design-craft invocation.
+  Trigger on "diseno Apple completo" or "Apple-style landing page". For a single
+  hero or layout use apple-design-composition; for a focused audit use
+  apple-design-review instead. Does not duplicate the specialist instructions.
 metadata:
   intent: build
 ---
 
 # Apple Design Craft
 
-Apply Apple HIG and WWDC principles to the requested artifact. This entrypoint
-selects the work; each module supplies its execution detail. Preserve the
-project's brand, tokens, stack, and the user's requested fidelity and scope.
+Compatibility entrypoint for complete Apple-inspired work. Each specialist below
+is an independent skill and can be invoked directly. Preserve the user's scope,
+brand, tokens, stack, and requested fidelity.
 
-## Select the part
+## Choose the skill
 
-Start from the user's request and the existing artifact. State the part and
-observable result in one sentence, then do the work. Read only the module(s)
-needed for that result, not the whole library.
-
-| Requested work | Read | Concrete result |
+| Task | Independent skill | Result |
 | --- | --- | --- |
-| Define the promise, brief, or story | [Direction](references/direction.md) | Task/promise, proof, next action, and sequence |
-| Design a hero, screen, or page; fix hierarchy or type | [Composition](references/composition.md) | Visible or implemented static composition |
-| Refine corners, materials, depth, or optical alignment | [Finish](references/finish.md) | Refined existing composition |
-| Add an explanatory transition, gesture, or scroll animation | [Motion](references/motion.md) | Working behavior and its static alternative |
-| Audit a result or check a completed change | [Review](references/review.md) | Observed findings or scoped verification |
+| Brief or story | [apple-design-direction](../apple-design-direction/SKILL.md) | Task/promise, proof, next action, and sequence |
+| Static layout or typography | [apple-design-composition](../apple-design-composition/SKILL.md) | Visible or implemented composition |
+| Surfaces, corners, and optical finish | [apple-design-finish](../apple-design-finish/SKILL.md) | Refined existing composition |
+| Transitions, gestures, or scroll animation | [apple-design-motion](../apple-design-motion/SKILL.md) | Working behavior and static alternative |
+| Audit or verification | [apple-design-review](../apple-design-review/SKILL.md) | Observed findings or scoped checks |
 
-## Execute within the request
+## Execution
 
-- For a focused request, complete that part. Use an adjacent module only to solve
-  a dependency of that result. Do not restart the whole design process.
-- For a complete design or build, work through the necessary parts in order:
-  direction if unresolved, composition, finish, motion if useful, then review.
-  Carry decisions forward and continue within the authorized task. These are
-  working parts, not mandatory approval gates or separate planning documents.
-- For "frame by frame", "one part at a time", or an explicitly bounded phase,
-  deliver that artifact and await feedback before expanding it.
-- Use existing content and assets where possible. Ask only for missing information
-  that materially changes the result; name reasonable assumptions otherwise.
-- Match the output to the request: a mockup needs a visible composition; a build
-  needs the implementation; advice needs a specification; an audit needs findings.
-  Keep review notes and technical caveats outside the product interface.
-- After implementing, use the relevant checks in the review module. Report
-  observations and limits; reading instructions is not evidence of visual quality.
+For a focused request, use the matching skill and deliver its result directly.
+For a complete build, use only the necessary skills in order: direction if
+unresolved, composition, finish, motion if useful, and review. Carry decisions
+forward without introducing mandatory approval gates or extra planning documents.
+Do not load all specialist instructions for a single-part request.
+
+For "one part at a time" or an explicitly bounded frame, deliver that part and
+await feedback before expanding. A mockup needs a visible composition; a build
+needs working implementation; an audit needs findings. Report observed checks
+and anything untested.
 
 ## Evidence and edge cases
 
-Read [Apple evidence](references/apple-evidence.md) when explaining an Apple
-attribution or resolving a source question. This is supporting evidence, not a
-prerequisite research exercise for every design change. Recheck current API or
-browser behavior before relying on it in an implementation.
+[Apple evidence](references/apple-evidence.md) supports source questions. It is
+not a mandatory research exercise before every change. Individual specialists
+carry their own source pointers and can operate without this router.
 
-- No sequence assets: use a static image or a modest transform within scope.
-- A comparison or data-heavy task: retain useful tables and compact controls.
-- An existing design system: adapt the treatment to its tokens and components.
-- An unviewable artifact: identify the missing observation and limit conclusions;
-  do not claim the design or interaction was visually verified.
+If a specialist is not exposed in the skill catalog, read its linked sibling
+SKILL.md from the installed plugin when accessible. If it is unavailable, state
+that limitation rather than claiming it ran. No agent delegation is required.
 
 ## Principles
 
-- Motion explains, orients, or provides feedback; it is optional.
-- Keep accessibility and resilience in the part being implemented.
-- Attribute the four human needs to WWDC17; preserve the source distinction
-  between platform guidance and this skill's web adaptations.
-- Do not promise conversion effects, exact Apple geometry, or universal numeric
-  recipes without evidence appropriate to that claim.
+- Complete the requested scope with the smallest applicable set of skills.
+- Keep useful navigation, accessibility, and resilience in the result.
+- Do not treat optional motion as a prerequisite for Apple-inspired design.

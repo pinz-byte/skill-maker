@@ -1,4 +1,24 @@
-# Surfaces, corners, and optical finish
+---
+name: apple-design-finish
+description: >
+  Refine an existing Apple-inspired composition through corners, materials,
+  depth, nested padding, and optical alignment. Trigger on "acabados Apple",
+  "squircle corners", or "pulir interfaz Apple". For layout, hierarchy, and
+  typography work use apple-design-composition instead.
+metadata:
+  intent: build
+---
+
+# Apple Design Finish
+
+## Scope and execution
+
+Preserve the project's brand, tokens, stack, existing decisions, and requested
+fidelity. Inspect the supplied artifact and content before making changes. Ask
+only about missing information that materially changes the requested result.
+This skill executes its own task directly; no other Apple skill is a prerequisite.
+For an explicitly bounded frame or part, deliver it and await feedback before
+expanding. Keep implementation notes outside the product interface.
 
 Use to refine an existing composition. Preserve its content, reading order, and action hierarchy unless a concrete defect requires a local correction.
 
@@ -41,3 +61,24 @@ Do not add motion or rebuild the narrative as part of a finish-only request.
   the complexity, and preserve visible focus rings and shadows.
 - Check small controls and nested containers at actual sizes. Avoid tiny inner
   corners that visually collide with larger outer curves.
+
+## Verify the result
+
+Inspect the rendered artifact at relevant desktop and mobile sizes. Check type
+wraps, contrast, enlarged text, padding, crops, overflow, reachable actions, and
+visible keyboard focus. Report what was inspected and anything untested. If no
+viewer is available, limit conclusions to the evidence you can actually observe.
+
+## Edge cases
+
+If an effect obscures text or focus, use a simpler surface. Keep the existing
+brand tokens when an Apple-like treatment would conflict with them.
+
+## Principles
+
+- Apply the guidance only where it serves the requested task.
+- Preserve useful navigation, accessible content, and recovery paths.
+- Separate observed results from specifications and untested expectations.
+- Use [primary sources](references/sources.md) for Apple attributions; recheck
+  current implementation APIs when needed. Do not promise conversion effects
+  or universal numeric recipes without evidence appropriate to the claim.

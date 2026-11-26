@@ -68,7 +68,9 @@ GROUPS = {
     ),
     "lfp-design": (
         "Design craft, spatial art prototyping and personal-project design-system enforcement -- artistic concepts, Apple-inspired interfaces and AstroDiary brand checks.",
-        ["astrodiary-ds-enforcer", "apple-design-craft", "ideas-into-art"],
+        ["astrodiary-ds-enforcer", "apple-design-craft", "apple-design-direction",
+         "apple-design-composition", "apple-design-finish", "apple-design-motion",
+         "apple-design-review", "ideas-into-art"],
     ),
     "lfp-writing": (
         "Original literary craft -- humorous personal essays, character-driven fiction and novel structure, viewpoint and revision.",

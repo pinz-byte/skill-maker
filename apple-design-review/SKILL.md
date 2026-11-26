@@ -1,6 +1,27 @@
-# Review and correction
+---
+name: apple-design-review
+description: >
+  Audit an existing Apple-inspired design or verify a completed interface change
+  using visible evidence, accessibility, interaction, and resilience checks.
+  Trigger on "audita diseno Apple", "revisa este hero", or "verifica interfaz
+  Apple". For creating the composition use apple-design-composition; for a
+  general post-hoc execution audit use auditor-general instead.
+metadata:
+  intent: audit
+---
 
-Use to audit an existing artifact or verify a completed change. Read the relevant craft module only when a finding needs its technical detail; do not redesign before observing the result.
+# Apple Design Review
+
+## Scope and execution
+
+Preserve the project's brand, tokens, stack, existing decisions, and requested
+fidelity. Inspect the supplied artifact and content before making changes. Ask
+only about missing information that materially changes the requested result.
+This skill executes its own task directly; no other Apple skill is a prerequisite.
+For an explicitly bounded frame or part, deliver it and await feedback before
+expanding. Keep implementation notes outside the product interface.
+
+Use to audit an existing artifact or verify a completed change. Consult a relevant specialist skill only when a finding needs its technical detail; do not redesign before observing the result.
 
 ## Result and handoff
 
@@ -40,3 +61,17 @@ Choose the applicable checks below. Inspect the actual artifact when execution t
 
 A screenshot can support visual findings; it cannot prove working interactions.
 Separate source-backed guidance, design judgment, and hypotheses to test.
+
+## Edge cases
+
+If only screenshots are available, limit findings to visible evidence. Do not
+claim keyboard, motion, or runtime behavior passed without exercising it.
+
+## Principles
+
+- Apply the guidance only where it serves the requested task.
+- Preserve useful navigation, accessible content, and recovery paths.
+- Separate observed results from specifications and untested expectations.
+- Use [primary sources](references/sources.md) for Apple attributions; recheck
+  current implementation APIs when needed. Do not promise conversion effects
+  or universal numeric recipes without evidence appropriate to the claim.

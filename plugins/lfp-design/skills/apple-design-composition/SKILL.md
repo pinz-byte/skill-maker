@@ -1,4 +1,24 @@
-# Composition and typography
+---
+name: apple-design-composition
+description: >
+  Design or implement a static Apple-inspired hero, screen, or page composition:
+  hierarchy, typography, spacing, product evidence, and action placement. Trigger
+  on "hero Apple", "composicion Apple", or "tipografia estilo Apple". For
+  surfaces and corners on an existing layout use apple-design-finish instead.
+metadata:
+  intent: build
+---
+
+# Apple Design Composition
+
+## Scope and execution
+
+Preserve the project's brand, tokens, stack, existing decisions, and requested
+fidelity. Inspect the supplied artifact and content before making changes. Ask
+only about missing information that materially changes the requested result.
+This skill executes its own task directly; no other Apple skill is a prerequisite.
+For an explicitly bounded frame or part, deliver it and await feedback before
+expanding. Keep implementation notes outside the product interface.
 
 Use for a hero, page layout, or interface structure. Start from the supplied content or existing screen; infer only what is needed for this composition.
 
@@ -41,3 +61,24 @@ If the task is composition only, stop after delivering this result.
 - Use optical sizing when the chosen font and renderer support it. Inspect icons
   beside text, button labels, baselines, nested padding, and awkward headline
   breaks. Check the rendered result before claiming optical refinement.
+
+## Verify the result
+
+Inspect the rendered artifact at relevant desktop and mobile sizes. Check type
+wraps, contrast, enlarged text, padding, crops, overflow, reachable actions, and
+visible keyboard focus. Report what was inspected and anything untested. If no
+viewer is available, limit conclusions to the evidence you can actually observe.
+
+## Edge cases
+
+If content or assets are incomplete, use clearly identified placeholders only
+where the requested fidelity permits them. Do not invent product evidence.
+
+## Principles
+
+- Apply the guidance only where it serves the requested task.
+- Preserve useful navigation, accessible content, and recovery paths.
+- Separate observed results from specifications and untested expectations.
+- Use [primary sources](references/sources.md) for Apple attributions; recheck
+  current implementation APIs when needed. Do not promise conversion effects
+  or universal numeric recipes without evidence appropriate to the claim.
