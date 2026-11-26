@@ -67,10 +67,10 @@ GROUPS = {
          "persuasive-selling"],
     ),
     "lfp-design": (
-        "Design craft, spatial art prototyping and personal-project design-system enforcement -- artistic concepts, Apple-inspired interfaces and AstroDiary brand checks.",
+        "Human-centered UX/UI product design, design craft and design-system enforcement -- usable workflows, coherent interfaces, artistic concepts and platform guidance.",
         ["astrodiary-ds-enforcer", "apple-design-craft", "apple-design-direction",
          "apple-design-composition", "apple-design-finish", "apple-design-motion",
-         "apple-design-review", "ideas-into-art"],
+         "apple-design-review", "ideas-into-art", "ux-ui-specialist"],
     ),
     "lfp-writing": (
         "Original literary craft -- humorous personal essays, character-driven fiction and novel structure, viewpoint and revision.",
